@@ -149,42 +149,6 @@ events.forEach(event => {
 
 });
 
-    link.innerHTML = `
-    <div style="font-size:12px;opacity:.9;">
-        🕒 ${event.time}
-    </div>
-
-    <div style="margin-top:6px;">
-        ${event.title}
-    </div>
-    `;
-
-    if (event.url === "") {
-
-        link.removeAttribute("href");
-
-        link.style.cursor = "default";
-
-        link.style.opacity = ".6";
-
-        link.innerHTML = `
-    <div style="font-size:12px;opacity:.9;">
-        🕒 ${event.time}
-    </div>
-
-    <div style="margin-top:6px;">
-        ${event.title}
-    </div>
-
-    <div style="margin-top:6px;font-size:11px;">
-        🔒 URL準備中
-    </div>
-`;
-
-    }
-
-    cell.appendChild(link);
-
 // ==========================================
 // 土日の日付の色変更
 // ==========================================
