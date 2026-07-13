@@ -71,7 +71,7 @@ main{
 }
 
 .day{
-    min-height:130px;
+    min: height 150px;
     border:1px solid #ddd;
     padding:8px;
     background:white;
@@ -93,13 +93,23 @@ main{
 
 .event{
     display:block;
+
     margin-top:6px;
     padding:6px;
-    border-radius:6px;
-    text-decoration:none;
-    font-size:14px;
+
+    border-radius:8px;
+
     color:white;
-    background:#2c7be5;
+    text-decoration:none;
+
+    font-size:13px;
+    font-weight:bold;
+
+    line-height:1.4;
+
+    word-break:keep-all;
+    overflow-wrap:break-word;
+
     transition:.2s;
 }
 
