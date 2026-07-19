@@ -1,13 +1,15 @@
 // =====================================
 // ERINA 管理画面
-// manager.js Part①
+// manager.js Ver2.0 Part1/3
 // =====================================
+
 
 // ------------------------------
 // パスワード
 // ------------------------------
 
 const ADMIN_PASSWORD = "Tera0427";
+
 
 // ------------------------------
 // HTML取得
@@ -43,14 +45,19 @@ const editCategory = document.getElementById("editCategory");
 const saveButton = document.getElementById("saveButton");
 const addEventButton = document.getElementById("addEventButton");
 
+
 // 編集中イベント番号
+
 let editingIndex = null;
+
+
 
 // ------------------------------
 // ログイン
 // ------------------------------
 
 loginButton.addEventListener("click", login);
+
 
 password.addEventListener("keydown",(e)=>{
 
@@ -62,23 +69,33 @@ password.addEventListener("keydown",(e)=>{
 
 });
 
+
 function login(){
 
-    if(password.value===ADMIN_PASSWORD){
+    if(password.value === ADMIN_PASSWORD){
 
         loginArea.style.display="none";
+
         adminArea.style.display="block";
+
 
         loadEventList();
 
+
     }else{
 
+
         loginMessage.textContent="パスワードが違います。";
+
         loginMessage.style.color="red";
+
 
     }
 
 }
+
+
+
 
 // ------------------------------
 // イベント一覧
@@ -88,11 +105,15 @@ function loadEventList(){
 
     eventList.innerHTML="";
 
+
     events.forEach((e,index)=>{
 
-        eventList.innerHTML+=`
+
+        eventList.innerHTML += `
+
 
         <div class="card" style="margin-bottom:15px;">
+
 
             <strong>
 
@@ -102,11 +123,15 @@ function loadEventList(){
 
             </strong>
 
+
             <br>
+
 
             ${e.title}
 
+
             <br><br>
+
 
             <button onclick="editEvent(${index})">
 
@@ -114,11 +139,13 @@ function loadEventList(){
 
             </button>
 
+
             <button onclick="duplicateEvent(${index})">
 
                 📄 複製
 
             </button>
+
 
             <button onclick="deleteEvent(${index})">
 
@@ -126,13 +153,20 @@ function loadEventList(){
 
             </button>
 
+
         </div>
+
 
         `;
 
+
     });
 
+
 }
+
+
+
 
 // ------------------------------
 // 編集
@@ -140,28 +174,47 @@ function loadEventList(){
 
 function editEvent(index){
 
-    editingIndex=index;
 
-    const e=events[index];
+    editingIndex = index;
+
+
+    const e = events[index];
+
 
     editor.style.display="block";
 
+
     editYear.value=e.year;
+
     editMonth.value=e.month;
+
     editDate.value=e.date;
 
+
     editTime.value=e.time;
+
     editEndTime.value=e.endTime || "";
 
+
+
     editTitle.value=e.title;
+
     editShortTitle.value=e.shortTitle || "";
 
+
+
     editImage.value=e.image || "";
+
     editUrl.value=e.url || "";
+
+
 
     editColor.value=e.color || "#ff69b4";
 
+
     editCategory.value=e.category || "";
+
+
 
     editor.scrollIntoView({
 
@@ -169,23 +222,27 @@ function editEvent(index){
 
     });
 
+
 }
 
-// ------------------------------
-// 仮機能
-// ------------------------------
+
+
+
 
 // ------------------------------
-// イベント削除
+// 削除
 // ------------------------------
 
 function deleteEvent(index){
+
 
     const e = events[index];
 
 
     const result = confirm(
+
         `${e.title}\n\nこのイベントを削除しますか？`
+
     );
 
 
@@ -196,186 +253,149 @@ function deleteEvent(index){
     }
 
 
-    // 配列から削除
-
     events.splice(index,1);
 
 
-    // 一覧更新
 
-    loadEventList();
+    editingIndex=null;
 
-
-    // 編集画面を閉じる
 
     editor.style.display="none";
 
 
-    editingIndex = null;
+
+    loadEventList();
 
 
-    // GitHubへ保存
 
     saveEventsToGitHub();
 
 
 }
-
 // ------------------------------
 // 保存
 // ------------------------------
 
-saveButton.addEventListener("click", async()=>{
+saveButton.addEventListener("click",()=>{
 
 
-    
+    const newEvent = {
 
 
-// 編集内容
+        year:Number(editYear.value),
 
-const newEvent = {
+        month:Number(editMonth.value),
 
-    year:Number(editYear.value),
-
-    month:Number(editMonth.value),
-
-    date:Number(editDate.value),
-
-    time:editTime.value,
-
-    endTime:editEndTime.value,
-
-    title:editTitle.value,
-
-    shortTitle:editShortTitle.value,
-
-    image:editImage.value,
-
-    url:editUrl.value,
-
-    color:editColor.value,
-
-    category:editCategory.value
-
-};
+        date:Number(editDate.value),
 
 
-// 新規追加の場合
+        time:editTime.value,
 
-if(editingIndex === null){
-
-    events.push(newEvent);
-
-}else{
-
-    // 編集の場合
-
-    events[editingIndex] = newEvent;
-
-}
+        endTime:editEndTime.value,
 
 
-    // Workerへ送信
+        title:editTitle.value,
 
-    try{
-
-
-        const response = await fetch(
-            "https://erina-manager.tomoya19980427goku.workers.dev/",
-            {
-
-                method:"POST",
-
-                headers:{
-
-                    "Content-Type":"application/json"
-
-                },
-
-                body:JSON.stringify({
-
-                    events:events
-
-                })
-
-            }
-        );
+        shortTitle:editShortTitle.value,
 
 
-        const result = await response.json();
+        image:editImage.value,
+
+        url:editUrl.value,
+
+
+        color:editColor.value,
+
+        category:editCategory.value
+
+
+    };
 
 
 
-        if(result.success){
+    // 新規追加
+
+    if(editingIndex === null){
 
 
-            alert("保存しました！");
+        events.push(newEvent);
 
 
-            loadEventList();
+
+    }else{
 
 
-        }else{
+        // 編集更新
 
-
-            alert(
-                "保存失敗\n"+
-                result.error
-            );
-
-
-        }
-
-
-    }catch(error){
-
-
-        alert(
-            "通信エラー\n"+
-            error
-        );
+        events[editingIndex] = newEvent;
 
 
     }
 
 
+
+    loadEventList();
+
+
+    saveEventsToGitHub();
+
+
+
 });
+
+
+
+
 // ------------------------------
 // 新しいイベント追加
 // ------------------------------
 
 addEventButton.addEventListener("click",()=>{
 
+
     editingIndex = null;
+
 
     editor.style.display="block";
 
 
+
     editYear.value = new Date().getFullYear();
 
+
     editMonth.value = new Date().getMonth()+1;
+
 
     editDate.value = new Date().getDate();
 
 
+
     editTime.value="";
+
 
     editEndTime.value="";
 
 
+
     editTitle.value="";
+
 
     editShortTitle.value="";
 
 
+
     editImage.value="";
+
 
     editUrl.value="";
 
 
+
     editColor.value="#ff69b4";
 
+
     editCategory.value="";
+
 
 
     editor.scrollIntoView({
@@ -384,58 +404,102 @@ addEventButton.addEventListener("click",()=>{
 
     });
 
+
+
 });
+
+
+
+
+
 // ------------------------------
 // GitHub保存
 // ------------------------------
 
 async function saveEventsToGitHub(){
 
+
     try{
 
+
         const response = await fetch(
+
             "https://erina-manager.tomoya19980427goku.workers.dev/",
+
             {
+
 
                 method:"POST",
 
+
                 headers:{
+
+
                     "Content-Type":"application/json"
+
+
                 },
 
+
                 body:JSON.stringify({
+
+
                     events:events
+
+
                 })
 
+
             }
+
         );
+
 
 
         const result = await response.json();
 
 
+
+
         if(result.success){
 
-            alert("削除しました！");
+
+
+            alert("保存しました！");
+
+
 
         }else{
 
+
             alert(
+
                 "保存失敗\n"+
+
                 result.error
+
             );
+
 
         }
 
 
+
     }catch(error){
 
+
+
         alert(
+
             "通信エラー\n"+
+
             error
+
         );
 
+
     }
+
 
 }
 // ------------------------------
@@ -444,42 +508,57 @@ async function saveEventsToGitHub(){
 
 function duplicateEvent(index){
 
+
     const original = events[index];
 
 
     const copy = {
 
+
         year: original.year,
+
 
         month: original.month,
 
+
         date: original.date,
 
+
         time: original.time,
+
 
         endTime: original.endTime || "",
 
 
+
         title: original.title + "（コピー）",
+
 
         shortTitle: original.shortTitle || "",
 
 
+
         image: original.image || "",
+
 
         url: original.url || "",
 
 
+
         color: original.color || "#ff69b4",
 
+
         category: original.category || ""
+
 
     };
 
 
-    // コピーを追加
+
+    // コピー追加
 
     events.push(copy);
+
 
 
     // 一覧更新
@@ -487,11 +566,15 @@ function duplicateEvent(index){
     loadEventList();
 
 
-    // 追加したものを編集状態へ
+
+    // 追加したイベントを編集状態へ
 
     editingIndex = events.length - 1;
 
+
+
     editEvent(editingIndex);
+
 
 
 }
