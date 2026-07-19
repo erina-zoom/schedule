@@ -40,15 +40,15 @@ const events = [
   },
   {
     "year": 2026,
-    "month": 7,
-    "date": 31,
-    "time": "19:00",
-    "endTime": "20:00",
-    "title": "テストイベント",
-    "shortTitle": "テスト",
-    "image": "",
+    "month": 8,
+    "date": 15,
+    "time": "13:00",
+    "endTime": "14:30",
+    "title": "🍒 平日チェリーライブ（コピー）",
+    "shortTitle": "🍒チェリー",
+    "image": "images/cherry215.jpg",
     "url": "",
-    "color": "#6b75ff",
-    "category": "test"
+    "color": "#e74c3c",
+    "category": "cherry"
   }
 ];
