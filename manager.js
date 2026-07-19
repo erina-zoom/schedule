@@ -41,6 +41,7 @@ const editColor = document.getElementById("editColor");
 const editCategory = document.getElementById("editCategory");
 
 const saveButton = document.getElementById("saveButton");
+const addEventButton = document.getElementById("addEventButton");
 
 // 編集中イベント番号
 let editingIndex = null;
@@ -192,14 +193,56 @@ function deleteEvent(index){
 
 saveButton.addEventListener("click", async()=>{
 
+if(editingIndex === null){
 
-    if(editingIndex === null){
+    // 新規追加
 
-        alert("編集するイベントを選択してください");
+    events.push({
 
-        return;
+        year:Number(editYear.value),
+        month:Number(editMonth.value),
+        date:Number(editDate.value),
 
-    }
+        time:editTime.value,
+        endTime:editEndTime.value,
+
+        title:editTitle.value,
+        shortTitle:editShortTitle.value,
+
+        image:editImage.value,
+        url:editUrl.value,
+
+        color:editColor.value,
+        category:editCategory.value
+
+    });
+
+}else{
+
+    // 編集更新
+
+    events[editingIndex] = {
+
+        year:Number(editYear.value),
+        month:Number(editMonth.value),
+        date:Number(editDate.value),
+
+        time:editTime.value,
+        endTime:editEndTime.value,
+
+        title:editTitle.value,
+        shortTitle:editShortTitle.value,
+
+        image:editImage.value,
+        url:editUrl.value,
+
+        color:editColor.value,
+        category:editCategory.value
+
+    };
+
+}
+    
 
 
     // 編集内容を反映
@@ -297,5 +340,50 @@ saveButton.addEventListener("click", async()=>{
 
     }
 
+
+});
+// ------------------------------
+// 新しいイベント追加
+// ------------------------------
+
+addEventButton.addEventListener("click",()=>{
+
+    editingIndex = null;
+
+    editor.style.display="block";
+
+
+    editYear.value = new Date().getFullYear();
+
+    editMonth.value = new Date().getMonth()+1;
+
+    editDate.value = new Date().getDate();
+
+
+    editTime.value="";
+
+    editEndTime.value="";
+
+
+    editTitle.value="";
+
+    editShortTitle.value="";
+
+
+    editImage.value="";
+
+    editUrl.value="";
+
+
+    editColor.value="#ff69b4";
+
+    editCategory.value="";
+
+
+    editor.scrollIntoView({
+
+        behavior:"smooth"
+
+    });
 
 });
