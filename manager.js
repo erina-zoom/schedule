@@ -1025,7 +1025,10 @@ async function uploadImage(
     const result =
     await response.json();
 
-
+console.log(
+    "画像アップロード返答",
+    result
+);
 
     if(
         !result.success
