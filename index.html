@@ -1,154 +1,183 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>ERINA Zoom予定表</title>
 
-    <meta
-        name="theme-color"
-        content="#0d6efd">
+    <meta name="theme-color" content="#2e7d32">
 
-    <meta
-        name="apple-mobile-web-app-capable"
-        content="yes">
+    <link rel="manifest" href="manifest.json">
 
-    <meta
-        name="apple-mobile-web-app-status-bar-style"
-        content="default">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
 
-    <meta
-        name="apple-mobile-web-app-title"
-        content="ERINA Zoom">
-
-    <link
-        rel="manifest"
-        href="manifest.json">
-
-    <link
-        rel="apple-touch-icon"
-        href="images/icon-192.png">
-
-    <link
-        rel="icon"
-        href="images/icon-192.png">
-
-    <link
-        rel="stylesheet"
-        href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
-    <header>
+<header class="header">
 
-    <h1>
+    <div class="logo-area">
 
-        ERINA Zoom予定表
+        <img src="images/logo.png"
+             class="logo"
+             alt="ERINA">
 
-    </h1>
+        <div>
+
+            <h1>ERINA Zoom予定表</h1>
+
+            <p class="sub-title">
+                最新のZoomスケジュール
+            </p>
+
+        </div>
+
+    </div>
 
 </header>
-<section class="home-section">
 
-    <h2>
+<main>
 
-        📅 今日のZoom
+    <!-- 今日のZoom -->
 
-    </h2>
+    <section class="card">
 
-    <div id="todayEvents">
+        <h2>
+            📢 今日のZoom
+        </h2>
 
-    </div>
+        <div id="todayEvent">
 
-</section>
-<section class="home-section">
+            読み込み中...
 
-    <h2>
+        </div>
 
-        ⏭ 次回Zoom
+    </section>
 
-    </h2>
+    <!-- 次回Zoom -->
 
-    <div id="nextEvent">
+    <section class="card">
 
-    </div>
+        <h2>
 
-</section>
-<section class="calendar-section">
-
-    <div class="calendar-header">
-
-        <button id="prevMonth">
-
-            ◀
-
-        </button>
-
-        <h2 id="monthTitle">
-
-            2026年7月
+            ⏭ 次回Zoom
 
         </h2>
 
-        <button id="nextMonth">
+        <div id="nextEvent">
 
-            ▶
+            読み込み中...
 
-        </button>
+        </div>
 
-    </div>
+    </section>
 
-    <div id="calendar">
+    <!-- 今週 -->
 
-    </div>
+    <section class="card">
 
-</section>
-<!-- ==========================
-     イベント詳細モーダル
-========================== -->
+        <h2>
+
+            📅 今週の予定
+
+        </h2>
+
+        <div id="weekEvents">
+
+        </div>
+
+    </section>
+
+    <!-- カレンダー -->
+
+    <section class="card">
+
+        <div class="calendar-header">
+
+            <button id="prevMonth">
+
+                ◀
+
+            </button>
+
+            <h2 id="monthTitle">
+
+            </h2>
+
+            <button id="nextMonth">
+
+                ▶
+
+            </button>
+
+        </div>
+
+        <div class="week">
+
+            <div>月</div>
+            <div>火</div>
+            <div>水</div>
+            <div>木</div>
+            <div>金</div>
+            <div>土</div>
+            <div>日</div>
+
+        </div>
+
+        <div
+            id="calendar"
+            class="calendar">
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- イベント詳細 -->
 
 <div
     id="eventModal"
-    class="modal">
+    class="modal hidden">
 
     <div class="modal-content">
 
         <button
             id="closeModal"
-            class="close-button">
+            class="close">
 
-            ×
+            ✕
 
         </button>
 
-        <div id="modalBody">
+        <div
+            id="eventImageArea">
+
+        </div>
+
+        <div
+            id="eventDetail">
 
         </div>
 
     </div>
 
 </div>
-<footer>
 
-    <p>
+<!-- 更新通知 -->
 
-        © 2026 ERINA Zoom Schedule
+<div
+    id="updateToast"
+    class="toast hidden">
 
-    </p>
+    新しい予定があります
 
-</footer>
-<script src="app.js"></script>
 </div>
 
-</body>
+<script src="app.js"></script>
 
+</body>
 </html>
