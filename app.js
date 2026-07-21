@@ -9,7 +9,8 @@
    1. 基本設定
    ========================================================= */
 
-const DATA_URL = "data/events.json";
+const DATA_URL =
+"https://erina-manager.tomoya19980427goku.workers.dev/?action=events";
 
 /*
   予定データ確認間隔
@@ -150,8 +151,8 @@ async function loadEvents(
             Date.now();
 
         const response =
-            await fetch(
-                `${DATA_URL}?t=${cacheBuster}`,
+    await fetch(
+        `${DATA_URL}&t=${cacheBuster}`,
                 {
                     method: "GET",
 
