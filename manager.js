@@ -869,6 +869,10 @@ async function saveEvent(){
 
         const result =
         await response.json();
+        console.log(
+    "Worker返答",
+    result
+);
 
 
 
