@@ -1,18 +1,5 @@
 [
   {
-    "id": "20260726-cherry",
-    "date": "2026-07-26",
-    "startTime": "13:00",
-    "endTime": "",
-    "title": "🍒 休日チェリーLive",
-    "shortTitle": "🍒チェリー",
-    "category": "cherry",
-    "color": "#c62828",
-    "image": "images/event-1784720917363.jpg",
-    "zoomUrl": "https://us06web.zoom.us/j/81508872311?pwd=i01nYlbwEYec6hF2w1loy4yK0fgjCl.1",
-    "program": []
-  },
-  {
     "id": "20260727-night-fm",
     "date": "2026-07-27",
     "startTime": "19:00",
