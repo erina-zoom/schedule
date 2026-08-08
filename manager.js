@@ -104,33 +104,34 @@ async function saveNotice(){
 // ==========================================
 async function renderNoticeList(){
 
-    console.log("お知らせ描画スタート");
-
     const res = await fetch(WORKER_URL + "?action=notices");
-    const notices = await res.json();
+    let notices = await res.json();
 
     const list = document.getElementById("noticeList");
 
-    if(!list){
-        console.log("noticeListが存在しない");
-        return;
-    }
+    if(!list) return;
 
     list.innerHTML = "";
+
+    // ③ 有効なお知らせだけ
+    notices = notices.filter(n => n.enabled);
+
+    // ④ 新しい順
+    notices.sort((a,b)=> b.startDate.localeCompare(a.startDate));
 
     notices.forEach(notice => {
 
         const item = document.createElement("div");
 
-        item.style.border = "1px solid #ccc";
-        item.style.padding = "10px";
-        item.style.marginBottom = "10px";
+        // ① デザイン用クラス
+        item.className = "notice-item";
 
         item.innerHTML = `
-            <strong>${notice.title}</strong><br>
-            ${notice.message}<br>
-            <button class="delete-btn">削除</button>
-        `;
+    <div class="notice-title">${notice.title}</div>
+    <div class="notice-message">${notice.message}</div>
+    <div>📅 ${notice.startDate}〜${notice.endDate}</div>
+    <button class="delete-btn">削除</button>
+`;
 
         item.querySelector(".delete-btn").onclick = async () => {
 
@@ -149,9 +150,25 @@ async function renderNoticeList(){
 
             alert("削除した👍");
 
-            renderNoticeList(); // 再読み込み
+            renderNoticeList();
         };
 
         list.appendChild(item);
     });
+}
+
+function clearEditor(){
+
+    const title = document.getElementById("noticeTitle");
+    const message = document.getElementById("noticeMessage");
+    const start = document.getElementById("noticeStart");
+    const end = document.getElementById("noticeEnd");
+    const enabled = document.getElementById("noticeEnabled");
+
+    if(title) title.value = "";
+    if(message) message.value = "";
+    if(start) start.value = "";
+    if(end) end.value = "";
+    if(enabled) enabled.value = "true";
+
 }
