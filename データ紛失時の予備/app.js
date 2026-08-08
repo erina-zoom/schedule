@@ -1,4 +1,4 @@
-const API = "https://erina-manager.tomoya19980427goku.workers.dev?action=events";
+const API="https://erina-manager.tomoya19980427goku.workers.dev?action=events"
 
 let events = [];
 let current = new Date();
