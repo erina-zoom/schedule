@@ -3,40 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ERINA Zoom予定表</title>
+
 <link rel="stylesheet" href="style.css">
+
+<link rel="manifest" href="manifest.json">
 </head>
 
 <body>
 
-<header class="header">
+<header>
     <h1>ERINA Zoom予定表</h1>
-
-    <div class="top-buttons">
-        <button id="btnList">📋 予定</button>
-        <button id="btnCalendar">📅 カレンダー</button>
-    </div>
 </header>
 
-<main>
-
-<section class="card">
+<!-- ================= 今日 ================= -->
+<section>
     <h2>📢 今日のZoom</h2>
     <div id="todayEvent"></div>
 </section>
 
-<section class="card">
+<!-- ================= 次回 ================= -->
+<section>
     <h2>⏭ 次回のZoom</h2>
     <div id="nextEvent"></div>
 </section>
 
-<section class="card">
+<!-- ================= 今週 ================= -->
+<section>
     <h2>📅 今週の予定</h2>
     <div id="weekEvents"></div>
 </section>
 
-</main>
-<div id="calendarSection" class="card" style="display:none;">
+<!-- ================= 切替ボタン ================= -->
+<div class="switch-buttons">
+    <button id="btnList">一覧</button>
+    <button id="btnCalendar">カレンダー</button>
+</div>
+
+<!-- ================= カレンダー ================= -->
+<section id="calendarSection" style="display:none;">
 
     <div class="calendar-header">
         <button id="prevMonth">◀</button>
@@ -44,14 +50,21 @@
         <button id="nextMonth">▶</button>
     </div>
 
-    <div class="calendar-grid" id="calendar"></div>
+    <div id="calendar" class="calendar-grid"></div>
 
-</div>
+</section>
+
+<!-- ================= モーダル ================= -->
 <div id="eventModal" class="modal hidden">
+
     <div class="modal-content">
-        <button id="closeModal">✕</button>
+
+        <button id="closeModal">✖</button>
+
         <div id="eventDetail"></div>
+
     </div>
+
 </div>
 
 <script src="app.js"></script>

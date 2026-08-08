@@ -2,26 +2,32 @@ const DATA_URL =
 "https://erina-manager.tomoya19980427goku.workers.dev/?action=events";
 
 let events = [];
+let currentDate = new Date();
 
+// 初期化
 async function init(){
 
     const res = await fetch(DATA_URL + "&t=" + Date.now());
     events = await res.json();
 
-    renderToday();
-    renderNext();
-    renderWeek();
+    renderAll();
 }
 
 init();
 
+function renderAll(){
+    renderToday();
+    renderNext();
+    renderWeek();
+    renderCalendar();
+}
 
 // ================= 今日 =================
 function renderToday(){
 
     const today = new Date().toISOString().slice(0,10);
 
-    const e = events.find(e=>e.date===today);
+    const e = events.find(e => e.date === today);
 
     const el = document.getElementById("todayEvent");
 
@@ -31,12 +37,13 @@ function renderToday(){
     }
 
     el.innerHTML = `
-        ${e.date}<br>
-        ${e.startTime}<br>
-        ${e.title}
+        <div class="event-card">
+            <div>${e.date}</div>
+            <div>${e.startTime}</div>
+            <div>${e.title}</div>
+        </div>
     `;
 }
-
 
 // ================= 次回 =================
 function renderNext(){
@@ -44,26 +51,28 @@ function renderNext(){
     const now = new Date();
 
     const next = events
-    .filter(e=> new Date(e.date+"T"+e.startTime) > now)
-    .sort((a,b)=> new Date(a.date+"T"+a.startTime) - new Date(b.date+"T"+b.startTime))[0];
+    .filter(e => new Date(e.date + "T" + e.startTime) > now)
+    .sort((a,b)=>
+        new Date(a.date + "T" + a.startTime) -
+        new Date(b.date + "T" + b.startTime)
+    )[0];
 
     document.getElementById("nextEvent").innerText =
     next ? `${next.title}` : "なし";
 }
 
-
-// ================= 今週（ここが本命） =================
+// ================= 今週 =================
 function renderWeek(){
 
     const area = document.getElementById("weekEvents");
-    area.innerHTML="";
+    area.innerHTML = "";
 
     const now = new Date();
 
     const week = events.filter(e=>{
         const d = new Date(e.date);
         const diff = (d - now)/(1000*60*60*24);
-        return diff>=0 && diff<=7;
+        return diff >= 0 && diff <= 7;
     });
 
     week.forEach(e=>{
@@ -76,43 +85,19 @@ function renderWeek(){
         div.className = "event-card";
 
         div.innerHTML = `
-            <div class="event-date">
-                ${m}/${day}
-            </div>
-            <div class="event-time">
-                ${e.startTime}
-            </div>
-            <div class="event-title">
-                ${e.title}
-            </div>
+            <div class="event-date">${m}/${day}</div>
+            <div class="event-time">${e.startTime}</div>
+            <div class="event-title">${e.title}</div>
         `;
+
+        div.onclick = ()=> openModal(e);
 
         area.appendChild(div);
     });
 }
-document.getElementById("btnList").onclick = ()=>{
-    document.querySelector("main").style.display = "block";
-    document.getElementById("calendarSection").style.display = "none";
-};
 
-document.getElementById("btnCalendar").onclick = ()=>{
-    document.querySelector("main").style.display = "none";
-    document.getElementById("calendarSection").style.display = "block";
-    renderCalendar();
-};
-let currentDate = new Date();
-
+// ================= カレンダー =================
 function renderCalendar(){
-    div.onclick = ()=>{
-    if(dayEvents.length){
-        openModal(dayEvents[0]);
-    }
-};
-const today = new Date().toISOString().slice(0,10);
-
-if(dateStr === today){
-    div.classList.add("today");
-}
 
     const calendar = document.getElementById("calendar");
     calendar.innerHTML = "";
@@ -121,7 +106,7 @@ if(dateStr === today){
     const month = currentDate.getMonth();
 
     document.getElementById("monthTitle").innerText =
-        `${year}年 ${month+1}月`;
+    `${year}年 ${month+1}月`;
 
     const firstDay = new Date(year,month,1).getDay();
     const startDay = firstDay === 0 ? 6 : firstDay - 1;
@@ -145,42 +130,43 @@ if(dateStr === today){
         const dayEvents =
         events.filter(e=>e.date===dateStr);
 
+        const today = new Date().toISOString().slice(0,10);
+        if(dateStr === today){
+            div.classList.add("today");
+        }
+
         div.innerHTML = `<div>${day}</div>`;
 
-        // イベント表示
         dayEvents.forEach(e=>{
 
-    const ev = document.createElement("div");
-    ev.className = "event-badge";
+            const ev = document.createElement("div");
+            ev.className = "event-badge";
 
-    ev.innerText = e.startTime;
+            ev.innerText = e.startTime;
+            ev.style.background = e.color || "#2e7d32";
 
-    // 色
-    ev.style.background = e.color || "#2e7d32";
+            div.appendChild(ev);
+        });
 
-    div.appendChild(ev);
-});
+        div.onclick = ()=>{
+            if(dayEvents.length){
+                openModal(dayEvents[0]);
+            }
+        };
 
         calendar.appendChild(div);
     }
 }
-document.getElementById("prevMonth").onclick = ()=>{
-    currentDate.setMonth(currentDate.getMonth()-1);
-    renderCalendar();
-};
 
-document.getElementById("nextMonth").onclick = ()=>{
-    currentDate.setMonth(currentDate.getMonth()+1);
-    renderCalendar();
-};
+// ================= モーダル =================
 function openModal(e){
 
     const modal = document.getElementById("eventModal");
     modal.classList.remove("hidden");
 
     const imageHtml = e.image
-        ? `<img src="${e.image}" class="event-image">`
-        : "";
+    ? `<img src="${e.image}?t=${Date.now()}" class="event-image">`
+    : "";
 
     document.getElementById("eventDetail").innerHTML = `
         ${imageHtml}
@@ -192,3 +178,19 @@ function openModal(e){
         </button>
     `;
 }
+
+// 閉じる
+document.getElementById("closeModal").onclick = ()=>{
+    document.getElementById("eventModal").classList.add("hidden");
+};
+
+// 月移動
+document.getElementById("prevMonth").onclick = ()=>{
+    currentDate.setMonth(currentDate.getMonth()-1);
+    renderCalendar();
+};
+
+document.getElementById("nextMonth").onclick = ()=>{
+    currentDate.setMonth(currentDate.getMonth()+1);
+    renderCalendar();
+};
