@@ -209,3 +209,39 @@ function clearEditor(){
     if(end) end.value = "";
     if(enabled) enabled.value = "true";
 }
+// ==========================================
+// イベント描画
+// ==========================================
+function renderEvents(){
+
+    console.log("イベント描画開始", events);
+
+    const container = document.getElementById("eventList");
+
+    if(!container){
+        console.log("eventListが見つからない");
+        return;
+    }
+
+    container.innerHTML = "";
+
+    if(!events || events.length === 0){
+        container.innerHTML = "イベントがありません";
+        return;
+    }
+
+    events.forEach(e => {
+
+        const item = document.createElement("div");
+
+        item.style.padding = "10px";
+        item.style.borderBottom = "1px solid #ccc";
+
+        item.innerHTML = `
+            <div><strong>${e.title}</strong></div>
+            <div>${e.date} ${e.startTime || ""}</div>
+        `;
+
+        container.appendChild(item);
+    });
+}
