@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     const res = await fetch(API + "&t="+Date.now());
     events = await res.json();
 
+    console.log("②データ取得", events);
+
     renderAll();
     renderCalendar();
 });
