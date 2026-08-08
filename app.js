@@ -2769,3 +2769,46 @@ function renderScheduleList(){
 
 
 }
+async function loadNotices()
+
+    const res = await fetch(
+    "https://erina-manager.tomoya19980427goku.workers.dev/?action=notices"
+);
+async function renderNotices(){
+
+    const noticeArea =
+    document.getElementById("noticeArea");
+
+    if(!noticeArea) return;
+
+    const notices =
+    await loadNotices();
+
+    noticeArea.innerHTML = "";
+
+    const today =
+    new Date().toISOString().split("T")[0];
+
+    notices.forEach(n=>{
+
+        if(!n.enabled) return;
+
+        if(n.startDate && today < n.startDate) return;
+        if(n.endDate && today > n.endDate) return;
+
+        const div =
+        document.createElement("div");
+
+        div.className =
+        "notice-item";
+
+        div.innerHTML = `
+            <strong>${n.title}</strong><br>
+            ${n.message}
+        `;
+
+        noticeArea.appendChild(div);
+
+    });
+
+}
