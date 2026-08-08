@@ -1,111 +1,153 @@
 /* ==========================================
-   管理画面（元のデザインに戻す）
+   管理画面 完全復元
    ========================================== */
 
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+}
+
+/* ヘッダー */
+header {
+    background: #2e7d32;
+    color: white;
+    padding: 16px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* コンテナ */
+.container {
+    padding: 15px;
+}
+
+/* セクションカード */
+.section {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* タイトル */
+.section h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* 上部ボタン */
+.top-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.top-buttons button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.add-btn {
+    background: #2e7d32;
+    color: white;
+}
+
+.reload-btn {
+    background: #e0e0e0;
+}
+
+/* イベントカード */
 .event-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    background: #ffffff;
-    border-radius: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
 
-    padding: 14px 16px;
-    margin-bottom: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
 
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    background: #fafafa;
 }
 
+/* 左側 */
 .event-info {
     display: flex;
     flex-direction: column;
 }
 
 .event-title {
-    font-size: 15px;
     font-weight: bold;
+    font-size: 14px;
 }
 
 .event-date {
     font-size: 12px;
     color: #666;
-    margin-top: 3px;
 }
 
+/* 右ボタン */
 .event-actions {
     display: flex;
     gap: 6px;
 }
 
 .event-actions button {
-    padding: 6px 12px;
+    padding: 6px 10px;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
+    cursor: pointer;
     font-size: 12px;
-    cursor: pointer;
 }
 
-/* 編集 */
 .edit-btn {
-    background: #1e88e5;
-    color: #fff;
+    background: #1976d2;
+    color: white;
 }
 
-/* 複製 */
 .copy-btn {
-    background: #9e9e9e;
-    color: #fff;
+    background: #eeeeee;
 }
 
-/* 削除 */
 .delete-btn {
-    background: #e53935;
-    color: #fff;
+    background: #d32f2f;
+    color: white;
 }
 
-/* ==========================================
-   上のボタン（新規・更新）
-   ========================================== */
-
-.top-buttons {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.top-buttons button {
-    padding: 10px 16px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-/* 新規 */
-.add-btn {
-    background: #2e7d32;
-    color: #fff;
-}
-
-/* 更新 */
-.reload-btn {
-    background: #ccc;
-}
-
-/* ==========================================
-   入力フォーム
-   ========================================== */
-
-.editor {
-    margin-top: 20px;
-}
-
-.editor input,
-.editor select {
+/* フォーム */
+input, select, textarea {
     width: 100%;
     padding: 10px;
+    margin-top: 5px;
     margin-bottom: 10px;
 
     border: 1px solid #ccc;
     border-radius: 8px;
+}
+
+/* 保存ボタン */
+.save-btn {
+    background: #2e7d32;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* 削除ボタン */
+.danger-btn {
+    background: #d32f2f;
+    color: white;
+}
+
+/* 小さいボタン */
+.small-btn {
+    padding: 6px 10px;
+    font-size: 12px;
 }
