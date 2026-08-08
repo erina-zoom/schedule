@@ -77,10 +77,13 @@ const updateToast =
    3. 初期化
    ========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeApp
-);
+document.addEventListener("DOMContentLoaded", () => {
+
+    initializeApp();
+
+    renderNotices();
+
+});
 
 
 async function initializeApp() {
@@ -2769,11 +2772,23 @@ function renderScheduleList(){
 
 
 }
-async function loadNotices()
+// ===============================
+// 📢 お知らせ取得
+// ===============================
+async function loadNotices(){
 
     const res = await fetch(
-    "https://erina-manager.tomoya19980427goku.workers.dev/?action=notices"
-);
+        "https://erina-manager.tomoya19980427goku.workers.dev/?action=notices"
+    );
+
+    return await res.json();
+
+}
+
+
+// ===============================
+// 📢 お知らせ表示
+// ===============================
 async function renderNotices(){
 
     const noticeArea =
