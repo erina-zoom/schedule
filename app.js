@@ -1,187 +1,214 @@
-console.log("①JS読み込み成功");
-"use strict";
-
-/* =========================================================
-   1. 基本設定
-   ========================================================= */
-
-const DATA_URL =
-"https://erina-manager.tomoya19980427goku.workers.dev/?action=events";
-
-const UPDATE_INTERVAL = 30 * 1000;
+// ==========================
+// API
+// ==========================
+const API = "https://erina-manager.tomoya19980427goku.workers.dev?action=events";
 
 let events = [];
-let currentYear;
-let currentMonth;
-let lastDataSignature = "";
-let refreshTimer = null;
+let current = new Date();
 
-let displayMode = "schedule";
+// ==========================
+// 初期化
+// ==========================
+document.addEventListener("DOMContentLoaded", async ()=>{
+    console.log("①JS読み込み成功");
 
-/* =========================================================
-   初期化
-   ========================================================= */
+    const res = await fetch(API + "&t=" + Date.now());
+    events = await res.json();
 
-document.addEventListener("DOMContentLoaded", () => {
-    initializeApp();
-    renderNotices();
-});
-
-async function initializeApp() {
-
-    const now = new Date();
-    currentYear = now.getFullYear();
-    currentMonth = now.getMonth() + 1;
-
-    await loadEvents({ firstLoad: true });
+    console.log("②データ取得", events);
 
     renderAll();
+    renderCalendar();
+});
 
-    document.getElementById("calendarSection").style.display = "none";
+// ==========================
+// 今日
+// ==========================
+function renderToday(){
+    const e = events.find(x=>x.date===getToday());
 
-    setupEventListeners();
-
-    startAutoRefresh();
-
-    registerServiceWorker();
+    document.getElementById("todayEvent").innerHTML =
+        e ? createCard(e,"today",true)
+          : `<div class="card">今日のZoomはありません</div>`;
 }
 
-/* =========================================================
-   データ取得（キャッシュ完全回避）
-   ========================================================= */
+// ==========================
+// 次回
+// ==========================
+function renderNext(){
+    const today = getToday();
 
-async function loadEvents({ firstLoad=false, silent=false }={}){
+    const e = events
+        .filter(x=>x.date>=today)
+        .sort((a,b)=>a.date.localeCompare(b.date))[0];
 
-    try{
-
-        const res = await fetch(
-            DATA_URL + "&t=" + Date.now(),
-            {
-                cache:"no-store"
-            }
-        );
-
-        if(!res.ok){
-            throw new Error("取得失敗");
-        }
-
-        const newEvents = await res.json();
-
-        const normalized = newEvents
-        .map(normalizeEvent)
-        .filter(Boolean)
-        .sort(compareEvents);
-
-        const newSig = JSON.stringify(normalized);
-
-        const changed =
-        lastDataSignature &&
-        lastDataSignature !== newSig;
-
-        events = normalized;
-        lastDataSignature = newSig;
-
-        if(changed && !firstLoad){
-
-            renderAll();
-
-            if(!silent){
-                showToast("📢 新しい予定があります");
-            }
-
-        }
-
-        return true;
-
-    }catch(e){
-
-        console.error("取得エラー",e);
-
-        if(firstLoad){
-            showLoadError();
-        }
-
-        return false;
-    }
+    document.getElementById("nextEvent").innerHTML =
+        e ? createCard(e,"next",true)
+          : `<div class="card">予定なし</div>`;
 }
 
-/* =========================================================
-   自動更新（これがリアルタイムの核）
-   ========================================================= */
+// ==========================
+// 今週
+// ==========================
+function renderWeek(){
+    const el = document.getElementById("weekEvents");
+    el.innerHTML="";
 
-function startAutoRefresh(){
+    const now = new Date();
+    const end = new Date();
+    end.setDate(now.getDate()+7);
 
-    if(refreshTimer){
-        clearInterval(refreshTimer);
-    }
-
-    refreshTimer =
-    setInterval(refreshLatestData, UPDATE_INTERVAL);
-}
-
-async function refreshLatestData(){
-
-    if(document.hidden) return;
-
-    await loadEvents({
-        firstLoad:false,
-        silent:false
+    events.forEach(e=>{
+        const d = new Date(e.date);
+        if(d>=now && d<=end){
+            const div = document.createElement("div");
+            div.className="week-card";
+            div.innerHTML=createInner(e,false);
+            div.onclick=()=>openModal(e);
+            el.appendChild(div);
+        }
     });
 }
 
-/* =========================================================
-   再描画
-   ========================================================= */
+// ==========================
+// スケジュール
+// ==========================
+function renderSchedule(){
+    const el = document.getElementById("scheduleList");
+    el.innerHTML="";
 
+    events.forEach(e=>{
+        const div = document.createElement("div");
+        div.className="card";
+        div.innerHTML=createInner(e,false);
+        div.onclick=()=>openModal(e);
+        el.appendChild(div);
+    });
+}
+
+// ==========================
+// まとめ
+// ==========================
 function renderAll(){
+    renderToday();
+    renderNext();
+    renderWeek();
+    renderSchedule();
+}
 
-    renderTodayEvents();
-    renderNextEvent();
-    renderWeekEvents();
+// ==========================
+// UI
+// ==========================
+function createCard(e,type,showBtn){
+    return `
+    <div class="card ${type}">
+        ${createInner(e,showBtn)}
+    </div>`;
+}
 
-    if(displayMode==="schedule"){
-        renderScheduleList();
+function createInner(e,showBtn){
+    return `
+        <div><b>${e.date}</b></div>
+        <div>🕒 ${e.startTime}</div>
+        <div>${getIcon(e.category)} ${e.title}</div>
+        ${showBtn && e.zoomUrl ? `<a href="${e.zoomUrl}" target="_blank">Zoomに参加</a>` : ""}
+    `;
+}
+
+function getIcon(c){
+    switch(c){
+        case "チェリーライブ": return "🍒";
+        case "FMなまず": return "📻";
+        case "サクラ咲く会": return "🌸";
+        case "竹の子族": return "🎵";
+        default: return "";
     }
+}
 
-    if(displayMode==="calendar"){
+// ==========================
+// モーダル
+// ==========================
+function openModal(e){
+    const box = document.getElementById("eventDetail");
+
+    box.innerHTML = `
+        <h3>${e.title}</h3>
+        <p>📅 ${e.date}</p>
+        <p>🕒 ${e.startTime}</p>
+        ${e.image ? `<img src="${e.image}" style="width:100%;border-radius:10px;">` : ""}
+        ${e.zoomUrl ? `<a href="${e.zoomUrl}" target="_blank">Zoomに参加</a>` : ""}
+    `;
+
+    document.getElementById("modal").classList.remove("hidden");
+}
+
+document.getElementById("closeModal").onclick=()=>{
+    document.getElementById("modal").classList.add("hidden");
+};
+
+// ==========================
+// カレンダー
+// ==========================
+function renderCalendar(){
+    const el = document.getElementById("calendar");
+    el.innerHTML="";
+
+    const y=current.getFullYear();
+    const m=current.getMonth();
+
+    document.getElementById("monthTitle").innerText=`${y}年${m+1}月`;
+
+    const first=new Date(y,m,1);
+    let start=first.getDay();
+    start=start===0?6:start-1;
+
+    const days=new Date(y,m+1,0).getDate();
+
+    for(let i=0;i<start;i++) el.innerHTML+="<div></div>";
+
+    for(let d=1;d<=days;d++){
+        const dateStr=`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+        const ev=events.filter(e=>e.date===dateStr);
+
+        let html=`<div class="cell"><b>${d}</b>`;
+        ev.forEach(x=>{
+            html+=`<div class="event">${x.startTime}</div>`;
+        });
+        html+="</div>";
+
+        el.innerHTML+=html;
+    }
+}
+
+// ==========================
+// 操作
+// ==========================
+document.addEventListener("click",e=>{
+    if(e.target.id==="prevMonth"){
+        current.setMonth(current.getMonth()-1);
         renderCalendar();
     }
-}
 
-/* =========================================================
-   以下はそのまま（既存ロジック）
-   ========================================================= */
-
-// ※あなたの元コードのまま全部維持でOK
-// normalizeEvent / render系 / modal / notice etc
-
-/* =========================================================
-   通知
-   ========================================================= */
-
-let toastTimer = null;
-
-function showToast(message){
-
-    const el = document.getElementById("updateToast");
-    if(!el) return;
-
-    el.textContent = message;
-    el.classList.remove("hidden");
-
-    if(toastTimer){
-        clearTimeout(toastTimer);
+    if(e.target.id==="nextMonth"){
+        current.setMonth(current.getMonth()+1);
+        renderCalendar();
     }
 
-    toastTimer = setTimeout(()=>{
-        el.classList.add("hidden");
-    },3000);
-}
-function normalizeEvent(e){
-    return e;
-}
+    if(e.target.id==="showSchedule"){
+        scheduleSection.style.display="block";
+        calendarSection.style.display="none";
+    }
 
-function compareEvents(a,b){
-    return (a.date + a.startTime)
-        .localeCompare(b.date + b.startTime);
+    if(e.target.id==="showCalendar"){
+        scheduleSection.style.display="none";
+        calendarSection.style.display="block";
+    }
+});
+
+// ==========================
+// 日付
+// ==========================
+function getToday(){
+    const d=new Date();
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
