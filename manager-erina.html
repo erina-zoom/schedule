@@ -5,121 +5,102 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ERINA Zoom 管理画面</title>
 
-<style>
-body{font-family:sans-serif;background:#f4f7f5;margin:0}
-.panel{background:#fff;padding:20px;margin:20px;border-radius:10px}
-.button{padding:10px 15px;border:none;border-radius:8px}
-.button-primary{background:#247447;color:#fff}
-.button-danger{background:#c62828;color:#fff}
-.button-secondary{background:#ddd}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1 style="padding:20px;">ERINA Zoom 管理画面</h1>
+<header>
+ERINA Zoom 管理画面
+</header>
 
-<!-- ========================= -->
-<!-- イベント一覧 -->
-<!-- ========================= -->
-<div class="panel">
+<div class="container">
 
-<h2>📅 イベント一覧</h2>
+<!-- 一覧 -->
+<div class="section">
 
-<button id="newEventButton" class="button button-primary">＋新規</button>
-<button id="reloadButton" class="button button-secondary">更新</button>
+<h2>📅 登録済み催事</h2>
+
+<div class="top-buttons">
+<button id="newEventButton" class="add-btn">＋新しい催事を追加</button>
+<button id="reloadButton" class="reload-btn">最新データを読み込む</button>
+</div>
 
 <div id="eventList"></div>
 
 </div>
 
-<!-- ========================= -->
-<!-- 編集 -->
-<!-- ========================= -->
-<div class="panel">
 
-<h2>✏️ 編集</h2>
+<!-- 編集 -->
+<div class="section">
+
+<h2>＋ 新しい催事を追加</h2>
 
 <input type="hidden" id="eventId">
 
-<input id="title" placeholder="タイトル"><br><br>
+<label>催事名</label>
+<input id="title">
 
-<input type="date" id="date"><br><br>
+<label>カレンダー用の短い名前</label>
+<input id="shortTitle">
 
-<input type="time" id="startTime"><br><br>
+<label>カテゴリー</label>
+<select id="category">
+<option>その他</option>
+<option>チェリー</option>
+<option>FMなまず</option>
+<option>理科</option>
+</select>
 
-<input type="time" id="endTime"><br><br>
+<label>開催日</label>
+<input type="date" id="eventDate">
 
-<button id="saveEventButton" class="button button-primary">保存</button>
-<button id="deleteButton" class="button button-danger">削除</button>
-<button id="clearButton" class="button button-secondary">クリア</button>
+<label>カラー</label>
+<input type="color" id="eventColor" value="#247447">
+
+<label>開始時間</label>
+<input type="time" id="startTime">
+
+<label>終了時間</label>
+<input type="time" id="endTime">
+
+<label>Zoom URL</label>
+<input id="zoomUrl">
+
+<br>
+
+<button id="saveEventButton" class="save-btn">この催事を保存</button>
+<button id="deleteButton" class="danger-btn">削除</button>
+<button id="clearButton">クリア</button>
 
 </div>
 
-<!-- ========================= -->
+
 <!-- お知らせ -->
-<!-- ========================= -->
-<div class="panel">
+<div class="section">
 
 <h2>📢 お知らせ</h2>
 
-<input id="noticeTitle" placeholder="タイトル"><br><br>
-<textarea id="noticeMessage" placeholder="内容"></textarea><br><br>
+<input id="noticeTitle" placeholder="タイトル">
+<textarea id="noticeMessage" placeholder="内容"></textarea>
 
-<input type="date" id="noticeStart"><br><br>
-<input type="date" id="noticeEnd"><br><br>
+<input type="date" id="noticeStart">
+<input type="date" id="noticeEnd">
 
 <select id="noticeEnabled">
 <option value="true">表示</option>
 <option value="false">非表示</option>
-</select><br><br>
+</select>
 
-<button id="saveNoticeButton" class="button button-primary">保存</button>
+<button id="saveNoticeButton" class="save-btn">お知らせ保存</button>
 
 <div id="noticeList"></div>
 
 </div>
 
+</div>
+
 <script src="manager.js"></script>
-
-<script>
-// 🔥 追加（超重要）
-
-document.getElementById("newEventButton").onclick = () => {
-    clearEditor();
-};
-
-document.getElementById("reloadButton").onclick = async () => {
-    await loadEvents();
-    renderEvents();
-};
-
-document.getElementById("deleteButton").onclick = async () => {
-    if(!editingEventId) return;
-
-    if(!confirm("削除する？")) return;
-
-    await fetch(WORKER_URL,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({
-            action:"deleteEvent",
-            id: editingEventId
-        })
-    });
-
-    alert("削除OK");
-
-    editingEventId = null;
-
-    await loadEvents();
-    renderEvents();
-};
-
-document.getElementById("clearButton").onclick = () => {
-    clearEditor();
-};
-</script>
 
 </body>
 </html>
