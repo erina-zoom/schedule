@@ -123,7 +123,19 @@ function renderSchedule(){
         container.appendChild(div);
     });
 }
-
+// ==========================================
+// アイコン
+// ==========================================
+function getIcon(category){
+    switch(category){
+        case "チェリーライブ": return "🍒";
+        case "FMなまず": return "📻";
+        case "サクラ咲く会": return "🌸";
+        case "竹の子族": return "🎵";
+        case "佐賀オンラインセミナー": return "💻";
+        default: return "📌";
+    }
+}
 // ==========================================
 // イベント表示HTML
 // ==========================================
@@ -131,21 +143,21 @@ function createEventHTML(e){
 
     const d = new Date(e.date);
 
-    const monthDay = e.date.slice(5).replace("-", "/");
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
 
     const week = ["日","月","火","水","木","金","土"][d.getDay()];
 
     return `
         <div class="week-date">
-            ${monthDay}<br>
+            ${month}/${day}<br>
             (${week})
         </div>
 
         <div class="week-content">
             <div class="time">${e.startTime}</div>
             <div class="title">
-                ${e.image ? `<img src="${e.image}" class="icon">` : ""}
-                ${e.title}
+                ${getIcon(e.category)} ${e.title}
             </div>
         </div>
     `;
