@@ -357,3 +357,28 @@ function clearEditor(){
     const enabled = document.getElementById("noticeEnabled");
     if(enabled) enabled.value = "true";
 }
+document.getElementById("uploadImageButton")?.addEventListener("click", async ()=>{
+
+    const file = document.getElementById("imageInput").files[0];
+    if(!file) return alert("画像選んで");
+
+    const reader = new FileReader();
+
+    reader.onload = async () => {
+
+        const base64 = reader.result;
+
+        await fetch(WORKER_URL,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify({
+                type:"image",
+                data: base64
+            })
+        });
+
+        alert("アップロードOK👍");
+    };
+
+    reader.readAsDataURL(file);
+});
