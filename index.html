@@ -6,27 +6,54 @@
 <title>ERINA Zoom予定表</title>
 
 <link rel="stylesheet" href="style.css">
-
 </head>
+
 <body>
 
 <h1>ERINA Zoom予定表</h1>
 
-<!-- 今日 -->
+<!-- 🔥 切り替えボタン -->
+<div class="switch">
+    <button id="showSchedule">📋 予定</button>
+    <button id="showCalendar">📅 カレンダー</button>
+</div>
+
+<!-- ================= 予定 ================= -->
+<div id="scheduleSection">
+
 <h2>📢 今日のZoom</h2>
 <div id="todayEvent"></div>
 
-<!-- 次回 -->
 <h2>⏭ 次回のZoom</h2>
 <div id="nextEvent"></div>
 
-<!-- 今週 -->
 <h2>📅 今週の予定</h2>
 <div id="weekEvents"></div>
 
-<!-- 一覧 -->
 <h2>📋 スケジュール一覧</h2>
 <div id="scheduleList"></div>
+
+</div>
+
+<!-- ================= カレンダー ================= -->
+<div id="calendarSection" style="display:none;">
+
+<h2>📅 カレンダー</h2>
+
+<div class="calendar-header">
+    <button id="prevMonth">◀</button>
+    <h2 id="monthTitle"></h2>
+    <button id="nextMonth">▶</button>
+</div>
+
+<div class="week">
+    <div>月</div><div>火</div><div>水</div>
+    <div>木</div><div>金</div><div>土</div><div>日</div>
+</div>
+
+<div id="calendar" class="calendar"></div>
+
+</div>
 
 <!-- モーダル -->
 <div id="modal" class="hidden">
@@ -35,8 +62,8 @@
     <div id="eventDetail"></div>
 </div>
 
-<!-- 🔥超重要 -->
 <script src="app.js?v=999"></script>
+<script src="calendar.js?v=999"></script>
 
 </body>
 </html>
