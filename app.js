@@ -94,6 +94,7 @@ function renderWeek(){
 
             // 👇ここだけ変更
             div.className = "week-card";
+            　div.style.borderLeft = `6px solid ${getColor(e.category)}`;
 
             div.innerHTML = createEventHTML(e);
 
@@ -134,6 +135,20 @@ function getIcon(category){
         case "竹の子族": return "🎵";
         case "佐賀オンラインセミナー": return "💻";
         default: return "📌";
+    }
+}
+
+// ==========================================
+// 色
+// ==========================================
+function getColor(category){
+    switch(category){
+        case "チェリーライブ": return "#e91e63";
+        case "FMなまず": return "#4caf50";
+        case "サクラ咲く会": return "#ff9800";
+        case "竹の子族": return "#9c27b0";
+        case "佐賀オンラインセミナー": return "#2196f3";
+        default: return "#2e7d32";
     }
 }
 // ==========================================
