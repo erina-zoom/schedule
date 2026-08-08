@@ -196,7 +196,8 @@ async function initializeManager(){
     clearEditor();
 
     await loadEvents();
-
+  
+    renderNoticeList();
 }
 
 
@@ -1765,6 +1766,55 @@ async function saveNotice(){
     }else{
         alert("保存失敗");
     }
+}
+async function renderNoticeList(){
+
+    const res = await fetch(WORKER_URL + "?action=notices");
+    const notices = await res.json();
+
+    const list = document.getElementById("noticeList");
+
+    list.innerHTML = "";
+
+    notices.forEach(notice => {
+
+        const item = document.createElement("div");
+
+        item.style.border = "1px solid #ccc";
+        item.style.padding = "10px";
+        item.style.marginBottom = "10px";
+
+        item.innerHTML = `
+            <strong>${notice.title}</strong><br>
+            ${notice.message}<br>
+            <button class="delete-btn">削除</button>
+        `;
+
+        // 🔥 削除ボタン
+        item.querySelector(".delete-btn").onclick = async () => {
+
+            if(!confirm("本当に削除する？")) return;
+
+            await fetch(WORKER_URL, {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({
+                    action:"deleteNotice",
+                    id: notice.id
+                })
+            });
+
+            alert("削除しました");
+
+            renderNoticeList(); // 再読み込み
+        };
+
+        list.appendChild(item);
+
+    });
+
 }
 
 
