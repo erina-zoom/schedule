@@ -129,10 +129,25 @@ function renderSchedule(){
 // ==========================================
 function createEventHTML(e){
 
+    const d = new Date(e.date);
+
+    const monthDay = e.date.slice(5).replace("-", "/");
+
+    const week = ["日","月","火","水","木","金","土"][d.getDay()];
+
     return `
-        <b>${e.title}</b><br>
-        ${e.date} ${e.startTime || ""}<br>
-        ${e.zoomUrl ? `<a href="${e.zoomUrl}" target="_blank">Zoom参加</a>` : ""}
+        <div class="week-date">
+            ${monthDay}<br>
+            (${week})
+        </div>
+
+        <div class="week-content">
+            <div class="time">${e.startTime}</div>
+            <div class="title">
+                ${e.image ? `<img src="${e.image}" class="icon">` : ""}
+                ${e.title}
+            </div>
+        </div>
     `;
 }
 
