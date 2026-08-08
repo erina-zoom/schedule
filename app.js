@@ -128,16 +128,18 @@ function renderSchedule(){
 // アイコン
 // ==========================================
 function getIcon(category){
+
+    if(!category) return "";
+
     switch(category){
         case "cherry": return "🍒";
         case "fm": return "📻";
         case "event": return "🌸";
         case "dance": return "💃";
         case "seminar": return "💻";
-        default: return ""; // ←📌消す
+        default: return "";
     }
 }
-
 // ==========================================
 // 色
 // ==========================================
@@ -153,8 +155,10 @@ function getColor(category){
 }
 
 function cleanTitle(title){
-    return title.replace(/^[📌🌸🍒📻💃💻🎵]+\s*/,'');
-    }
+    return title
+        .replace(/^[📌🌸🍒📻💃💻🎵🎤🎹🎧🎶]+\s*/,'') // 先頭の絵文字全部削除
+        .trim();
+}
 // ==========================================
 // イベント表示HTML
 // ==========================================
@@ -174,9 +178,9 @@ function createEventHTML(e){
         </div>
 
         <div class="week-content">
-            <div class="time">${e.startTime}</div>
+            <div class="time">${e.startTime || ""}</div>
             <div class="title">
-                ${getIcon(e.category)} ${cleanTitle(e.title)}
+                ${getIcon(e.category || "")} ${cleanTitle(e.title || "")}
             </div>
         </div>
     `;
