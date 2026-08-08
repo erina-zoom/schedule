@@ -75,17 +75,20 @@ function renderWeek(){
     const container = document.getElementById("weekEvents");
     container.innerHTML = "";
 
+    // 今日（時間リセット）
     const today = new Date();
+    today.setHours(0,0,0,0);
 
-    // 7日後まで
+    // 7日後
     const end = new Date();
     end.setDate(today.getDate() + 7);
+    end.setHours(23,59,59,999);
 
     events.forEach(e=>{
 
-        const d = new Date(e.date);
+        const d = new Date(e.date + "T00:00:00");
 
-        // 👇ここが重要（今週だけ）
+        // 👇ここが完全修正
         if(d >= today && d <= end){
 
             const div = document.createElement("div");
