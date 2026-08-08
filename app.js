@@ -11,18 +11,9 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     renderCalendar();
 });
 
-/* ---------- 表示 ---------- */
-
-function renderAll(){
-    renderToday();
-    renderNext();
-    renderWeek();
-}
-
 /* 今日 */
 function renderToday(){
-    const today = getToday();
-    const e = events.find(x=>x.date===today);
+    const e = events.find(x=>x.date===getToday());
 
     document.getElementById("todayEvent").innerHTML =
         e ? createCard(e,"today",true) : `<div class="card">今日のZoomはありません</div>`;
@@ -61,8 +52,28 @@ function renderWeek(){
     });
 }
 
-/* ---------- UI ---------- */
+/* スケジュール */
+function renderSchedule(){
+    const el = document.getElementById("scheduleList");
+    el.innerHTML="";
 
+    events.forEach(e=>{
+        const div = document.createElement("div");
+        div.className="card";
+        div.innerHTML=createInner(e,false);
+        div.onclick=()=>openModal(e);
+        el.appendChild(div);
+    });
+}
+
+function renderAll(){
+    renderToday();
+    renderNext();
+    renderWeek();
+    renderSchedule();
+}
+
+/* UI */
 function createCard(e,type,showBtn){
     return `
     <div class="card ${type}" onclick='openModal(${JSON.stringify(e)})'>
@@ -89,16 +100,15 @@ function getIcon(c){
     }
 }
 
-/* ---------- モーダル ---------- */
-
+/* モーダル */
 function openModal(e){
     const box = document.getElementById("eventDetail");
 
     box.innerHTML = `
         <h3>${e.title}</h3>
-        <p>${e.date}</p>
+        <p>📅 ${e.date}</p>
         <p>🕒 ${e.startTime}</p>
-        ${e.image ? `<img src="${e.image}" style="width:100%;border-radius:10px;">` : ""}
+        ${e.image ? `<img src="${e.image}" style="width:100%;border-radius:10px;margin:10px 0;">` : ""}
         ${e.zoomUrl ? `<a href="${e.zoomUrl}" target="_blank" class="zoom-btn">Zoomに参加</a>` : ""}
     `;
 
@@ -109,8 +119,7 @@ document.getElementById("closeModal").onclick=()=>{
     document.getElementById("modal").classList.add("hidden");
 };
 
-/* ---------- カレンダー ---------- */
-
+/* カレンダー */
 function renderCalendar(){
     const el = document.getElementById("calendar");
     el.innerHTML="";
@@ -142,8 +151,7 @@ function renderCalendar(){
     }
 }
 
-/* ---------- 操作 ---------- */
-
+/* 操作 */
 document.addEventListener("click",e=>{
     if(e.target.id==="prevMonth"){
         current.setMonth(current.getMonth()-1);
