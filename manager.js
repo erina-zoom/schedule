@@ -1,5 +1,5 @@
 // ==========================================
-// ERINA Zoom Manager Ver5（完成版）
+// ERINA Zoom Manager Ver5（完全完成版）
 // ==========================================
 
 "use strict";
@@ -8,7 +8,6 @@
 // 設定
 // ==========================================
 const WORKER_URL = "https://erina-manager.tomoya19980427goku.workers.dev";
-
 const EVENTS_URL = `${WORKER_URL}?action=events`;
 
 // ==========================================
@@ -30,9 +29,9 @@ async function initializeManager(){
 
     await loadEvents();
 
-    renderEvents(); // ←イベント表示
+    renderEvents(); // ←UIそのまま表示
 
-    await renderNoticeList(); // ←お知らせ表示
+    await renderNoticeList();
 }
 
 // ==========================================
@@ -42,6 +41,32 @@ function setupEventListeners(){
 
     document.getElementById("saveNoticeButton")
         ?.addEventListener("click", saveNotice);
+
+    document.getElementById("saveEventButton")
+        ?.addEventListener("click", saveEvent);
+
+    // 🔥 追加（元UI用）
+    document.getElementById("newEventButton")
+        ?.addEventListener("click", ()=>{
+            editingEventId = null;
+            clearEditor();
+            window.scrollTo({top:0,behavior:"smooth"});
+        });
+
+    document.getElementById("reloadButton")
+        ?.addEventListener("click", async ()=>{
+            await loadEvents();
+            renderEvents();
+        });
+
+    document.getElementById("clearButton")
+        ?.addEventListener("click", clearEditor);
+
+    document.getElementById("deleteButton")
+        ?.addEventListener("click", async ()=>{
+            if(!editingEventId) return;
+            await deleteEvent(editingEventId);
+        });
 }
 
 // ==========================================
@@ -54,9 +79,7 @@ async function loadEvents(){
             cache:"no-store"
         });
 
-        const data = await res.json();
-
-        events = data;
+        events = await res.json();
 
         console.log("イベント取得", events);
 
@@ -66,16 +89,12 @@ async function loadEvents(){
 }
 
 // ==========================================
-// イベント描画（ボタン付き完全版）
+// イベント描画（元デザイン完全復元）
 // ==========================================
 function renderEvents(){
 
     const container = document.getElementById("eventList");
-
-    if(!container){
-        console.log("eventListがない");
-        return;
-    }
+    if(!container) return;
 
     container.innerHTML = "";
 
@@ -87,55 +106,139 @@ function renderEvents(){
     events.forEach(e => {
 
         const item = document.createElement("div");
-
-        item.style.padding = "10px";
-        item.style.borderBottom = "1px solid #ccc";
+        item.className = "event-list-item";
 
         item.innerHTML = `
-            <div><strong>${e.title}</strong></div>
-            <div>${e.date} ${e.startTime || ""}</div>
+            <div>
+                <div class="event-list-title">${e.title}</div>
+                <div class="event-list-date">
+                    ${e.date} ${e.startTime || ""}
+                </div>
+            </div>
 
-            <div style="margin-top:8px;">
-                <button class="edit-btn">編集</button>
-                <button class="copy-btn">複製</button>
-                <button class="delete-btn">削除</button>
+            <div class="event-list-buttons">
+                <button class="button button-blue edit-btn">編集</button>
+                <button class="button button-secondary copy-btn">複製</button>
+                <button class="button button-danger delete-btn">削除</button>
             </div>
         `;
 
-        // 編集
         item.querySelector(".edit-btn").onclick = ()=>{
-            alert("編集機能はこれから実装");
+            editEvent(e.id);
         };
 
-        // 複製
         item.querySelector(".copy-btn").onclick = ()=>{
-            alert("複製機能はこれから実装");
+            duplicateEvent(e.id);
         };
 
-        // 削除
-        item.querySelector(".delete-btn").onclick = async ()=>{
-
-            if(!confirm("削除する？")) return;
-
-            await fetch(WORKER_URL, {
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body: JSON.stringify({
-                    action:"deleteEvent",
-                    id: e.id
-                })
-            });
-
-            alert("削除した👍");
-
-            await loadEvents();
-            renderEvents();
+        item.querySelector(".delete-btn").onclick = ()=>{
+            deleteEvent(e.id);
         };
 
         container.appendChild(item);
     });
+}
+
+// ==========================================
+// 保存
+// ==========================================
+async function saveEvent(){
+
+    const event = {
+        id: editingEventId || Date.now(),
+        title: document.getElementById("title").value,
+        shortTitle: document.getElementById("shortTitle").value,
+        category: document.getElementById("category").value,
+        date: document.getElementById("eventDate").value,
+        color: document.getElementById("eventColor").value,
+        startTime: document.getElementById("startTime").value,
+        endTime: document.getElementById("endTime").value,
+        zoomUrl: document.getElementById("zoomUrl").value
+    };
+
+    await fetch(WORKER_URL,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+            action:"saveEvent",
+            event:event
+        })
+    });
+
+    alert("保存OK👍");
+
+    editingEventId = null;
+
+    clearEditor();
+
+    await loadEvents();
+    renderEvents();
+}
+
+// ==========================================
+// 編集
+// ==========================================
+function editEvent(id){
+
+    const e = events.find(x => x.id === id);
+    if(!e) return;
+
+    editingEventId = id;
+
+    document.getElementById("title").value = e.title || "";
+    document.getElementById("shortTitle").value = e.shortTitle || "";
+    document.getElementById("category").value = e.category || "";
+    document.getElementById("eventDate").value = e.date || "";
+    document.getElementById("eventColor").value = e.color || "#247447";
+    document.getElementById("startTime").value = e.startTime || "";
+    document.getElementById("endTime").value = e.endTime || "";
+    document.getElementById("zoomUrl").value = e.zoomUrl || "";
+
+    window.scrollTo({ top:0, behavior:"smooth" });
+}
+
+// ==========================================
+// 複製
+// ==========================================
+function duplicateEvent(id){
+
+    const e = events.find(x => x.id === id);
+    if(!e) return;
+
+    editingEventId = null;
+
+    document.getElementById("title").value = e.title || "";
+    document.getElementById("shortTitle").value = e.shortTitle || "";
+    document.getElementById("category").value = e.category || "";
+    document.getElementById("eventDate").value = "";
+    document.getElementById("eventColor").value = e.color || "#247447";
+    document.getElementById("startTime").value = e.startTime || "";
+    document.getElementById("endTime").value = e.endTime || "";
+    document.getElementById("zoomUrl").value = e.zoomUrl || "";
+
+    window.scrollTo({ top:0, behavior:"smooth" });
+}
+
+// ==========================================
+// 削除
+// ==========================================
+async function deleteEvent(id){
+
+    if(!confirm("削除する？")) return;
+
+    await fetch(WORKER_URL,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+            action:"deleteEvent",
+            id:id
+        })
+    });
+
+    alert("削除した👍");
+
+    await loadEvents();
+    renderEvents();
 }
 
 // ==========================================
@@ -151,14 +254,12 @@ async function saveNotice(){
         enabled: document.getElementById("noticeEnabled").value === "true"
     };
 
-    const res = await fetch(WORKER_URL, {
+    const res = await fetch(WORKER_URL,{
         method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
+        headers:{"Content-Type":"application/json"},
         body: JSON.stringify({
             action:"saveNotice",
-            notice: notice
+            notice:notice
         })
     });
 
@@ -182,40 +283,35 @@ async function renderNoticeList(){
     let notices = await res.json();
 
     const list = document.getElementById("noticeList");
-
     if(!list) return;
 
     list.innerHTML = "";
 
     notices = notices.filter(n => n.enabled !== false);
-
     notices.sort((a,b)=> b.startDate.localeCompare(a.startDate));
 
-    notices.forEach(notice => {
+    notices.forEach(n => {
 
         const item = document.createElement("div");
-
         item.className = "notice-item";
 
         item.innerHTML = `
-            <div class="notice-title">${notice.title}</div>
-            <div class="notice-message">${notice.message}</div>
-            <div>📅 ${notice.startDate}〜${notice.endDate}</div>
+            <div class="notice-title">${n.title}</div>
+            <div class="notice-message">${n.message}</div>
+            <div>📅 ${n.startDate}〜${n.endDate}</div>
             <button class="delete-btn">削除</button>
         `;
 
-        item.querySelector(".delete-btn").onclick = async () => {
+        item.querySelector(".delete-btn").onclick = async ()=>{
 
             if(!confirm("削除する？")) return;
 
-            await fetch(WORKER_URL, {
+            await fetch(WORKER_URL,{
                 method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
+                headers:{"Content-Type":"application/json"},
                 body: JSON.stringify({
                     action:"deleteNotice",
-                    id: notice.id
+                    id:n.id
                 })
             });
 
@@ -233,15 +329,25 @@ async function renderNoticeList(){
 // ==========================================
 function clearEditor(){
 
-    const title = document.getElementById("noticeTitle");
-    const message = document.getElementById("noticeMessage");
-    const start = document.getElementById("noticeStart");
-    const end = document.getElementById("noticeEnd");
-    const enabled = document.getElementById("noticeEnabled");
+    const ids = [
+        "title","shortTitle","category",
+        "eventDate","eventColor",
+        "startTime","endTime","zoomUrl",
+        "noticeTitle","noticeMessage",
+        "noticeStart","noticeEnd"
+    ];
 
-    if(title) title.value = "";
-    if(message) message.value = "";
-    if(start) start.value = "";
-    if(end) end.value = "";
+    ids.forEach(id=>{
+        const el = document.getElementById(id);
+        if(el){
+            if(el.type === "color"){
+                el.value = "#247447";
+            }else{
+                el.value = "";
+            }
+        }
+    });
+
+    const enabled = document.getElementById("noticeEnabled");
     if(enabled) enabled.value = "true";
 }
