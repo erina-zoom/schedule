@@ -176,3 +176,11 @@ function showToast(message){
         el.classList.add("hidden");
     },3000);
 }
+function normalizeEvent(e){
+    return e;
+}
+
+function compareEvents(a,b){
+    return (a.date + a.startTime)
+        .localeCompare(b.date + b.startTime);
+}
