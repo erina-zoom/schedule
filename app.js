@@ -2780,7 +2780,10 @@ async function loadNotices(){
     try{
 
         const res = await fetch(
-            "https://erina-manager.tomoya19980427goku.workers.dev/?action=notices"
+            "https://erina-manager.tomoya19980427goku.workers.dev/?action=notices&t=" + Date.now(),
+            {
+                cache: "no-store"
+            }
         );
 
         if(!res.ok){
