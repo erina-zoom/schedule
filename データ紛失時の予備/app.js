@@ -1,10 +1,18 @@
-const API="https://erina-manager.tomoya19980427goku.workers.dev?action=events"
+// ==========================
+// API
+// ==========================
+const API = "https://erina-manager.tomoya19980427goku.workers.dev?action=events";
 
 let events = [];
 let current = new Date();
 
+// ==========================
+// 初期化
+// ==========================
 document.addEventListener("DOMContentLoaded", async ()=>{
-    const res = await fetch(API + "&t="+Date.now());
+    console.log("①JS読み込み成功");
+
+    const res = await fetch(API + "&t=" + Date.now());
     events = await res.json();
 
     console.log("②データ取得", events);
@@ -13,15 +21,20 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     renderCalendar();
 });
 
-/* 今日 */
+// ==========================
+// 今日
+// ==========================
 function renderToday(){
     const e = events.find(x=>x.date===getToday());
 
     document.getElementById("todayEvent").innerHTML =
-        e ? createCard(e,"today",true) : `<div class="card">今日のZoomはありません</div>`;
+        e ? createCard(e,"today",true)
+          : `<div class="card">今日のZoomはありません</div>`;
 }
 
-/* 次回 */
+// ==========================
+// 次回
+// ==========================
 function renderNext(){
     const today = getToday();
 
@@ -30,10 +43,13 @@ function renderNext(){
         .sort((a,b)=>a.date.localeCompare(b.date))[0];
 
     document.getElementById("nextEvent").innerHTML =
-        e ? createCard(e,"next",true) : `<div class="card">予定なし</div>`;
+        e ? createCard(e,"next",true)
+          : `<div class="card">予定なし</div>`;
 }
 
-/* 今週 */
+// ==========================
+// 今週
+// ==========================
 function renderWeek(){
     const el = document.getElementById("weekEvents");
     el.innerHTML="";
@@ -54,7 +70,9 @@ function renderWeek(){
     });
 }
 
-/* スケジュール */
+// ==========================
+// スケジュール
+// ==========================
 function renderSchedule(){
     const el = document.getElementById("scheduleList");
     el.innerHTML="";
@@ -68,6 +86,9 @@ function renderSchedule(){
     });
 }
 
+// ==========================
+// まとめ
+// ==========================
 function renderAll(){
     renderToday();
     renderNext();
@@ -75,10 +96,12 @@ function renderAll(){
     renderSchedule();
 }
 
-/* UI */
+// ==========================
+// UI
+// ==========================
 function createCard(e,type,showBtn){
     return `
-    <div class="card ${type}" onclick='openModal(${JSON.stringify(e)})'>
+    <div class="card ${type}">
         ${createInner(e,showBtn)}
     </div>`;
 }
@@ -88,7 +111,7 @@ function createInner(e,showBtn){
         <div><b>${e.date}</b></div>
         <div>🕒 ${e.startTime}</div>
         <div>${getIcon(e.category)} ${e.title}</div>
-        ${showBtn && e.zoomUrl ? `<a href="${e.zoomUrl}" target="_blank" class="zoom-btn">Zoomに参加</a>` : ""}
+        ${showBtn && e.zoomUrl ? `<a href="${e.zoomUrl}" target="_blank">Zoomに参加</a>` : ""}
     `;
 }
 
@@ -102,7 +125,9 @@ function getIcon(c){
     }
 }
 
-/* モーダル */
+// ==========================
+// モーダル
+// ==========================
 function openModal(e){
     const box = document.getElementById("eventDetail");
 
@@ -110,8 +135,8 @@ function openModal(e){
         <h3>${e.title}</h3>
         <p>📅 ${e.date}</p>
         <p>🕒 ${e.startTime}</p>
-        ${e.image ? `<img src="${e.image}" style="width:100%;border-radius:10px;margin:10px 0;">` : ""}
-        ${e.zoomUrl ? `<a href="${e.zoomUrl}" target="_blank" class="zoom-btn">Zoomに参加</a>` : ""}
+        ${e.image ? `<img src="${e.image}" style="width:100%;border-radius:10px;">` : ""}
+        ${e.zoomUrl ? `<a href="${e.zoomUrl}" target="_blank">Zoomに参加</a>` : ""}
     `;
 
     document.getElementById("modal").classList.remove("hidden");
@@ -121,7 +146,9 @@ document.getElementById("closeModal").onclick=()=>{
     document.getElementById("modal").classList.add("hidden");
 };
 
-/* カレンダー */
+// ==========================
+// カレンダー
+// ==========================
 function renderCalendar(){
     const el = document.getElementById("calendar");
     el.innerHTML="";
@@ -153,7 +180,9 @@ function renderCalendar(){
     }
 }
 
-/* 操作 */
+// ==========================
+// 操作
+// ==========================
 document.addEventListener("click",e=>{
     if(e.target.id==="prevMonth"){
         current.setMonth(current.getMonth()-1);
@@ -176,8 +205,10 @@ document.addEventListener("click",e=>{
     }
 });
 
+// ==========================
+// 日付
+// ==========================
 function getToday(){
     const d=new Date();
     return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
-
