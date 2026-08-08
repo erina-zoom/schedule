@@ -2813,13 +2813,20 @@ async function loadNotices(){
 // ===============================
 async function renderNotices(){
 
+    console.log("お知らせ描画スタート");
+
     const noticeArea =
     document.getElementById("noticeArea");
 
-    if(!noticeArea) return;
+    if(!noticeArea){
+        console.log("noticeAreaがない");
+        return;
+    }
 
     const notices =
     await loadNotices();
+
+    console.log("取得データ", notices);
 
     noticeArea.innerHTML = "";
 
