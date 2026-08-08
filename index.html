@@ -1,73 +1,155 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ERINA Zoom予定表</title>
+
+<meta name="theme-color" content="#2e7d32">
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 
 <link rel="stylesheet" href="style.css">
 
-<link rel="manifest" href="manifest.json">
-</head>
+<div class="logo-area">
 
-<body>
+    <img src="images/logo.png"
+         class="logo"
+         alt="ERINA">
 
-<header>
-    <h1>ERINA Zoom予定表</h1>
-</header>
+    <div>
 
-<!-- ================= 今日 ================= -->
-<section>
-    <h2>📢 今日のZoom</h2>
-    <div id="todayEvent"></div>
-</section>
+        <h1>ERINA Zoom予定表</h1>
 
-<!-- ================= 次回 ================= -->
-<section>
-    <h2>⏭ 次回のZoom</h2>
-    <div id="nextEvent"></div>
-</section>
-
-<!-- ================= 今週 ================= -->
-<section>
-    <h2>📅 今週の予定</h2>
-    <div id="weekEvents"></div>
-</section>
-
-<!-- ================= 切替ボタン ================= -->
-<div class="switch-buttons">
-    <button id="btnList">一覧</button>
-    <button id="btnCalendar">カレンダー</button>
-</div>
-
-<!-- ================= カレンダー ================= -->
-<section id="calendarSection" style="display:none;">
-
-    <div class="calendar-header">
-        <button id="prevMonth">◀</button>
-        <h2 id="monthTitle"></h2>
-        <button id="nextMonth">▶</button>
-    </div>
-
-    <div id="calendar" class="calendar-grid"></div>
-
-</section>
-
-<!-- ================= モーダル ================= -->
-<div id="eventModal" class="modal hidden">
-
-    <div class="modal-content">
-
-        <button id="closeModal">✖</button>
-
-        <div id="eventDetail"></div>
+        <p class="sub-title">
+            最新のZoomスケジュール
+        </p>
 
     </div>
 
 </div>
 
-<script src="app.js"></script>
+<button id="showSchedule">
 
-</body>
-</html>
+    📋予定表
+
+</button>
+
+
+<button id="showCalendar">
+
+    📅カレンダー
+
+</button>
+
+<!-- 今日のZoom -->
+
+<section class="card">
+
+    <h2>
+        📢 今日のZoom
+    </h2>
+
+    <div id="todayEvent">
+
+        読み込み中...
+
+    </div>
+
+</section>
+
+<!-- 次回Zoom -->
+
+<section class="card">
+
+    <h2>
+
+        ⏭ 次回Zoom
+
+    </h2>
+
+    <div id="nextEvent">
+
+        読み込み中...
+
+    </div>
+
+</section>
+
+<h2>
+    📅 今週の予定
+</h2>
+
+<div id="weekEvents">
+
+</div>
+
+<h2>
+    📋 スケジュール表
+</h2>
+
+
+<div id="scheduleList">
+
+</div>
+
+<div class="calendar-header">
+
+        <button id="prevMonth">
+
+            ◀
+
+        </button>
+
+        <h2 id="monthTitle">
+
+        </h2>
+
+        <button id="nextMonth">
+
+            ▶
+
+        </button>
+
+    </div>
+
+    <div class="week">
+
+        <div>月</div>
+        <div>火</div>
+        <div>水</div>
+        <div>木</div>
+        <div>金</div>
+        <div>土</div>
+        <div>日</div>
+
+    </div>
+
+    <div
+        id="calendar"
+        class="calendar">
+
+    </div>
+
+</section>
+
+<div class="modal-content">
+
+    <button
+        id="closeModal"
+        class="close">
+
+        ✕
+
+    </button>
+
+    <div
+        id="eventImageArea">
+
+    </div>
+
+    <div
+        id="eventDetail">
+
+    </div>
+
+</div>
+
+新しい予定があります
