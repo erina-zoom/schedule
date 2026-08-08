@@ -1,75 +1,149 @@
 body{
-font-family:sans-serif;
-margin:0;
-background:#f5f5f5;
+    font-family: sans-serif;
+    margin:0;
+    background:#f5f5f5;
 }
 
+/* ヘッダー */
 .header{
-background:#247447;
-color:white;
-padding:15px;
-text-align:center;
+    background:#247447;
+    color:white;
+    padding:15px;
+    text-align:center;
 }
 
+.sub-title{
+    font-size:14px;
+    opacity:0.8;
+}
+
+/* カード */
 .card{
-background:white;
-margin:15px;
-padding:15px;
-border-radius:10px;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    background:white;
+    margin:15px;
+    padding:15px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
 /* カレンダー */
 .calendar{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:5px;
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
 }
 
 .week{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-text-align:center;
-font-weight:bold;
-margin-bottom:5px;
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    text-align:center;
+    font-weight:bold;
+    margin-bottom:5px;
 }
 
 .day{
-padding:10px;
-background:white;
-border-radius:5px;
-text-align:center;
+    padding:12px;
+    background:white;
+    border-radius:5px;
+    text-align:center;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.day:hover{
+    background:#eee;
 }
 
 .today{
-background:#ffe082;
+    background:#ffe082;
 }
 
 .has-event{
-background:#c8e6c9;
+    background:#c8e6c9;
+}
+
+/* カレンダー上部 */
+.calendar-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.calendar-header button{
+    padding:5px 10px;
+    border:none;
+    background:#247447;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+/* 今週リスト */
+#weekEvents div{
+    padding:8px;
+    border-bottom:1px solid #ddd;
+    cursor:pointer;
+}
+
+#weekEvents div:hover{
+    background:#f0f0f0;
 }
 
 /* モーダル */
 .modal{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-display:flex;
-justify-content:center;
-align-items:center;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
 }
 
 .hidden{
-display:none;
+    display:none;
 }
 
 .modal-content{
-background:white;
-padding:20px;
-border-radius:10px;
-width:90%;
-max-width:400px;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    width:90%;
+    max-width:400px;
+    max-height:90%;
+    overflow:auto;
+}
+
+.modal-content h3{
+    margin-top:0;
+}
+
+/* 画像 */
+#eventImageArea img{
+    width:100%;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+/* Zoomボタン */
+.modal-content button{
+    width:100%;
+    padding:10px;
+    background:#e91e63;
+    color:white;
+    border:none;
+    border-radius:8px;
+    margin:10px 0;
+    font-size:16px;
+    cursor:pointer;
+}
+
+/* プログラム */
+.modal-content p{
+    font-size:14px;
+    margin:5px 0;
 }

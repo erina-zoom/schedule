@@ -4,12 +4,9 @@ const DATA_URL =
 let events = [];
 let currentDate = new Date();
 
-// =========================
-// 初期化
-// =========================
 async function init(){
 
-    const res = await fetch(DATA_URL);
+    const res = await fetch(DATA_URL + "&t=" + Date.now());
     events = await res.json();
 
     renderAll();
@@ -17,9 +14,6 @@ async function init(){
 
 init();
 
-// =========================
-// 全描画
-// =========================
 function renderAll(){
     renderCalendar();
     renderToday();
@@ -27,65 +21,46 @@ function renderAll(){
     renderWeek();
 }
 
-// =========================
-// カレンダー
-// =========================
+// ================= カレンダー =================
 function renderCalendar(){
 
-    const calendar =
-    document.getElementById("calendar");
-
+    const calendar = document.getElementById("calendar");
     calendar.innerHTML="";
 
-    const year =
-    currentDate.getFullYear();
-
-    const month =
-    currentDate.getMonth();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
 
     document.getElementById("monthTitle").innerText =
     `${year}年 ${month+1}月`;
 
-    const firstDay =
-    new Date(year,month,1).getDay();
-
-    const startDay =
-    firstDay === 0 ? 6 : firstDay - 1;
-
-    const totalDays =
-    new Date(year,month+1,0).getDate();
+    const firstDay = new Date(year,month,1).getDay();
+    const startDay = firstDay === 0 ? 6 : firstDay - 1;
+    const totalDays = new Date(year,month+1,0).getDate();
 
     for(let i=0;i<startDay;i++){
-        calendar.appendChild(
-            document.createElement("div")
-        );
+        calendar.appendChild(document.createElement("div"));
     }
 
     for(let day=1;day<=totalDays;day++){
 
-        const div =
-        document.createElement("div");
-
+        const div = document.createElement("div");
         div.className="day";
 
         const dateStr =
         `${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
 
-        const hasEvent =
-        events.some(e=>e.date===dateStr);
+        const dayEvents =
+        events.filter(e=>e.date===dateStr);
 
-        if(hasEvent){
+        if(dayEvents.length){
             div.classList.add("has-event");
         }
 
         div.innerText = day;
 
         div.onclick=()=>{
-            const event =
-            events.find(e=>e.date===dateStr);
-
-            if(event){
-                openModal(event);
+            if(dayEvents.length){
+                openModal(dayEvents[0]);
             }
         };
 
@@ -93,72 +68,96 @@ function renderCalendar(){
     }
 }
 
-// =========================
-// 今日
-// =========================
+// ================= 今日 =================
 function renderToday(){
 
-    const today =
-    new Date().toISOString().slice(0,10);
+    const today = new Date().toISOString().slice(0,10);
 
-    const e =
-    events.find(e=>e.date===today);
+    const e = events.find(e=>e.date===today);
 
-    document.getElementById("todayEvent").innerText =
-    e ? e.title : "なし";
+    const el = document.getElementById("todayEvent");
+
+    if(!e){
+        el.innerText="なし";
+        return;
+    }
+
+    el.innerHTML = `
+        ${e.title}<br>
+        ${e.startTime}
+    `;
 }
 
-// =========================
-// 次回
-// =========================
+// ================= 次回 =================
 function renderNext(){
 
     const now = new Date();
 
-    const next =
-    events.find(e=>{
-        return new Date(e.date+"T"+e.startTime) > now;
-    });
+    const next = events
+    .filter(e=> new Date(e.date+"T"+e.startTime) > now)
+    .sort((a,b)=> new Date(a.date+"T"+a.startTime) - new Date(b.date+"T"+b.startTime))[0];
 
     document.getElementById("nextEvent").innerText =
-    next ? next.title : "なし";
+    next ? `${next.title}` : "なし";
 }
 
-// =========================
-// 今週
-// =========================
+// ================= 今週 =================
 function renderWeek(){
 
-    const area =
-    document.getElementById("weekEvents");
-
+    const area = document.getElementById("weekEvents");
     area.innerHTML="";
 
-    events.slice(0,7).forEach(e=>{
+    const now = new Date();
 
-        const div =
-        document.createElement("div");
+    const week = events.filter(e=>{
+        const d = new Date(e.date);
+        const diff = (d - now)/(1000*60*60*24);
+        return diff>=0 && diff<=7;
+    });
 
-        div.innerText =
+    week.forEach(e=>{
+
+        const div = document.createElement("div");
+
+        div.innerHTML =
         `${e.date} ${e.title}`;
+
+        div.onclick=()=>openModal(e);
 
         area.appendChild(div);
     });
 }
 
-// =========================
-// モーダル
-// =========================
+// ================= モーダル =================
 function openModal(event){
 
-    const modal =
-    document.getElementById("eventModal");
-
+    const modal = document.getElementById("eventModal");
     modal.classList.remove("hidden");
 
+    // 画像
+    const imgArea = document.getElementById("eventImageArea");
+
+    if(event.image){
+        imgArea.innerHTML =
+        `<img src="${event.image}" style="width:100%;border-radius:10px;">`;
+    }else{
+        imgArea.innerHTML = "";
+    }
+
+    // 詳細
     document.getElementById("eventDetail").innerHTML = `
         <h3>${event.title}</h3>
         <p>${event.date} ${event.startTime}</p>
+
+        <button onclick="window.open('${event.zoomUrl}','_blank')">
+            Zoomに参加
+        </button>
+
+        <div>
+        ${event.program.map(p=>`
+            <p>${p.time} ${p.title}<br>${p.person||""}</p>
+        `).join("")}
+        </div>
     `;
 }
 
@@ -166,9 +165,7 @@ document.getElementById("closeModal").onclick=()=>{
     document.getElementById("eventModal").classList.add("hidden");
 };
 
-// =========================
-// 月移動
-// =========================
+// ================= 月移動 =================
 document.getElementById("prevMonth").onclick=()=>{
     currentDate.setMonth(currentDate.getMonth()-1);
     renderCalendar();

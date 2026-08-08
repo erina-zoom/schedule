@@ -1,26 +1,19 @@
-const CACHE_NAME = "erina-v1";
+const CACHE_NAME = "erina-v5";
 
-const urlsToCache = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./app.js"
-];
-
-// =====================
 self.addEventListener("install",e=>{
-    e.waitUntil(
-        caches.open(CACHE_NAME)
-        .then(cache=>cache.addAll(urlsToCache))
-    );
+    self.skipWaiting();
 });
 
-// =====================
+self.addEventListener("activate",e=>{
+    caches.keys().then(keys=>{
+        keys.forEach(key=>{
+            if(key!==CACHE_NAME){
+                caches.delete(key);
+            }
+        });
+    });
+});
+
 self.addEventListener("fetch",e=>{
-    e.respondWith(
-        caches.match(e.request)
-        .then(res=>{
-            return res || fetch(e.request);
-        })
-    );
+    e.respondWith(fetch(e.request));
 });

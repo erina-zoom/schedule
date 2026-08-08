@@ -18,7 +18,7 @@ border-radius:10px;
 margin-bottom:15px;
 }
 
-input,select{
+input,textarea{
 width:100%;
 padding:8px;
 margin-bottom:10px;
@@ -55,8 +55,11 @@ padding:10px 0;
 <input id="title" placeholder="タイトル">
 <input id="eventDate" type="date">
 <input id="startTime" type="time">
-
 <input id="zoomUrl" placeholder="Zoom URL">
+
+<textarea id="program" placeholder="プログラム（JSON）"></textarea>
+
+<input type="file" id="imageInput">
 
 <button id="saveBtn">保存</button>
 <button id="newBtn">新規</button>
