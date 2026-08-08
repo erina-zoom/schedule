@@ -88,11 +88,12 @@ function renderWeek(){
 
         const d = new Date(e.date + "T00:00:00");
 
-        // 👇ここが完全修正
         if(d >= today && d <= end){
 
             const div = document.createElement("div");
-            div.className = "card";
+
+            // 👇ここだけ変更
+            div.className = "week-card";
 
             div.innerHTML = createEventHTML(e);
 
