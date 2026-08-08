@@ -75,3 +75,14 @@ button{
 .hidden{
     display:none;
 }
+.week-card{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:16px;
+    margin-bottom:12px;
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    cursor:pointer;
+}
