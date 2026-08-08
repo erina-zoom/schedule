@@ -1,5 +1,5 @@
 // ==========================================
-// ERINA Zoom Manager Ver5（完全版）
+// ERINA Zoom Manager Ver5（完成版）
 // ==========================================
 
 "use strict";
@@ -9,16 +9,13 @@
 // ==========================================
 const WORKER_URL = "https://erina-manager.tomoya19980427goku.workers.dev";
 
-const EVENTS_URL =
-`${WORKER_URL}?action=events`;
+const EVENTS_URL = `${WORKER_URL}?action=events`;
 
 // ==========================================
 // データ
 // ==========================================
 let events = [];
 let editingEventId = null;
-let selectedImageFile = null;
-let removeCurrentImage = false;
 
 // ==========================================
 // 初期化
@@ -33,9 +30,9 @@ async function initializeManager(){
 
     await loadEvents();
 
-    renderEvents(); // ←🔥これ重要
+    renderEvents(); // ←イベント表示
 
-    await renderNoticeList();
+    await renderNoticeList(); // ←お知らせ表示
 }
 
 // ==========================================
@@ -43,7 +40,8 @@ async function initializeManager(){
 // ==========================================
 function setupEventListeners(){
 
-    document.getElementById("saveNoticeButton")?.addEventListener("click", saveNotice);
+    document.getElementById("saveNoticeButton")
+        ?.addEventListener("click", saveNotice);
 }
 
 // ==========================================
@@ -68,7 +66,7 @@ async function loadEvents(){
 }
 
 // ==========================================
-// イベント描画（←追加）
+// イベント描画（ボタン付き完全版）
 // ==========================================
 function renderEvents(){
 
@@ -81,7 +79,7 @@ function renderEvents(){
 
     container.innerHTML = "";
 
-    if(events.length === 0){
+    if(!events || events.length === 0){
         container.innerHTML = "イベントがありません";
         return;
     }
@@ -95,8 +93,46 @@ function renderEvents(){
 
         item.innerHTML = `
             <div><strong>${e.title}</strong></div>
-            <div>${e.date} ${e.startTime}</div>
+            <div>${e.date} ${e.startTime || ""}</div>
+
+            <div style="margin-top:8px;">
+                <button class="edit-btn">編集</button>
+                <button class="copy-btn">複製</button>
+                <button class="delete-btn">削除</button>
+            </div>
         `;
+
+        // 編集
+        item.querySelector(".edit-btn").onclick = ()=>{
+            alert("編集機能はこれから実装");
+        };
+
+        // 複製
+        item.querySelector(".copy-btn").onclick = ()=>{
+            alert("複製機能はこれから実装");
+        };
+
+        // 削除
+        item.querySelector(".delete-btn").onclick = async ()=>{
+
+            if(!confirm("削除する？")) return;
+
+            await fetch(WORKER_URL, {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({
+                    action:"deleteEvent",
+                    id: e.id
+                })
+            });
+
+            alert("削除した👍");
+
+            await loadEvents();
+            renderEvents();
+        };
 
         container.appendChild(item);
     });
@@ -130,7 +166,7 @@ async function saveNotice(){
 
     if(result.success){
         alert("保存OK👍");
-        clearEditor(); // ←追加
+        clearEditor();
         renderNoticeList();
     }else{
         alert("保存失敗");
@@ -138,7 +174,7 @@ async function saveNotice(){
 }
 
 // ==========================================
-// お知らせ一覧表示（削除付き）
+// お知らせ一覧
 // ==========================================
 async function renderNoticeList(){
 
@@ -208,40 +244,4 @@ function clearEditor(){
     if(start) start.value = "";
     if(end) end.value = "";
     if(enabled) enabled.value = "true";
-}
-// ==========================================
-// イベント描画
-// ==========================================
-function renderEvents(){
-
-    console.log("イベント描画開始", events);
-
-    const container = document.getElementById("eventList");
-
-    if(!container){
-        console.log("eventListが見つからない");
-        return;
-    }
-
-    container.innerHTML = "";
-
-    if(!events || events.length === 0){
-        container.innerHTML = "イベントがありません";
-        return;
-    }
-
-    events.forEach(e => {
-
-        const item = document.createElement("div");
-
-        item.style.padding = "10px";
-        item.style.borderBottom = "1px solid #ccc";
-
-        item.innerHTML = `
-            <div><strong>${e.title}</strong></div>
-            <div>${e.date} ${e.startTime || ""}</div>
-        `;
-
-        container.appendChild(item);
-    });
 }
