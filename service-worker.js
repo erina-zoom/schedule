@@ -1,19 +1,27 @@
-const CACHE_NAME = "erina-v5";
+const CACHE_NAME = "erina-cache-v2";
 
-self.addEventListener("install",e=>{
+// インストール
+self.addEventListener("install", e=>{
     self.skipWaiting();
 });
 
-self.addEventListener("activate",e=>{
-    caches.keys().then(keys=>{
-        keys.forEach(key=>{
-            if(key!==CACHE_NAME){
-                caches.delete(key);
-            }
-        });
-    });
+// アクティブ
+self.addEventListener("activate", e=>{
+    clients.claim();
 });
 
-self.addEventListener("fetch",e=>{
-    e.respondWith(fetch(e.request));
+// フェッチ
+self.addEventListener("fetch", event => {
+
+    // APIは絶対キャッシュしない
+    if(event.request.url.includes("workers.dev")){
+        event.respondWith(fetch(event.request));
+        return;
+    }
+
+    event.respondWith(
+        fetch(event.request).catch(()=>{
+            return caches.match(event.request);
+        })
+    );
 });

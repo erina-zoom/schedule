@@ -2,93 +2,41 @@ const DATA_URL =
 "https://erina-manager.tomoya19980427goku.workers.dev/?action=events";
 
 let events = [];
-let currentDate = new Date();
 
 async function init(){
 
     const res = await fetch(DATA_URL + "&t=" + Date.now());
     events = await res.json();
 
-    renderAll();
-}
-
-init();
-
-function renderAll(){
-    renderCalendar();
     renderToday();
     renderNext();
     renderWeek();
 }
 
-// ================= カレンダー =================
-function renderCalendar(){
+init();
 
-    const calendar = document.getElementById("calendar");
-    calendar.innerHTML="";
-
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-
-    document.getElementById("monthTitle").innerText =
-    `${year}年 ${month+1}月`;
-
-    const firstDay = new Date(year,month,1).getDay();
-    const startDay = firstDay === 0 ? 6 : firstDay - 1;
-    const totalDays = new Date(year,month+1,0).getDate();
-
-    for(let i=0;i<startDay;i++){
-        calendar.appendChild(document.createElement("div"));
-    }
-
-    for(let day=1;day<=totalDays;day++){
-
-        const div = document.createElement("div");
-        div.className="day";
-
-        const dateStr =
-        `${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
-
-        const dayEvents =
-        events.filter(e=>e.date===dateStr);
-
-        if(dayEvents.length){
-            div.classList.add("has-event");
-        }
-
-        div.innerText = day;
-
-        div.onclick=()=>{
-            if(dayEvents.length){
-                openModal(dayEvents[0]);
-            }
-        };
-
-        calendar.appendChild(div);
-    }
-}
 
 // ================= 今日 =================
 function renderToday(){
 
     const today = new Date().toISOString().slice(0,10);
 
-    const todayEvents = events.filter(e=>e.date===today);
+    const e = events.find(e=>e.date===today);
 
     const el = document.getElementById("todayEvent");
 
-    if(todayEvents.length === 0){
-    el.innerText = "今日のZoomはありません";
-    return;
+    if(!e){
+        el.innerText = "今日のZoomはありません";
+        return;
+    }
+
+    el.innerHTML = `
+        ${e.date}<br>
+        ${e.startTime}<br>
+        ${e.title}
+    `;
 }
 
-el.innerHTML = todayEvents.map(e=>`
-    <div>
-        ${e.title}<br>
-        ${e.startTime}
-    </div>
-`).join("");
-}
 
 // ================= 次回 =================
 function renderNext(){
@@ -103,7 +51,8 @@ function renderNext(){
     next ? `${next.title}` : "なし";
 }
 
-// ================= 今週 =================
+
+// ================= 今週（ここが本命） =================
 function renderWeek(){
 
     const area = document.getElementById("weekEvents");
@@ -119,61 +68,127 @@ function renderWeek(){
 
     week.forEach(e=>{
 
+        const d = new Date(e.date);
+        const m = d.getMonth()+1;
+        const day = d.getDate();
+
         const div = document.createElement("div");
+        div.className = "event-card";
 
-        div.innerHTML =
-        `${e.date} ${e.title}`;
-
-        div.onclick=()=>openModal(e);
+        div.innerHTML = `
+            <div class="event-date">
+                ${m}/${day}
+            </div>
+            <div class="event-time">
+                ${e.startTime}
+            </div>
+            <div class="event-title">
+                ${e.title}
+            </div>
+        `;
 
         area.appendChild(div);
     });
 }
-
-// ================= モーダル =================
-function openModal(event){
-
-    const modal = document.getElementById("eventModal");
-    modal.classList.remove("hidden");
-
-    // 画像
-    const imgArea = document.getElementById("eventImageArea");
-
-    if(event.image){
-        imgArea.innerHTML =
-        `<img src="${event.image}" style="width:100%;border-radius:10px;">`;
-    }else{
-        imgArea.innerHTML = "";
-    }
-
-    // 詳細
-    document.getElementById("eventDetail").innerHTML = `
-        <h3>${event.title}</h3>
-        <p>${event.date} ${event.startTime}</p>
-
-        <button onclick="window.open('${event.zoomUrl}','_blank')">
-            Zoomに参加
-        </button>
-
-        <div>
-        ${event.program.map(p=>`
-            <p>${p.time} ${p.title}<br>${p.person||""}</p>
-        `).join("")}
-        </div>
-    `;
-}
-
-document.getElementById("closeModal").onclick=()=>{
-    document.getElementById("eventModal").classList.add("hidden");
+document.getElementById("btnList").onclick = ()=>{
+    document.querySelector("main").style.display = "block";
+    document.getElementById("calendarSection").style.display = "none";
 };
 
-// ================= 月移動 =================
-document.getElementById("prevMonth").onclick=()=>{
+document.getElementById("btnCalendar").onclick = ()=>{
+    document.querySelector("main").style.display = "none";
+    document.getElementById("calendarSection").style.display = "block";
+    renderCalendar();
+};
+let currentDate = new Date();
+
+function renderCalendar(){
+    div.onclick = ()=>{
+    if(dayEvents.length){
+        openModal(dayEvents[0]);
+    }
+};
+const today = new Date().toISOString().slice(0,10);
+
+if(dateStr === today){
+    div.classList.add("today");
+}
+
+    const calendar = document.getElementById("calendar");
+    calendar.innerHTML = "";
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    document.getElementById("monthTitle").innerText =
+        `${year}年 ${month+1}月`;
+
+    const firstDay = new Date(year,month,1).getDay();
+    const startDay = firstDay === 0 ? 6 : firstDay - 1;
+
+    const totalDays = new Date(year,month+1,0).getDate();
+
+    // 空白
+    for(let i=0;i<startDay;i++){
+        calendar.appendChild(document.createElement("div"));
+    }
+
+    // 日付
+    for(let day=1;day<=totalDays;day++){
+
+        const div = document.createElement("div");
+        div.className = "calendar-day";
+
+        const dateStr =
+        `${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+
+        const dayEvents =
+        events.filter(e=>e.date===dateStr);
+
+        div.innerHTML = `<div>${day}</div>`;
+
+        // イベント表示
+        dayEvents.forEach(e=>{
+
+    const ev = document.createElement("div");
+    ev.className = "event-badge";
+
+    ev.innerText = e.startTime;
+
+    // 色
+    ev.style.background = e.color || "#2e7d32";
+
+    div.appendChild(ev);
+});
+
+        calendar.appendChild(div);
+    }
+}
+document.getElementById("prevMonth").onclick = ()=>{
     currentDate.setMonth(currentDate.getMonth()-1);
     renderCalendar();
 };
 
-document.getElementById("nextMonth").onclick=()=>{
+document.getElementById("nextMonth").onclick = ()=>{
     currentDate.setMonth(currentDate.getMonth()+1);
     renderCalendar();
 };
+function openModal(e){
+
+    const modal = document.getElementById("eventModal");
+    modal.classList.remove("hidden");
+
+    const imageHtml = e.image
+        ? `<img src="${e.image}" class="event-image">`
+        : "";
+
+    document.getElementById("eventDetail").innerHTML = `
+        ${imageHtml}
+        <h3>${e.title}</h3>
+        <p>${e.date} ${e.startTime}</p>
+
+        <button onclick="window.open('${e.zoomUrl}','_blank')">
+            Zoomに参加
+        </button>
+    `;
+}

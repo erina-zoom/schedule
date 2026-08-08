@@ -3,71 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ERINA Zoom予定表</title>
-
-<meta name="theme-color" content="#2e7d32">
-
-<link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
 <header class="header">
-
     <h1>ERINA Zoom予定表</h1>
-    <p class="sub-title">最新のZoomスケジュール</p>
 
+    <div class="top-buttons">
+        <button id="btnList">📋 予定</button>
+        <button id="btnCalendar">📅 カレンダー</button>
+    </div>
 </header>
 
 <main>
 
 <section class="card">
-<h2>📢 今日のZoom</h2>
-<div id="todayEvent">読み込み中...</div>
+    <h2>📢 今日のZoom</h2>
+    <div id="todayEvent"></div>
 </section>
 
 <section class="card">
-<h2>⏭ 次回Zoom</h2>
-<div id="nextEvent">読み込み中...</div>
+    <h2>⏭ 次回のZoom</h2>
+    <div id="nextEvent"></div>
 </section>
 
 <section class="card">
-<h2>📅 今週の予定</h2>
-<div id="weekEvents"></div>
-</section>
-
-<section class="card">
-
-<div class="calendar-header">
-<button id="prevMonth">◀</button>
-<h2 id="monthTitle"></h2>
-<button id="nextMonth">▶</button>
-</div>
-
-<div class="week">
-<div>月</div><div>火</div><div>水</div>
-<div>木</div><div>金</div><div>土</div><div>日</div>
-</div>
-
-<div id="calendar" class="calendar"></div>
-
+    <h2>📅 今週の予定</h2>
+    <div id="weekEvents"></div>
 </section>
 
 </main>
+<div id="calendarSection" class="card" style="display:none;">
 
-<!-- モーダル -->
-<div id="eventModal" class="modal hidden">
-<div class="modal-content">
+    <div class="calendar-header">
+        <button id="prevMonth">◀</button>
+        <h2 id="monthTitle"></h2>
+        <button id="nextMonth">▶</button>
+    </div>
 
-<button id="closeModal">✕</button>
-
-<div id="eventImageArea"></div>
-<div id="eventDetail"></div>
+    <div class="calendar-grid" id="calendar"></div>
 
 </div>
+<div id="eventModal" class="modal hidden">
+    <div class="modal-content">
+        <button id="closeModal">✕</button>
+        <div id="eventDetail"></div>
+    </div>
 </div>
 
 <script src="app.js"></script>

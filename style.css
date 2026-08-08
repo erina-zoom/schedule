@@ -1,20 +1,28 @@
 body{
-    font-family: sans-serif;
-    margin:0;
+    font-family:sans-serif;
     background:#f5f5f5;
+    margin:0;
 }
 
 /* ヘッダー */
 .header{
-    background:#247447;
-    color:white;
-    padding:15px;
+    background:#e0e0e0;
+    padding:20px;
     text-align:center;
 }
 
-.sub-title{
-    font-size:14px;
-    opacity:0.8;
+/* ボタン */
+.top-buttons{
+    margin-top:10px;
+}
+
+.top-buttons button{
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:8px 16px;
+    border-radius:20px;
+    margin:5px;
 }
 
 /* カード */
@@ -22,47 +30,38 @@ body{
     background:white;
     margin:15px;
     padding:15px;
-    border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    border-radius:15px;
 }
 
-/* カレンダー */
-.calendar{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    gap:5px;
+/* イベントカード（ここが重要） */
+.event-card{
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    background:#f9f9f9;
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:10px;
 }
 
-.week{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
+/* 日付 */
+.event-date{
+    width:70px;
     text-align:center;
     font-weight:bold;
-    margin-bottom:5px;
+    color:#2e7d32;
 }
 
-.day{
-    padding:12px;
-    background:white;
-    border-radius:5px;
-    text-align:center;
-    cursor:pointer;
-    transition:0.2s;
+/* 時間 */
+.event-time{
+    width:60px;
 }
 
-.day:hover{
-    background:#eee;
+/* タイトル */
+.event-title{
+    flex:1;
 }
-
-.today{
-    background:#ffe082;
-}
-
-.has-event{
-    background:#c8e6c9;
-}
-
-/* カレンダー上部 */
 .calendar-header{
     display:flex;
     justify-content:space-between;
@@ -70,27 +69,31 @@ body{
     margin-bottom:10px;
 }
 
-.calendar-header button{
-    padding:5px 10px;
-    border:none;
-    background:#247447;
+.calendar-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+}
+
+.calendar-day{
+    background:#fff;
+    border-radius:10px;
+    min-height:70px;
+    padding:5px;
+    font-size:12px;
+}
+
+.event-badge{
+    background:#2e7d32;
     color:white;
     border-radius:5px;
-    cursor:pointer;
+    font-size:10px;
+    padding:2px;
+    margin-top:3px;
 }
-
-/* 今週リスト */
-#weekEvents div{
-    padding:8px;
-    border-bottom:1px solid #ddd;
-    cursor:pointer;
+.today{
+    border:2px solid #2e7d32;
 }
-
-#weekEvents div:hover{
-    background:#f0f0f0;
-}
-
-/* モーダル */
 .modal{
     position:fixed;
     top:0;
@@ -98,10 +101,10 @@ body{
     width:100%;
     height:100%;
     background:rgba(0,0,0,0.5);
+
     display:flex;
     justify-content:center;
     align-items:center;
-    z-index:1000;
 }
 
 .hidden{
@@ -112,38 +115,10 @@ body{
     background:white;
     padding:20px;
     border-radius:10px;
-    width:90%;
-    max-width:400px;
-    max-height:90%;
-    overflow:auto;
+    width:80%;
 }
-
-.modal-content h3{
-    margin-top:0;
-}
-
-/* 画像 */
-#eventImageArea img{
+.event-image{
     width:100%;
     border-radius:10px;
     margin-bottom:10px;
-}
-
-/* Zoomボタン */
-.modal-content button{
-    width:100%;
-    padding:10px;
-    background:#e91e63;
-    color:white;
-    border:none;
-    border-radius:8px;
-    margin:10px 0;
-    font-size:16px;
-    cursor:pointer;
-}
-
-/* プログラム */
-.modal-content p{
-    font-size:14px;
-    margin:5px 0;
 }
