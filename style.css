@@ -1,16 +1,10 @@
-/* =========================
-   全体
-========================= */
 body{
     margin:0;
     font-family:sans-serif;
     background:#f4f7f5;
 }
 
-
-/* =========================
-   ロゴエリア
-========================= */
+/* ロゴ */
 .logo-area{
     display:flex;
     align-items:center;
@@ -18,37 +12,30 @@ body{
     color:#fff;
     padding:10px 15px;
     gap:10px;
-
-    height:80px;          /* ←高さ固定（超重要） */
-    overflow:hidden;      /* ←はみ出し防止 */
+    height:80px;
+    overflow:hidden;
 }
 
-/* 🔥 ロゴ完全修正（ここが原因） */
 .logo{
     width:55px;
     height:55px;
-    object-fit:cover;     /* ←これで暴走防止 */
+    object-fit:cover;
     border-radius:12px;
-    flex-shrink:0;        /* ←潰れ防止 */
+    flex-shrink:0;
 }
 
-/* タイトル */
 .logo-area h1{
     margin:0;
     font-size:18px;
 }
 
-/* サブタイトル */
 .sub-title{
     margin:0;
     font-size:12px;
     color:#e0e0e0;
 }
 
-
-/* =========================
-   カード
-========================= */
+/* カード */
 .card{
     background:#fff;
     margin:15px;
@@ -57,21 +44,14 @@ body{
     box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
-
-/* =========================
-   ボタン
-========================= */
+/* ボタン */
 button{
     padding:6px 10px;
     border:none;
     border-radius:6px;
-    cursor:pointer;
 }
 
-
-/* =========================
-   カレンダー
-========================= */
+/* カレンダー */
 .calendar{
     display:grid;
     grid-template-columns:repeat(7,1fr);
@@ -86,10 +66,7 @@ button{
     margin:10px 0;
 }
 
-
-/* =========================
-   モーダル
-========================= */
+/* モーダル */
 .modal{
     position:fixed;
     inset:0;
@@ -106,18 +83,12 @@ button{
     border-radius:10px;
 }
 
-
-/* =========================
-   非表示
-========================= */
+/* 非表示 */
 .hidden{
     display:none;
 }
 
-
-/* =========================
-   画像暴走防止（全体）
-========================= */
+/* 画像暴走防止 */
 img{
     max-width:100%;
     height:auto;
