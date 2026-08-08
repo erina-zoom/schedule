@@ -10,7 +10,10 @@
 
 <body>
 
-<h1>ERINA Zoom予定表</h1>
+<h1 class="header">
+    <img src="icon.png" class="logo">
+    ERINA Zoom予定表
+</h1>
 
 <div class="switch">
     <button id="showSchedule">📋 予定</button>
@@ -29,9 +32,6 @@
 <h2>📅 今週の予定</h2>
 <div id="weekEvents"></div>
 
-<h2>📋 スケジュール一覧</h2>
-<div id="scheduleList"></div>
-
 </div>
 
 <!-- カレンダー -->
@@ -46,12 +46,20 @@
 </div>
 
 <div class="week">
-    <div>月</div><div>火</div><div>水</div>
-    <div>木</div><div>金</div><div>土</div><div>日</div>
+<div>月</div><div>火</div><div>水</div>
+<div>木</div><div>金</div><div>土</div><div>日</div>
 </div>
 
 <div id="calendar" class="calendar"></div>
 
+</div>
+
+<!-- モーダル -->
+<div id="modal" class="hidden">
+    <div class="modal-box">
+        <button id="closeModal">✕</button>
+        <div id="eventDetail"></div>
+    </div>
 </div>
 
 <script src="app.js?v=999"></script>

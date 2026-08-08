@@ -1,15 +1,24 @@
 body{
     font-family:sans-serif;
-    background:#f3f5f4;
+    background:#eef3ef;
     margin:0;
     padding:20px;
 }
 
-h1{
-    text-align:center;
+/* ヘッダー */
+.header{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
     color:#2e7d32;
 }
 
+.logo{
+    width:40px;
+}
+
+/* ボタン */
 .switch{
     text-align:center;
     margin:20px 0;
@@ -20,18 +29,18 @@ h1{
     color:#fff;
     border:none;
     padding:12px 20px;
-    margin:0 5px;
     border-radius:20px;
-    cursor:pointer;
+    margin:0 5px;
 }
 
+/* カード */
 .card{
-    position:relative;
     background:#fff;
-    border-radius:20px;
-    padding:20px 20px 20px 24px;
-    margin:15px 0;
-    box-shadow:0 6px 16px rgba(0,0,0,0.08);
+    border-radius:18px;
+    padding:18px;
+    margin:12px 0;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    position:relative;
 }
 
 /* 左ライン */
@@ -39,35 +48,87 @@ h1{
     content:"";
     position:absolute;
     left:0;
-    top:12px;
-    bottom:12px;
-    width:8px;
+    top:10px;
+    bottom:10px;
+    width:6px;
     border-radius:10px;
     background:#2e7d32;
 }
 
-/* 時間 */
-.time{
-    color:#2e7d32;
-    font-weight:bold;
-    margin-top:6px;
+/* 次回（青） */
+.card.next{
+    background:#e3f2fd;
 }
 
-/* タイトル */
-.title{
-    margin-top:8px;
-    font-size:18px;
+.card.next::before{
+    background:#2196f3;
 }
 
-/* Zoomボタン */
+/* 今週用（小さめ・線なし） */
+.week-card{
+    background:#fff;
+    border-radius:12px;
+    padding:10px;
+    margin:8px 0;
+    font-size:14px;
+}
+
+/* ボタン */
 .zoom-btn{
     display:block;
-    margin-top:15px;
+    margin-top:12px;
     background:#2e7d32;
     color:#fff;
     text-align:center;
-    padding:14px;
-    border-radius:12px;
+    padding:12px;
+    border-radius:10px;
     text-decoration:none;
-    font-weight:bold;
+}
+
+/* モーダル */
+#modal{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:rgba(0,0,0,0.6);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+#modal.hidden{
+    display:none;
+}
+
+.modal-box{
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    width:90%;
+    max-width:400px;
+}
+
+/* カレンダー */
+.calendar{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;
+}
+
+.cell{
+    background:#fff;
+    min-height:80px;
+    padding:6px;
+    border-radius:6px;
+}
+
+.event{
+    font-size:11px;
+    margin-top:4px;
+    padding:2px;
+    border-radius:4px;
+    background:#2e7d32;
+    color:#fff;
 }
