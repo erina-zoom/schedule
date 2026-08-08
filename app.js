@@ -73,19 +73,21 @@ function renderToday(){
 
     const today = new Date().toISOString().slice(0,10);
 
-    const e = events.find(e=>e.date===today);
+    const todayEvents = events.filter(e=>e.date===today);
 
     const el = document.getElementById("todayEvent");
 
-    if(!e){
-        el.innerText="なし";
-        return;
-    }
+    if(todayEvents.length === 0){
+    el.innerText = "今日のZoomはありません";
+    return;
+}
 
-    el.innerHTML = `
+el.innerHTML = todayEvents.map(e=>`
+    <div>
         ${e.title}<br>
         ${e.startTime}
-    `;
+    </div>
+`).join("");
 }
 
 // ================= 次回 =================
