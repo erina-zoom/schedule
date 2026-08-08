@@ -129,11 +129,10 @@ function renderSchedule(){
 // ==========================================
 function getIcon(category){
     switch(category){
-        case "チェリーライブ": return "🍒";
-        case "FMなまず": return "📻";
-        case "サクラ咲く会": return "🌸";
-        case "竹の子族": return "🎵";
-        case "佐賀オンラインセミナー": return "💻";
+        case "cherry": return "🍒";
+        case "fm": return "📻";
+        case "event": return "🌸";   // ←これ追加
+        case "seminar": return "💻";
     }
 }
 
