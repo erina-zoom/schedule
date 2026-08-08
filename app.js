@@ -1,5 +1,5 @@
 // ==========================================
-// ERINA Zoom フロント 完全版（元UI復元）
+// ERINA Zoom フロント 完全復旧版
 // ==========================================
 
 "use strict";
@@ -31,27 +31,36 @@ function renderAll(){
 }
 
 // ==========================================
-// 今日
+// 今日（←ここ修正済み🔥）
 // ==========================================
+function getTodayLocal(){
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2,"0");
+    return `${y}-${m}-${day}`;
+}
+
 function renderToday(){
-    const today = new Date().toISOString().slice(0,10);
+    const today = getTodayLocal();
+
     const e = events.find(x=>x.date === today);
 
     const el = document.getElementById("todayEvent");
 
     if(!e){
-        el.innerHTML = "本日の予定はありません";
+        el.innerHTML = "本日のZoomはありません";
         return;
     }
 
-    el.innerHTML = createEventHTML(e);
+    el.innerHTML = createCardHTML(e);
 }
 
 // ==========================================
 // 次回
 // ==========================================
 function renderNext(){
-    const today = new Date().toISOString().slice(0,10);
+    const today = getTodayLocal();
 
     const e = events
         .filter(x=>x.date >= today)
@@ -64,22 +73,20 @@ function renderNext(){
         return;
     }
 
-    el.innerHTML = createEventHTML(e);
+    el.innerHTML = createCardHTML(e);
 }
 
 // ==========================================
-// 今週
+// 今週（カードUI復元🔥）
 // ==========================================
 function renderWeek(){
 
     const container = document.getElementById("weekEvents");
     container.innerHTML = "";
 
-    // 今日（時間リセット）
     const today = new Date();
     today.setHours(0,0,0,0);
 
-    // 7日後
     const end = new Date();
     end.setDate(today.getDate() + 7);
     end.setHours(23,59,59,999);
@@ -92,11 +99,9 @@ function renderWeek(){
 
             const div = document.createElement("div");
 
-            // 👇ここだけ変更
-            div.className = "week-card";
-            　div.style.borderLeft = `6px solid ${getColor(e.category)}`;
+            div.className = "card";
 
-            div.innerHTML = createEventHTML(e);
+            div.innerHTML = createCardHTML(e);
 
             div.onclick = ()=>showDetail(e);
 
@@ -107,93 +112,103 @@ function renderWeek(){
 }
 
 // ==========================================
-// スケジュール一覧
+// スケジュール一覧（元UI🔥）
 // ==========================================
 function renderSchedule(){
+
     const container = document.getElementById("scheduleList");
     container.innerHTML = "";
 
     events.forEach(e=>{
+
         const div = document.createElement("div");
+
         div.className = "card";
 
-        div.innerHTML = createEventHTML(e);
+        div.style.borderLeft = `6px solid ${getColor(e.category)}`;
+
+        div.innerHTML = createCardHTML(e);
 
         div.onclick = ()=>showDetail(e);
 
         container.appendChild(div);
     });
 }
+
 // ==========================================
-// アイコン
+// アイコン（←ピン消した）
 // ==========================================
 function getIcon(category){
-
-    if(!category) return "";
-
     switch(category){
-        case "cherry": return "🍒";
-        case "fm": return "📻";
-        case "event": return "🌸";
-        case "dance": return "💃";
-        case "seminar": return "💻";
+        case "チェリーライブ": return "🍒";
+        case "FMなまず": return "📻";
+        case "サクラ咲く会": return "🌸";
+        case "竹の子族": return "🎵";
+        case "佐賀オンラインセミナー": return "💻";
+        case "ミナソンチャンネル": return "♣";
+        case "ワンコインダンス": return "💃";
         default: return "";
     }
 }
+
 // ==========================================
 // 色
 // ==========================================
 function getColor(category){
     switch(category){
-        case "cherry": return "#e91e63"; // ピンク
-        case "fm": return "#4caf50";     // 緑
-        case "event": return "#ff9800";  // オレンジ
-        case "dance": return "#f44336";  // 赤
-        case "seminar": return "#2196f3";// 青
+        case "チェリーライブ": return "#e91e63";
+        case "FMなまず": return "#4caf50";
+        case "サクラ咲く会": return "#ff9800";
+        case "竹の子族": return "#9c27b0";
+        case "佐賀オンラインセミナー": return "#2196f3";
+        case "ミナソンチャンネル": return "#000";
+        case "ワンコインダンス": return "#f44336";
         default: return "#2e7d32";
     }
 }
 
-function cleanTitle(title){
-    return title
-        .replace(/^[📌🌸🍒📻💃💻🎵🎤🎹🎧🎶]+\s*/,'') // 先頭の絵文字全部削除
-        .trim();
-}
 // ==========================================
-// イベント表示HTML
+// 🔥元のカードUI（これが超重要）
 // ==========================================
-function createEventHTML(e){
+function createCardHTML(e){
 
     const d = new Date(e.date);
 
+    const year = d.getFullYear();
     const month = d.getMonth() + 1;
     const day = d.getDate();
-
     const week = ["日","月","火","水","木","金","土"][d.getDay()];
 
     return `
-        <div class="week-date">
-            ${month}/${day}<br>
-            (${week})
-        </div>
+        <div style="
+            border-left:6px solid ${getColor(e.category)};
+            padding:16px;
+            border-radius:16px;
+            background:#fff;
+            box-shadow:0 2px 8px rgba(0,0,0,0.05);
+        ">
+            <div style="font-size:18px;font-weight:bold;">
+                ${year}年${month}月${day}日（${week}）
+            </div>
 
-        <div class="week-content">
-            <div class="time">${e.startTime || ""}</div>
-            <div class="title">
-                ${getIcon(e.category || "")} ${cleanTitle(e.title || "")}
+            <div style="margin-top:10px;color:#2e7d32;font-weight:bold;">
+                🕒 ${e.startTime}
+            </div>
+
+            <div style="margin-top:8px;font-size:20px;">
+                ${getIcon(e.category)} ${e.title}
             </div>
         </div>
     `;
 }
 
 // ==========================================
-// モーダル表示（←これが元UIの核心）
+// モーダル（そのまま）
 // ==========================================
 function showDetail(e){
 
     document.getElementById("modal").classList.remove("hidden");
 
-    // 🔥画像
     const imageArea = document.getElementById("eventImageArea");
 
     if(e.image){
@@ -202,17 +217,13 @@ function showDetail(e){
         imageArea.innerHTML = "";
     }
 
-    // 🔥詳細
     let html = `
-        <h3>${cleanTitle(e.title)}</h3>
+        <h3>${e.title}</h3>
         <p>${e.date} ${e.startTime || ""}</p>
     `;
 
-    // 🔥プログラム（のびしろ用）
     if(e.program && e.program.length > 0){
-
         html += `<hr><b>📋 タイムスケジュール</b><br>`;
-
         e.program.forEach(p=>{
             html += `
                 <div style="margin:5px 0;">
@@ -224,7 +235,6 @@ function showDetail(e){
         });
     }
 
-    // 🔥Zoom
     if(e.zoomUrl){
         html += `<br><a href="${e.zoomUrl}" target="_blank">▶ Zoom参加</a>`;
     }
@@ -233,21 +243,6 @@ function showDetail(e){
 }
 
 // ==========================================
-// モーダル閉じる
-// ==========================================
 document.getElementById("closeModal").onclick = ()=>{
     document.getElementById("modal").classList.add("hidden");
-};
-
-// ==========================================
-// 表示切り替え
-// ==========================================
-document.getElementById("showSchedule").onclick = ()=>{
-    document.getElementById("scheduleSection").style.display="block";
-    document.getElementById("calendarSection").style.display="none";
-};
-
-document.getElementById("showCalendar").onclick = ()=>{
-    document.getElementById("scheduleSection").style.display="none";
-    document.getElementById("calendarSection").style.display="block";
 };
