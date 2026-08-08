@@ -180,10 +180,4 @@ function getToday(){
     const d=new Date();
     return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
-function renderTodayEvents(){
-    console.log("仮：今日の表示");
-}
 
-function renderNotices(){
-    console.log("仮：お知らせ表示");
-}
