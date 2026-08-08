@@ -1,59 +1,7 @@
 [
   {
-    "id": "20260724-saga",
-    "date": "2026-07-24",
-    "startTime": "13:00",
-    "endTime": "",
-    "title": "💻 佐賀オンラインセミナー",
-    "shortTitle": "💻佐賀",
-    "category": "seminar",
-    "color": "#1976d2",
-    "image": "",
-    "zoomUrl": "https://us06web.zoom.us/j/82075654454?pwd=fOABrry090GmJOPZmvEnJ5alOEytMi.1",
-    "program": []
-  },
-  {
-    "id": "20260726-cherry",
-    "date": "2026-07-26",
-    "startTime": "13:00",
-    "endTime": "",
-    "title": "🍒 休日チェリーLive",
-    "shortTitle": "🍒チェリー",
-    "category": "cherry",
-    "color": "#c62828",
-    "image": "images/event-1784720917363.jpg",
-    "zoomUrl": "https://us06web.zoom.us/j/81508872311?pwd=i01nYlbwEYec6hF2w1loy4yK0fgjCl.1",
-    "program": []
-  },
-  {
-    "id": "20260727-night-fm",
-    "date": "2026-07-27",
-    "startTime": "19:00",
-    "endTime": "",
-    "title": "🌙 ナイトFMなまず",
-    "shortTitle": "🌙FM",
-    "category": "fm",
-    "color": "#247447",
-    "image": "",
-    "zoomUrl": "https://us06web.zoom.us/j/81027843098?pwd=PXv4xY4DrB8mOxI6veZDjmabYOxIZR.1",
-    "program": []
-  },
-  {
-    "id": "20260728-takenoko",
-    "date": "2026-07-28",
-    "startTime": "19:00",
-    "endTime": "",
-    "title": "🎶 竹の子族",
-    "shortTitle": "🎶竹の子",
-    "category": "event",
-    "color": "#8e44ad",
-    "image": "",
-    "zoomUrl": "https://us06web.zoom.us/j/84602857850?pwd=KaXVHarTMU5rPCqZNoPnan7LnA3PUh.1",
-    "program": []
-  },
-  {
-    "id": "20260729-sakura",
-    "date": "2026-07-29",
+    "id": "20260809-kuqdia",
+    "date": "2026-08-09",
     "startTime": "13:00",
     "endTime": "",
     "title": "🌸 サクラ咲く会",
@@ -61,77 +9,233 @@
     "category": "event",
     "color": "#e91e63",
     "image": "",
-    "zoomUrl": "https://us06web.zoom.us/j/81571154600?pwd=rIaefQagLtkgVSJZzFN1bTgqS2NXx4.1",
-    "program": []
-  },
-  {
-    "id": "20260729-yoga",
-    "date": "2026-07-29",
-    "startTime": "20:00",
-    "endTime": "",
-    "title": "🧘 ヨガチャンネル",
-    "shortTitle": "🧘ヨガ",
-    "category": "event",
-    "color": "#7b1fa2",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260731-science",
-    "date": "2026-07-31",
-    "startTime": "19:00",
-    "endTime": "",
-    "title": "🧪 理科の実験チャンネル",
-    "shortTitle": "🧪理科実験",
-    "category": "event",
-    "color": "#ef6c00",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260803-ndwnqn",
-    "date": "2026-08-03",
-    "startTime": "13:00",
-    "endTime": "14:30",
-    "title": "第68回　のびしろの会",
-    "shortTitle": "のびしろ",
-    "category": "",
-    "color": "#754024",
-    "image": "",
-    "zoomUrl": "",
+    "zoomUrl": "https://us06web.zoom.us/j/84439041449?pwd=jjTc5ICZ7sTNDRrJJIxs4QHhv87NFs.1",
     "program": [
       {
         "time": "13:00",
-        "title": "司会",
-        "person": "吉塚桂子SＭ"
+        "title": "目的",
+        "person": "吉塚M\n"
       },
       {
         "time": "13:05",
-        "title": "スキンケア紹介",
-        "person": "椿由希子Ｍ\n中村友光子M"
+        "title": "エリナの歴史",
+        "person": "冨田M"
       },
       {
-        "time": "13:10",
-        "title": "KGフェーシャルマスク",
-        "person": "本社佐藤ビューティートレーナー"
+        "time": "13:15",
+        "title": "お仕事の仕組み",
+        "person": "早人M"
       },
       {
-        "time": "13:25",
-        "title": "ヘルスケア　ABCとアロエジュース",
-        "person": "本社杉本課長"
+        "time": "13:35",
+        "title": "浄水器動画",
+        "person": "早人M"
       },
       {
         "time": "13:50",
-        "title": "ハロートーク",
-        "person": "大宅SM・上野紀美子さん(RM)"
+        "title": "エリナのお仕事について",
+        "person": "大宅M"
       },
       {
-        "time": "14:25",
-        "title": "次回ご案内佐賀オンライン・のびしろの会",
-        "person": "田島さとみＭ\n脇屋敷Ｍ"
+        "time": "14:10",
+        "title": "新会員獲得者対談",
+        "person": "吉塚M\n\nゲストさん紹介\n※寺岡智哉さん\n※森口きみ子さんor吉川M\n※緒方亜由美さん"
+      },
+      {
+        "time": "14:40",
+        "title": "次回のご案内",
+        "person": "9/12(土) 13:00〜\n　植木公民館　\n　2階　多目的室"
       }
     ]
+  },
+  {
+    "id": "20260810-3q8f1b",
+    "date": "2026-08-10",
+    "startTime": "12:00",
+    "endTime": "",
+    "title": "📻FMなまず",
+    "shortTitle": "📻FM",
+    "category": "fm",
+    "color": "#247447",
+    "image": "images/event-1785998705381.jpg",
+    "zoomUrl": "https://us06web.zoom.us/j/81641297885?pwd=43PqRCDb7H1sHKX900lrkz5LQdTesZ.1",
+    "program": []
+  },
+  {
+    "id": "20260812-71dtw5",
+    "date": "2026-08-12",
+    "startTime": "13:00",
+    "endTime": "",
+    "title": "🍒 平日チェリーLive",
+    "shortTitle": "🍒チェリー",
+    "category": "cherry",
+    "color": "#c62828",
+    "image": "images/event-1785928538466.jpg",
+    "zoomUrl": "https://us06web.zoom.us/j/88943553036?pwd=MdlxD0cAWrXpuE1nHiHbpAftDF15YH.1",
+    "program": []
+  },
+  {
+    "id": "20260815-zn65b6",
+    "date": "2026-08-15",
+    "startTime": "13:00",
+    "endTime": "",
+    "title": "💃ワンコインダンス",
+    "shortTitle": "💃ワンコイン",
+    "category": "",
+    "color": "#e7c418",
+    "image": "",
+    "zoomUrl": "https://us06web.zoom.us/j/87028645307?pwd=Xc1MQXfxv2asuea89slEJcqTOcMNQT.1",
+    "program": []
+  },
+  {
+    "id": "20260816-8txzcn",
+    "date": "2026-08-16",
+    "startTime": "13:00",
+    "endTime": "",
+    "title": "♣ミナソンチャンネル",
+    "shortTitle": "♣ミナソン",
+    "category": "",
+    "color": "#3311df",
+    "image": "",
+    "zoomUrl": "https://us06web.zoom.us/j/87369717262?pwd=MOtL8zesaE8wnMpK5WUMdJcOpbnCp5.1",
+    "program": [
+      {
+        "time": "13:00",
+        "title": "第51回ミナソン♣クラブ",
+        "person": ""
+      },
+      {
+        "time": "",
+        "title": "♣オープニング♣",
+        "person": ""
+      },
+      {
+        "time": "",
+        "title": "♣この人と アノ人に注目♣",
+        "person": "今月のゲスト\n蔵本ひな"
+      },
+      {
+        "time": "",
+        "title": "♣ミナソン zoomパーティー♣",
+        "person": ""
+      },
+      {
+        "time": "",
+        "title": "♣クルーの エリナストーリー♣",
+        "person": ""
+      },
+      {
+        "time": "",
+        "title": "♣次回のお知らせ♣",
+        "person": ""
+      },
+      {
+        "time": "",
+        "title": "♣エンディング♣",
+        "person": ""
+      }
+    ]
+  },
+  {
+    "id": "20260817-6wtyi9",
+    "date": "2026-08-17",
+    "startTime": "12:00",
+    "endTime": "",
+    "title": "📻FMなまず",
+    "shortTitle": "📻FM",
+    "category": "fm",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20260806-y9f9ca",
+    "date": "2026-08-20",
+    "startTime": "19:00",
+    "endTime": "20:00",
+    "title": "🧪第47回　理科の実験チャンネル",
+    "shortTitle": "🧪理科実験",
+    "category": "event",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "https://us06web.zoom.us/j/85915570830?pwd=tkfdeF58gMX0ttiOa7DxEcV2b5pP6a.1",
+    "program": [
+      {
+        "time": "",
+        "title": "夏を乗り越える為の商品",
+        "person": "ABC NCM アロエジュース 高麗人参"
+      },
+      {
+        "time": "",
+        "title": "りかのまんま",
+        "person": "ゲスト：上園咲美M＆大野ひろみさん"
+      }
+    ]
+  },
+  {
+    "id": "20260821-8s5ebk",
+    "date": "2026-08-21",
+    "startTime": "13:00",
+    "endTime": "",
+    "title": "💻 佐賀オンラインセミナー",
+    "shortTitle": "💻佐賀",
+    "category": "seminar",
+    "color": "#1976d2",
+    "image": "",
+    "zoomUrl": "https://us06web.zoom.us/j/85448148643?pwd=lvD6M06uikAvxEVEbt3HCzWgz0ONcH.1",
+    "program": []
+  },
+  {
+    "id": "20260824-mw1a3g",
+    "date": "2026-08-24",
+    "startTime": "12:00",
+    "endTime": "",
+    "title": "📻FMなまず",
+    "shortTitle": "📻FM",
+    "category": "fm",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20260825-de945n",
+    "date": "2026-08-25",
+    "startTime": "19:00",
+    "endTime": "",
+    "title": "🎶 竹の子族",
+    "shortTitle": "🎶竹の子",
+    "category": "event",
+    "color": "#8e44ad",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20260830-u6c2dn",
+    "date": "2026-08-30",
+    "startTime": "13:00",
+    "endTime": "",
+    "title": "🍒 休日チェリーLive",
+    "shortTitle": "🍒チェリー",
+    "category": "cherry",
+    "color": "#c62828",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20260831-o15js0",
+    "date": "2026-08-31",
+    "startTime": "12:00",
+    "endTime": "",
+    "title": "📻FMなまず",
+    "shortTitle": "📻FM",
+    "category": "fm",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
   }
 ]
