@@ -83,6 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderNotices();
 
+    startNoticeAutoRefresh(); 
 });
 
 
@@ -2855,4 +2856,7 @@ async function renderNotices(){
 
     });
 
+}
+function startNoticeAutoRefresh(){
+    setInterval(renderNotices, 30000);
 }
