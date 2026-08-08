@@ -1,148 +1,183 @@
+// ==========================================
+// ERINA Zoom フロント 完全版（元UI復元）
+// ==========================================
+
 "use strict";
 
-/* =========================
-   基本設定
-========================= */
-
-const DATA_URL =
-"https://erina-manager.tomoya19980427goku.workers.dev/?action=events";
+const WORKER_URL = "https://erina-manager.tomoya19980427goku.workers.dev";
 
 let events = [];
 
-/* =========================
-   初期化
-========================= */
-
+// ==========================================
+// 初期読み込み
+// ==========================================
 document.addEventListener("DOMContentLoaded", async () => {
-
     await loadEvents();
     renderAll();
-
 });
 
-/* =========================
-   データ取得
-========================= */
-
+// ==========================================
 async function loadEvents(){
-
-    const res = await fetch(DATA_URL + "&t=" + Date.now());
-    const data = await res.json();
-
-    events = data || [];
-
+    const res = await fetch(WORKER_URL + "?action=events&t=" + Date.now());
+    events = await res.json();
 }
 
-/* =========================
-   全描画
-========================= */
-
+// ==========================================
 function renderAll(){
-
-    renderScheduleList();
-    renderWeekEvents();
-
+    renderToday();
+    renderNext();
+    renderWeek();
+    renderSchedule();
 }
 
-/* =========================
-   スケジュール（←ここが元UI）
-========================= */
+// ==========================================
+// 今日
+// ==========================================
+function renderToday(){
+    const today = new Date().toISOString().slice(0,10);
+    const e = events.find(x=>x.date === today);
 
-function renderScheduleList(){
+    const el = document.getElementById("todayEvent");
 
-    const container = document.getElementById("scheduleList");
-    if(!container) return;
+    if(!e){
+        el.innerHTML = "本日の予定はありません";
+        return;
+    }
 
-    container.innerHTML = "";
-
-    events.forEach(event => {
-
-        const card = document.createElement("div");
-        card.className = "card";
-
-        card.innerHTML = `
-            <div style="border-left:6px solid ${event.color || "#247447"}; padding-left:12px;">
-                
-                <h3>${formatDate(event.date)}</h3>
-
-                <p style="color:#2e7d32;font-weight:bold;">
-                    🕒 ${event.startTime || ""}
-                </p>
-
-                <p style="font-size:18px;">
-                    ${event.title || ""}
-                </p>
-
-            </div>
-        `;
-
-        container.appendChild(card);
-
-    });
-
+    el.innerHTML = createEventHTML(e);
 }
 
-/* =========================
-   今週の予定
-========================= */
+// ==========================================
+// 次回
+// ==========================================
+function renderNext(){
+    const today = new Date().toISOString().slice(0,10);
 
-function renderWeekEvents(){
+    const e = events
+        .filter(x=>x.date >= today)
+        .sort((a,b)=>a.date.localeCompare(b.date))[0];
 
-    const container =
-    document.getElementById("weekEvents");
+    const el = document.getElementById("nextEvent");
 
-    if(!container) return;
+    if(!e){
+        el.innerHTML = "予定なし";
+        return;
+    }
 
+    el.innerHTML = createEventHTML(e);
+}
+
+// ==========================================
+// 今週
+// ==========================================
+function renderWeek(){
+    const container = document.getElementById("weekEvents");
     container.innerHTML = "";
 
-    const today = new Date();
-
-    const weekLater = new Date();
-    weekLater.setDate(today.getDate()+6);
-
-    const weekEvents = events.filter(e=>{
-
-        const d = new Date(e.date);
-        return d >= today && d <= weekLater;
-
-    });
-
-    weekEvents.forEach(e=>{
-
+    events.forEach(e=>{
         const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = createEventHTML(e);
 
-        div.innerHTML = `
-            ${formatShortDate(e.date)}<br>
-            ${e.startTime}<br>
-            ${e.title}
-        `;
+        div.onclick = ()=>showDetail(e);
 
         container.appendChild(div);
-
     });
-
 }
 
-/* =========================
-   日付フォーマット
-========================= */
+// ==========================================
+// スケジュール一覧
+// ==========================================
+function renderSchedule(){
+    const container = document.getElementById("scheduleList");
+    container.innerHTML = "";
 
-function formatDate(dateStr){
+    events.forEach(e=>{
+        const div = document.createElement("div");
+        div.className = "card";
 
-    const d = new Date(dateStr);
+        div.innerHTML = createEventHTML(e);
 
-    const week = ["日","月","火","水","木","金","土"];
+        div.onclick = ()=>showDetail(e);
 
-    return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${week[d.getDay()]}）`;
-
+        container.appendChild(div);
+    });
 }
 
-function formatShortDate(dateStr){
+// ==========================================
+// イベント表示HTML
+// ==========================================
+function createEventHTML(e){
 
-    const d = new Date(dateStr);
-
-    const week = ["日","月","火","水","木","金","土"];
-
-    return `${d.getMonth()+1}/${d.getDate()}（${week[d.getDay()]}）`;
-
+    return `
+        <b>${e.title}</b><br>
+        ${e.date} ${e.startTime || ""}<br>
+        ${e.zoomUrl ? `<a href="${e.zoomUrl}" target="_blank">Zoom参加</a>` : ""}
+    `;
 }
+
+// ==========================================
+// モーダル表示（←これが元UIの核心）
+// ==========================================
+function showDetail(e){
+
+    document.getElementById("modal").classList.remove("hidden");
+
+    // 🔥画像
+    const imageArea = document.getElementById("eventImageArea");
+
+    if(e.image){
+        imageArea.innerHTML = `<img src="${e.image}" style="width:100%;border-radius:10px;">`;
+    }else{
+        imageArea.innerHTML = "";
+    }
+
+    // 🔥詳細
+    let html = `
+        <h3>${e.title}</h3>
+        <p>${e.date} ${e.startTime || ""}</p>
+    `;
+
+    // 🔥プログラム（のびしろ用）
+    if(e.program && e.program.length > 0){
+
+        html += `<hr><b>📋 タイムスケジュール</b><br>`;
+
+        e.program.forEach(p=>{
+            html += `
+                <div style="margin:5px 0;">
+                    ${p.time ? `<b>${p.time}</b>` : ""}
+                    ${p.title || ""}
+                    ${p.person ? `<br><small>${p.person}</small>` : ""}
+                </div>
+            `;
+        });
+    }
+
+    // 🔥Zoom
+    if(e.zoomUrl){
+        html += `<br><a href="${e.zoomUrl}" target="_blank">▶ Zoom参加</a>`;
+    }
+
+    document.getElementById("eventDetail").innerHTML = html;
+}
+
+// ==========================================
+// モーダル閉じる
+// ==========================================
+document.getElementById("closeModal").onclick = ()=>{
+    document.getElementById("modal").classList.add("hidden");
+};
+
+// ==========================================
+// 表示切り替え
+// ==========================================
+document.getElementById("showSchedule").onclick = ()=>{
+    document.getElementById("scheduleSection").style.display="block";
+    document.getElementById("calendarSection").style.display="none";
+};
+
+document.getElementById("showCalendar").onclick = ()=>{
+    document.getElementById("scheduleSection").style.display="none";
+    document.getElementById("calendarSection").style.display="block";
+};
