@@ -3,105 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ERINA Zoom 管理画面</title>
 
-<link rel="stylesheet" href="style.css">
+<title>ERINA 管理画面</title>
+
+<style>
+body{font-family:sans-serif;margin:0;background:#f5f5f5;}
+header{background:#247447;color:white;padding:15px;}
+main{padding:15px;}
+
+.panel{
+background:white;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+input,select{
+width:100%;
+padding:8px;
+margin-bottom:10px;
+}
+
+button{
+padding:10px;
+margin-right:5px;
+}
+
+.event-item{
+border-bottom:1px solid #ddd;
+padding:10px 0;
+}
+</style>
 </head>
 
 <body>
 
-<h1 style="padding:20px;">ERINA Zoom 管理画面</h1>
+<header>
+<h1>管理画面</h1>
+</header>
 
-<div class="panel">
+<main>
 
-<h2>📅 イベント一覧</h2>
-
-<button id="newEventButton">＋新規</button>
-<button id="reloadButton">更新</button>
-
+<section class="panel">
+<h2>催事一覧</h2>
 <div id="eventList"></div>
+</section>
 
-</div>
+<section class="panel">
+<h2>編集</h2>
 
+<input id="title" placeholder="タイトル">
+<input id="eventDate" type="date">
+<input id="startTime" type="time">
 
-<div class="panel">
+<input id="zoomUrl" placeholder="Zoom URL">
 
-<h2>✏️ 編集</h2>
+<button id="saveBtn">保存</button>
+<button id="newBtn">新規</button>
 
-<input type="hidden" id="eventId">
+</section>
 
-<input id="title" placeholder="タイトル"><br><br>
-
-<input id="shortTitle" placeholder="短い名前"><br><br>
-
-<select id="category">
-<option>その他</option>
-<option>チェリー</option>
-<option>FMなまず</option>
-<option>理科</option>
-</select><br><br>
-
-<input type="date" id="eventDate"><br><br>
-
-<input type="color" id="eventColor" value="#247447"><br><br>
-
-<input type="time" id="startTime"><br><br>
-
-<input type="time" id="endTime"><br><br>
-
-<input id="zoomUrl" placeholder="Zoom URL"><br><br>
-
-<!-- ===================== -->
-<!-- 🔥 画像（チェリー・FM） -->
-<!-- ===================== -->
-<h3>🖼 催事画像（チェリー・FM用）</h3>
-
-<input type="file" id="imageInput"><br><br>
-<button id="uploadImageButton">画像アップロード</button>
-
-<div id="imagePreview"></div>
-
-<hr>
-
-<!-- ===================== -->
-<!-- 🔥 スケジュール（のびしろ） -->
-<!-- ===================== -->
-<h3>📝 催事スケジュール（のびしろ用）</h3>
-
-<div id="programList"></div>
-
-<button id="addProgramButton">＋項目追加</button>
-
-<hr>
-
-<button id="saveEventButton">保存</button>
-<button id="deleteButton">削除</button>
-<button id="clearButton">クリア</button>
-
-
-<div class="panel">
-
-<h2>📢 お知らせ</h2>
-
-<input id="noticeTitle" placeholder="タイトル"><br><br>
-
-<textarea id="noticeMessage" placeholder="内容"></textarea><br><br>
-
-<input type="date" id="noticeStart"><br><br>
-<input type="date" id="noticeEnd"><br><br>
-
-<select id="noticeEnabled">
-<option value="true">表示</option>
-<option value="false">非表示</option>
-</select><br><br>
-
-<button id="saveNoticeButton">保存</button>
-
-<div id="noticeList"></div>
-
-</div>
+</main>
 
 <script src="manager.js"></script>
-
 </body>
 </html>
