@@ -1,10 +1,15 @@
+/* ===============================
+   全体
+=============================== */
 body{
     margin:0;
     font-family:sans-serif;
     background:#f4f7f5;
 }
 
-/* ロゴ */
+/* ===============================
+   ロゴ
+=============================== */
 .logo-area{
     display:flex;
     align-items:center;
@@ -18,47 +23,63 @@ body{
     margin-right:15px;
 }
 
-/* カード（←これが元UI） */
+/* ===============================
+   カード（←これが一番重要）
+=============================== */
 .card{
-    background:#fff;
+    background:#ffffff;
     margin:15px;
     padding:15px;
     border-radius:16px;
-    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    transition:0.2s;
 }
 
-/* ボタン */
+/* 押した時の反応（元UI） */
+.card:active{
+    transform:scale(0.98);
+}
+
+/* ===============================
+   今週のカードを縦に整える
+=============================== */
+#weekEvents{
+    display:flex;
+    flex-direction:column;
+}
+
+/* ===============================
+   ボタン
+=============================== */
 button{
     padding:8px 12px;
     border:none;
     border-radius:8px;
-    margin:5px;
+    background:#2e7d32;
+    color:white;
 }
 
-/* 今週の予定 */
-#weekEvents div{
-    background:#fff;
-    margin:10px 15px;
-    padding:10px;
-    border-radius:10px;
-}
-
-/* モーダル */
+/* ===============================
+   モーダル
+=============================== */
 .modal{
     position:fixed;
     inset:0;
     background:rgba(0,0,0,0.6);
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .modal-content{
     background:#fff;
-    margin:50px auto;
     padding:20px;
     width:90%;
     max-width:400px;
-    border-radius:10px;
+    border-radius:12px;
 }
 
+/* 非表示 */
 .hidden{
     display:none;
 }
