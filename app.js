@@ -131,8 +131,10 @@ function getIcon(category){
     switch(category){
         case "cherry": return "🍒";
         case "fm": return "📻";
-        case "event": return "🌸";   // ←これ追加
+        case "event": return "🌸";
+        case "dance": return "💃";
         case "seminar": return "💻";
+        default: return ""; // ←📌消す
     }
 }
 
@@ -141,13 +143,18 @@ function getIcon(category){
 // ==========================================
 function getColor(category){
     switch(category){
-        case "cherry": return "#e91e63"; // 🍒
-        case "fm": return "#4caf50";     // 📻
-        case "event": return "#ff9800";  // 🌸とか
-        case "seminar": return "#2196f3"; // 💻
+        case "cherry": return "#e91e63"; // ピンク
+        case "fm": return "#4caf50";     // 緑
+        case "event": return "#ff9800";  // オレンジ
+        case "dance": return "#f44336";  // 赤
+        case "seminar": return "#2196f3";// 青
         default: return "#2e7d32";
     }
 }
+
+function cleanTitle(title){
+    return title.replace(/^[📌🌸🍒📻💃💻🎵]+\s*/,'');
+    }
 // ==========================================
 // イベント表示HTML
 // ==========================================
@@ -169,7 +176,7 @@ function createEventHTML(e){
         <div class="week-content">
             <div class="time">${e.startTime}</div>
             <div class="title">
-                ${getIcon(e.category)} ${e.title}
+                ${getIcon(e.category)} ${cleanTitle(e.title)}
             </div>
         </div>
     `;
@@ -193,7 +200,7 @@ function showDetail(e){
 
     // 🔥詳細
     let html = `
-        <h3>${e.title}</h3>
+        <h3>${cleanTitle(e.title)}</h3>
         <p>${e.date} ${e.startTime || ""}</p>
     `;
 
