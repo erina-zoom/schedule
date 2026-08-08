@@ -94,6 +94,7 @@ async function loadEvents(){
 function renderEvents(){
 
     const container = document.getElementById("eventList");
+
     if(!container) return;
 
     container.innerHTML = "";
@@ -106,31 +107,36 @@ function renderEvents(){
     events.forEach(e => {
 
         const item = document.createElement("div");
-        item.className = "event-list-item";
+
+        // ★ 元のカード風デザイン
+        item.className = "event-card";
 
         item.innerHTML = `
-            <div>
-                <div class="event-list-title">${e.title}</div>
-                <div class="event-list-date">
+            <div class="event-info">
+                <div class="event-title">${e.title}</div>
+                <div class="event-date">
                     ${e.date} ${e.startTime || ""}
                 </div>
             </div>
 
-            <div class="event-list-buttons">
-                <button class="button button-blue edit-btn">編集</button>
-                <button class="button button-secondary copy-btn">複製</button>
-                <button class="button button-danger delete-btn">削除</button>
+            <div class="event-actions">
+                <button class="edit-btn">編集</button>
+                <button class="copy-btn">複製</button>
+                <button class="delete-btn">削除</button>
             </div>
         `;
 
+        // 編集
         item.querySelector(".edit-btn").onclick = ()=>{
             editEvent(e.id);
         };
 
+        // 複製
         item.querySelector(".copy-btn").onclick = ()=>{
             duplicateEvent(e.id);
         };
 
+        // 削除
         item.querySelector(".delete-btn").onclick = ()=>{
             deleteEvent(e.id);
         };
