@@ -1,5 +1,5 @@
 // ==========================================
-// ERINA Zoom Manager Ver5（完全完成版）
+// ERINA Zoom Manager 完全完成版（画像連動あり）
 // ==========================================
 
 "use strict";
@@ -29,7 +29,7 @@ async function initializeManager(){
 
     await loadEvents();
 
-    renderEvents(); // ←UIそのまま表示
+    renderEvents();
 
     await renderNoticeList();
 }
@@ -45,7 +45,6 @@ function setupEventListeners(){
     document.getElementById("saveEventButton")
         ?.addEventListener("click", saveEvent);
 
-    // 🔥 追加（元UI用）
     document.getElementById("newEventButton")
         ?.addEventListener("click", ()=>{
             editingEventId = null;
@@ -67,34 +66,32 @@ function setupEventListeners(){
             if(!editingEventId) return;
             await deleteEvent(editingEventId);
         });
+
+    // 🔥 画像アップロード
+    document.getElementById("uploadImageButton")
+        ?.addEventListener("click", uploadImage);
 }
 
 // ==========================================
 // events取得
 // ==========================================
 async function loadEvents(){
-
     try{
         const res = await fetch(`${EVENTS_URL}&t=${Date.now()}`, {
             cache:"no-store"
         });
-
         events = await res.json();
-
-        console.log("イベント取得", events);
-
     }catch(e){
         console.error("イベント取得失敗", e);
     }
 }
 
 // ==========================================
-// イベント描画（元デザイン完全復元）
+// イベント描画
 // ==========================================
 function renderEvents(){
 
     const container = document.getElementById("eventList");
-
     if(!container) return;
 
     container.innerHTML = "";
@@ -107,16 +104,13 @@ function renderEvents(){
     events.forEach(e => {
 
         const item = document.createElement("div");
-
-        // ★ 元のカード風デザイン
         item.className = "event-card";
 
         item.innerHTML = `
             <div class="event-info">
                 <div class="event-title">${e.title}</div>
-                <div class="event-date">
-                    ${e.date} ${e.startTime || ""}
-                </div>
+                <div class="event-date">${e.date} ${e.startTime || ""}</div>
+                ${e.image ? `<img src="${e.image}" style="width:80px;margin-top:5px;border-radius:6px;">` : ""}
             </div>
 
             <div class="event-actions">
@@ -126,20 +120,9 @@ function renderEvents(){
             </div>
         `;
 
-        // 編集
-        item.querySelector(".edit-btn").onclick = ()=>{
-            editEvent(e.id);
-        };
-
-        // 複製
-        item.querySelector(".copy-btn").onclick = ()=>{
-            duplicateEvent(e.id);
-        };
-
-        // 削除
-        item.querySelector(".delete-btn").onclick = ()=>{
-            deleteEvent(e.id);
-        };
+        item.querySelector(".edit-btn").onclick = ()=> editEvent(e.id);
+        item.querySelector(".copy-btn").onclick = ()=> duplicateEvent(e.id);
+        item.querySelector(".delete-btn").onclick = ()=> deleteEvent(e.id);
 
         container.appendChild(item);
     });
@@ -159,7 +142,8 @@ async function saveEvent(){
         color: document.getElementById("eventColor").value,
         startTime: document.getElementById("startTime").value,
         endTime: document.getElementById("endTime").value,
-        zoomUrl: document.getElementById("zoomUrl").value
+        zoomUrl: document.getElementById("zoomUrl").value,
+        image: document.getElementById("imagePreview")?.dataset.url || ""
     };
 
     await fetch(WORKER_URL,{
@@ -200,6 +184,15 @@ function editEvent(id){
     document.getElementById("endTime").value = e.endTime || "";
     document.getElementById("zoomUrl").value = e.zoomUrl || "";
 
+    const preview = document.getElementById("imagePreview");
+    if(e.image){
+        preview.innerHTML = `<img src="${e.image}" style="width:120px;border-radius:8px;">`;
+        preview.dataset.url = e.image;
+    }else{
+        preview.innerHTML = "";
+        preview.dataset.url = "";
+    }
+
     window.scrollTo({ top:0, behavior:"smooth" });
 }
 
@@ -221,6 +214,15 @@ function duplicateEvent(id){
     document.getElementById("startTime").value = e.startTime || "";
     document.getElementById("endTime").value = e.endTime || "";
     document.getElementById("zoomUrl").value = e.zoomUrl || "";
+
+    const preview = document.getElementById("imagePreview");
+    if(e.image){
+        preview.innerHTML = `<img src="${e.image}" style="width:120px;border-radius:8px;">`;
+        preview.dataset.url = e.image;
+    }else{
+        preview.innerHTML = "";
+        preview.dataset.url = "";
+    }
 
     window.scrollTo({ top:0, behavior:"smooth" });
 }
@@ -248,7 +250,41 @@ async function deleteEvent(id){
 }
 
 // ==========================================
-// お知らせ保存
+// 画像アップロード
+// ==========================================
+async function uploadImage(){
+
+    const file = document.getElementById("imageInput").files[0];
+    if(!file) return alert("画像選んで");
+
+    const reader = new FileReader();
+
+    reader.onload = async () => {
+
+        const base64 = reader.result;
+
+        const preview = document.getElementById("imagePreview");
+
+        preview.innerHTML = `<img src="${base64}" style="width:120px;border-radius:8px;">`;
+        preview.dataset.url = base64;
+
+        await fetch(WORKER_URL,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify({
+                type:"image",
+                data: base64
+            })
+        });
+
+        alert("アップロードOK👍");
+    };
+
+    reader.readAsDataURL(file);
+}
+
+// ==========================================
+// お知らせ
 // ==========================================
 async function saveNotice(){
 
@@ -275,8 +311,6 @@ async function saveNotice(){
         alert("保存OK👍");
         clearEditor();
         renderNoticeList();
-    }else{
-        alert("保存失敗");
     }
 }
 
@@ -294,24 +328,18 @@ async function renderNoticeList(){
     list.innerHTML = "";
 
     notices = notices.filter(n => n.enabled !== false);
-    notices.sort((a,b)=> b.startDate.localeCompare(a.startDate));
 
     notices.forEach(n => {
 
         const item = document.createElement("div");
-        item.className = "notice-item";
 
         item.innerHTML = `
-            <div class="notice-title">${n.title}</div>
-            <div class="notice-message">${n.message}</div>
-            <div>📅 ${n.startDate}〜${n.endDate}</div>
-            <button class="delete-btn">削除</button>
+            <div>${n.title}</div>
+            <div>${n.message}</div>
+            <button>削除</button>
         `;
 
-        item.querySelector(".delete-btn").onclick = async ()=>{
-
-            if(!confirm("削除する？")) return;
-
+        item.querySelector("button").onclick = async ()=>{
             await fetch(WORKER_URL,{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
@@ -320,9 +348,6 @@ async function renderNoticeList(){
                     id:n.id
                 })
             });
-
-            alert("削除した👍");
-
             renderNoticeList();
         };
 
@@ -331,7 +356,7 @@ async function renderNoticeList(){
 }
 
 // ==========================================
-// 入力リセット
+// リセット
 // ==========================================
 function clearEditor(){
 
@@ -354,31 +379,12 @@ function clearEditor(){
         }
     });
 
+    const preview = document.getElementById("imagePreview");
+    if(preview){
+        preview.innerHTML = "";
+        preview.dataset.url = "";
+    }
+
     const enabled = document.getElementById("noticeEnabled");
     if(enabled) enabled.value = "true";
 }
-document.getElementById("uploadImageButton")?.addEventListener("click", async ()=>{
-
-    const file = document.getElementById("imageInput").files[0];
-    if(!file) return alert("画像選んで");
-
-    const reader = new FileReader();
-
-    reader.onload = async () => {
-
-        const base64 = reader.result;
-
-        await fetch(WORKER_URL,{
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body: JSON.stringify({
-                type:"image",
-                data: base64
-            })
-        });
-
-        alert("アップロードOK👍");
-    };
-
-    reader.readAsDataURL(file);
-});
