@@ -69,8 +69,7 @@ function renderWeek(){
             const div = document.createElement("div");
 
             div.className="card";
-            div.style.borderLeft = `6px solid ${getColor(e.category)}`;
-
+        
             div.innerHTML = createInner(e);
 
             container.appendChild(div);
@@ -124,9 +123,18 @@ function getColor(c){
 function createInner(e){
     return `
         <div><b>${e.date}</b></div>
-        <div>🕒 ${e.startTime}</div>
-        <div>${getIcon(e.category)} ${e.title}</div>
-        ${e.zoomUrl ? `<div style="margin-top:8px;"><a href="${e.zoomUrl}" target="_blank">▶ Zoomに参加</a></div>` : ""}
+
+        <div class="time">🕒 ${e.startTime}</div>
+
+        <div class="title">
+            ${getIcon(e.category)} ${e.title}
+        </div>
+
+        ${e.zoomUrl ? `
+            <a href="${e.zoomUrl}" target="_blank" class="zoom-btn">
+                Zoomに参加
+            </a>
+        ` : ""}
     `;
 }
 
