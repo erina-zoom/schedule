@@ -34,8 +34,10 @@ async function initializeManager(){
 
     await loadEvents();
 
-    // 🔥 ここが重要（お知らせ一覧表示）
+    renderEvents(); // ←🔥これ追加！！
+
     await renderNoticeList();
+
 }
 
 // ==========================================
