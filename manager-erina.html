@@ -879,10 +879,38 @@
                 入力をクリア
             </button>
 
-        </div>
+    </div>
 
-    </section>
+    <!-- ========================= -->
+    <!-- 📢 お知らせ -->
+    <!-- ========================= -->
 
+    <h3>📢 お知らせ</h3>
+
+    <input type="text" id="noticeTitle" placeholder="タイトル">
+
+    <textarea id="noticeMessage" placeholder="内容"></textarea>
+
+    <input type="date" id="noticeStart">
+
+    <input type="date" id="noticeEnd">
+
+    <select id="noticeEnabled">
+      <option value="true">表示</option>
+      <option value="false">非表示</option>
+    </select>
+
+    <div class="button-row">
+        <button
+            type="button"
+            id="saveNoticeButton"
+            class="button button-primary"
+        >
+            📢 お知らせ保存
+        </button>
+    </div>
+
+</section>
 
 </main>
 
@@ -896,3 +924,5 @@
 
 </body>
 </html>
+
+

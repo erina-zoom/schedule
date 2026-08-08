@@ -206,79 +206,50 @@ async function initializeManager(){
 
 function setupEventListeners(){
 
-
     if(newEventButton){
-
         newEventButton.onclick = ()=>{
-
             clearEditor();
-
             editorPanel.scrollIntoView({
                 behavior:"smooth"
             });
-
         };
-
     }
-
 
     if(reloadButton){
-
-        reloadButton.onclick =
-        loadEvents;
-
+        reloadButton.onclick = loadEvents;
     }
-
 
     if(saveButton){
-
-        saveButton.onclick =
-        saveEvent;
-
+        saveButton.onclick = saveEvent;
     }
-
 
     if(deleteButton){
-
-        deleteButton.onclick =
-        deleteCurrentEvent;
-
+        deleteButton.onclick = deleteCurrentEvent;
     }
-
 
     if(clearButton){
-
-        clearButton.onclick =
-        clearEditor;
-
+        clearButton.onclick = clearEditor;
     }
-
 
     if(imageButton){
-
-        imageButton.onclick =
-        removeImage;
-
+        imageButton.onclick = removeImage;
     }
-
 
     if(imageFileInput){
-
-        imageFileInput.onchange =
-        handleImageSelection;
-
+        imageFileInput.onchange = handleImageSelection;
     }
 
-
     if(addProgramButton){
-
-        addProgramButton.onclick =
-        ()=>{
-
+        addProgramButton.onclick = ()=>{
             addProgramEditor();
-
         };
+    }
 
+    const saveNoticeButton =
+    document.getElementById("saveNoticeButton");
+
+    if(saveNoticeButton){
+        saveNoticeButton.onclick = saveNotice;
     }
 
 }
@@ -1766,6 +1737,35 @@ function escapeAttribute(
 
 }
 
+async function saveNotice(){
+
+    const notice = {
+        title: document.getElementById("noticeTitle").value,
+        message: document.getElementById("noticeMessage").value,
+        startDate: document.getElementById("noticeStart").value,
+        endDate: document.getElementById("noticeEnd").value,
+        enabled: document.getElementById("noticeEnabled").value === "true"
+    };
+
+    const res = await fetch(WORKER_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            action: "saveNotice",
+            notice: notice
+        })
+    });
+
+    const result = await res.json();
+
+    if(result.success){
+        alert("お知らせ保存した👍");
+    }else{
+        alert("保存失敗");
+    }
+}
 
 
 // ==========================================
