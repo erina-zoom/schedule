@@ -52,7 +52,7 @@ function renderNext(){
 // ==========================
 function renderWeek(){
     const el = document.getElementById("weekEvents");
-    el.innerHTML="";
+    el.innerHTML = "";
 
     const now = new Date();
     const end = new Date();
@@ -60,11 +60,32 @@ function renderWeek(){
 
     events.forEach(e=>{
         const d = new Date(e.date);
+
         if(d>=now && d<=end){
+
             const div = document.createElement("div");
-            div.className="week-card";
-            div.innerHTML=createInner(e,false);
-            div.onclick=()=>openModal(e);
+            div.className = "week-card";
+
+            const month = d.getMonth()+1;
+            const day = d.getDate();
+            const week = ["日","月","火","水","木","金","土"][d.getDay()];
+
+            div.innerHTML = `
+                <div style="display:flex; align-items:center; gap:10px;">
+                    
+                    <div style="font-weight:bold; color:#2e7d32;">
+                        ${month}/${day}<br>(${week})
+                    </div>
+
+                    <div>
+                        <div>🕒 ${e.startTime}</div>
+                        <div>${getIcon(e.category)} ${e.title}</div>
+                    </div>
+
+                </div>
+            `;
+
+            div.onclick = ()=>openModal(e);
             el.appendChild(div);
         }
     });
