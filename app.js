@@ -2848,9 +2848,9 @@ async function renderNotices(){
         "notice-item";
 
         div.innerHTML = `
-            <strong>${n.title}</strong><br>
-            ${n.message}
-        `;
+    <div class="notice-title">📢 ${n.title}</div>
+    <div class="notice-message">${n.message}</div>
+`;
 
         noticeArea.appendChild(div);
 
