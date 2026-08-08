@@ -1,17 +1,15 @@
 body{
-    font-family: sans-serif;
+    font-family:sans-serif;
     background:#f3f5f4;
     margin:0;
     padding:20px;
 }
 
-/* タイトル */
 h1{
     text-align:center;
     color:#2e7d32;
 }
 
-/* 切り替えボタン */
 .switch{
     text-align:center;
     margin:20px 0;
@@ -24,74 +22,52 @@ h1{
     padding:12px 20px;
     margin:0 5px;
     border-radius:20px;
-    font-size:14px;
     cursor:pointer;
 }
 
-/* セクション */
-h2{
-    margin-top:30px;
-    font-size:18px;
-}
-
-/* カード（これが超重要） */
 .card{
+    position:relative;
     background:#fff;
     border-radius:20px;
-    padding:20px;
+    padding:20px 20px 20px 24px;
     margin:15px 0;
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    position:relative;
+    box-shadow:0 6px 16px rgba(0,0,0,0.08);
 }
 
-/* 左のライン */
+/* 左ライン */
 .card::before{
     content:"";
     position:absolute;
     left:0;
-    top:10px;
-    bottom:10px;
-    width:6px;
+    top:12px;
+    bottom:12px;
+    width:8px;
     border-radius:10px;
-    background:#2e7d32; /* デフォルト */
-}
-
-/* 日付 */
-.card b{
-    font-size:16px;
+    background:#2e7d32;
 }
 
 /* 時間 */
-.card .time{
+.time{
     color:#2e7d32;
     font-weight:bold;
     margin-top:6px;
 }
 
 /* タイトル */
-.card .title{
+.title{
     margin-top:8px;
     font-size:18px;
 }
 
-/* Zoomボタン（これが画像のやつ） */
+/* Zoomボタン */
 .zoom-btn{
     display:block;
     margin-top:15px;
     background:#2e7d32;
     color:#fff;
     text-align:center;
-    padding:12px;
+    padding:14px;
     border-radius:12px;
     text-decoration:none;
     font-weight:bold;
-}
-
-/* グレーBOX（今日なしのとき） */
-.empty{
-    background:#eee;
-    padding:20px;
-    border-radius:12px;
-    text-align:center;
-    color:#888;
 }
