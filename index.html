@@ -1,222 +1,80 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ERINA Zoom予定表</title>
+<title>ERINA Zoom</title>
 
-    <meta name="theme-color" content="#2e7d32">
+<link rel="stylesheet" href="style.css">
 
-    <link rel="manifest" href="manifest.json">
-
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-
-    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header class="header">
-
-    <div class="logo-area">
-
-        <img src="images/logo.png"
-             class="logo"
-             alt="ERINA">
-
-        <div>
-
-            <h1>ERINA Zoom予定表</h1>
-
-            <p class="sub-title">
-                最新のZoomスケジュール
-            </p>
-
-        </div>
-
-    </div>
-
-    <div id="noticeArea" class="notice-area"></div>
-</header>
-
-
-
-<!-- 表示切替 -->
-
-<div class="display-switch">
-
-    <button id="showSchedule">
-
-        📋予定表
-
-    </button>
-
-
-    <button id="showCalendar">
-
-        📅カレンダー
-
-    </button>
-
+<!-- ロゴ -->
+<div class="logo-area">
+    <img src="images/logo.png" class="logo">
+    <h2>ERINA Zoom</h2>
 </div>
 
+<!-- 今日 -->
+<div class="card">
+    <h3>📢 今日のZoom</h3>
+    <div id="todayEvent">読み込み中...</div>
+</div>
 
-<main>
-
-    <!-- 今日のZoom -->
-
-    <section class="card">
-
-        <h2>
-            📢 今日のZoom
-        </h2>
-
-        <div id="todayEvent">
-
-            読み込み中...
-
-        </div>
-
-    </section>
-
-    <!-- 次回Zoom -->
-
-    <section class="card">
-
-        <h2>
-
-            ⏭ 次回Zoom
-
-        </h2>
-
-        <div id="nextEvent">
-
-            読み込み中...
-
-        </div>
-
-    </section>
+<!-- 次回 -->
+<div class="card">
+    <h3>⏭ 次回のZoom</h3>
+    <div id="nextEvent">読み込み中...</div>
+</div>
 
 <!-- 今週 -->
+<div class="card">
+    <h3>📅 今週の予定</h3>
+    <div id="weekEvents"></div>
+</div>
 
-<section class="card">
+<!-- ボタン -->
+<div style="text-align:center;">
+    <button id="showSchedule">一覧</button>
+    <button id="showCalendar">カレンダー</button>
+</div>
 
-    <h2>
-        📅 今週の予定
-    </h2>
-
-    <div id="weekEvents">
-
-    </div>
-
-</section>
-
-
-<!-- スケジュール表 -->
-
-<section 
-class="card"
-id="scheduleSection">
-
-    <h2>
-        📋 スケジュール表
-    </h2>
-
-
-    <div id="scheduleList">
-
-    </div>
-
-</section>
-
+<!-- スケジュール -->
+<div id="scheduleSection">
+    <div id="scheduleList"></div>
+</div>
 
 <!-- カレンダー -->
-
-<section 
-class="card"
-id="calendarSection">
+<div id="calendarSection" style="display:none;">
 
     <div class="calendar-header">
-
-            <button id="prevMonth">
-
-                ◀
-
-            </button>
-
-            <h2 id="monthTitle">
-
-            </h2>
-
-            <button id="nextMonth">
-
-                ▶
-
-            </button>
-
-        </div>
-
-        <div class="week">
-
-            <div>月</div>
-            <div>火</div>
-            <div>水</div>
-            <div>木</div>
-            <div>金</div>
-            <div>土</div>
-            <div>日</div>
-
-        </div>
-
-        <div
-            id="calendar"
-            class="calendar">
-
-        </div>
-
-    </section>
-
-</main>
-
-<!-- イベント詳細 -->
-
-<div
-    id="eventModal"
-    class="modal hidden">
-
-    <div class="modal-content">
-
-        <button
-            id="closeModal"
-            class="close">
-
-            ✕
-
-        </button>
-
-        <div
-            id="eventImageArea">
-
-        </div>
-
-        <div
-            id="eventDetail">
-
-        </div>
-
+        <button id="prevMonth">◀</button>
+        <h2 id="monthTitle"></h2>
+        <button id="nextMonth">▶</button>
     </div>
+
+    <div class="week">
+        <div>月</div><div>火</div><div>水</div>
+        <div>木</div><div>金</div><div>土</div><div>日</div>
+    </div>
+
+    <div id="calendar" class="calendar"></div>
 
 </div>
 
-<!-- 更新通知 -->
+<!-- モーダル -->
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
 
-<div
-    id="updateToast"
-    class="toast hidden">
+        <button id="closeModal" class="close">✕</button>
 
-    新しい予定があります
+        <div id="eventImageArea"></div>
+        <div id="eventDetail"></div>
 
+    </div>
 </div>
 
 <script src="app.js"></script>
