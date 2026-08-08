@@ -7,8 +7,7 @@
 // ==========================================
 // 設定
 // ==========================================
-const WORKER_URL =
-"https://erina-manager.tomoya19980427goku.workers.dev";
+const WORKER_URL = "https://erina-manager.tomoya19980427goku.workers.dev";
 
 const EVENTS_URL =
 `${WORKER_URL}?action=events`;
@@ -34,10 +33,9 @@ async function initializeManager(){
 
     await loadEvents();
 
-    renderEvents(); // ←🔥これ追加！！
+    renderEvents(); // ←🔥これ重要
 
     await renderNoticeList();
-
 }
 
 // ==========================================
@@ -62,9 +60,46 @@ async function loadEvents(){
 
         events = data;
 
+        console.log("イベント取得", events);
+
     }catch(e){
-        console.error(e);
+        console.error("イベント取得失敗", e);
     }
+}
+
+// ==========================================
+// イベント描画（←追加）
+// ==========================================
+function renderEvents(){
+
+    const container = document.getElementById("eventList");
+
+    if(!container){
+        console.log("eventListがない");
+        return;
+    }
+
+    container.innerHTML = "";
+
+    if(events.length === 0){
+        container.innerHTML = "イベントがありません";
+        return;
+    }
+
+    events.forEach(e => {
+
+        const item = document.createElement("div");
+
+        item.style.padding = "10px";
+        item.style.borderBottom = "1px solid #ccc";
+
+        item.innerHTML = `
+            <div><strong>${e.title}</strong></div>
+            <div>${e.date} ${e.startTime}</div>
+        `;
+
+        container.appendChild(item);
+    });
 }
 
 // ==========================================
@@ -95,7 +130,8 @@ async function saveNotice(){
 
     if(result.success){
         alert("保存OK👍");
-        renderNoticeList(); // 🔥 保存後に更新
+        clearEditor(); // ←追加
+        renderNoticeList();
     }else{
         alert("保存失敗");
     }
@@ -115,25 +151,22 @@ async function renderNoticeList(){
 
     list.innerHTML = "";
 
-    // ③ 有効なお知らせだけ
-    notices = notices.filter(n => n.enabled);
+    notices = notices.filter(n => n.enabled !== false);
 
-    // ④ 新しい順
     notices.sort((a,b)=> b.startDate.localeCompare(a.startDate));
 
     notices.forEach(notice => {
 
         const item = document.createElement("div");
 
-        // ① デザイン用クラス
         item.className = "notice-item";
 
         item.innerHTML = `
-    <div class="notice-title">${notice.title}</div>
-    <div class="notice-message">${notice.message}</div>
-    <div>📅 ${notice.startDate}〜${notice.endDate}</div>
-    <button class="delete-btn">削除</button>
-`;
+            <div class="notice-title">${notice.title}</div>
+            <div class="notice-message">${notice.message}</div>
+            <div>📅 ${notice.startDate}〜${notice.endDate}</div>
+            <button class="delete-btn">削除</button>
+        `;
 
         item.querySelector(".delete-btn").onclick = async () => {
 
@@ -159,6 +192,9 @@ async function renderNoticeList(){
     });
 }
 
+// ==========================================
+// 入力リセット
+// ==========================================
 function clearEditor(){
 
     const title = document.getElementById("noticeTitle");
@@ -172,5 +208,4 @@ function clearEditor(){
     if(start) start.value = "";
     if(end) end.value = "";
     if(enabled) enabled.value = "true";
-
 }
