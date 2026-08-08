@@ -3,81 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ERINA Zoom</title>
+<title>ERINA Zoom予定表</title>
 
 <link rel="stylesheet" href="style.css">
 
 </head>
-
 <body>
 
-<!-- ロゴ -->
-<div class="logo-area">
-    <img src="images/logo.png" class="logo">
-    <h2>ERINA Zoom</h2>
-</div>
+<h1>ERINA Zoom予定表</h1>
 
 <!-- 今日 -->
-<div class="card">
-    <h3>📢 今日のZoom</h3>
-    <div id="todayEvent">読み込み中...</div>
-</div>
+<h2>📢 今日のZoom</h2>
+<div id="todayEvent"></div>
 
 <!-- 次回 -->
-<div class="card">
-    <h3>⏭ 次回のZoom</h3>
-    <div id="nextEvent">読み込み中...</div>
-</div>
+<h2>⏭ 次回のZoom</h2>
+<div id="nextEvent"></div>
 
 <!-- 今週 -->
-<div class="card">
-    <h3>📅 今週の予定</h3>
-    <div id="weekEvents"></div>
-</div>
+<h2>📅 今週の予定</h2>
+<div id="weekEvents"></div>
 
-<!-- ボタン -->
-<div style="text-align:center;">
-    <button id="showSchedule">一覧</button>
-    <button id="showCalendar">カレンダー</button>
-</div>
-
-<!-- スケジュール -->
-<div id="scheduleSection">
-    <div id="scheduleList"></div>
-</div>
-
-<!-- カレンダー -->
-<div id="calendarSection" style="display:none;">
-
-    <div class="calendar-header">
-        <button id="prevMonth">◀</button>
-        <h2 id="monthTitle"></h2>
-        <button id="nextMonth">▶</button>
-    </div>
-
-    <div class="week">
-        <div>月</div><div>火</div><div>水</div>
-        <div>木</div><div>金</div><div>土</div><div>日</div>
-    </div>
-
-    <div id="calendar" class="calendar"></div>
-
-</div>
+<!-- 一覧 -->
+<h2>📋 スケジュール一覧</h2>
+<div id="scheduleList"></div>
 
 <!-- モーダル -->
-<div id="modal" class="modal hidden">
-    <div class="modal-content">
-
-        <button id="closeModal" class="close">✕</button>
-
-        <div id="eventImageArea"></div>
-        <div id="eventDetail"></div>
-
-    </div>
+<div id="modal" class="hidden">
+    <button id="closeModal">✕</button>
+    <div id="eventImageArea"></div>
+    <div id="eventDetail"></div>
 </div>
 
-<script src="app.js"></script>
+<!-- 🔥超重要 -->
+<script src="app.js?v=999"></script>
 
 </body>
 </html>
