@@ -123,3 +123,31 @@ body {
 #closeModal {
     float: right;
 }
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.cell {
+    background: white;
+    border-radius: 10px;
+    padding: 5px;
+    min-height: 80px;   /* ←超重要 */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.cell b {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.event {
+    background: #2e7d32;
+    color: white;
+    border-radius: 5px;
+    padding: 2px 4px;
+    margin-top: 3px;
+    font-size: 10px;
+}
