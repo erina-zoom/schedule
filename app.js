@@ -2777,11 +2777,30 @@ function renderScheduleList(){
 // ===============================
 async function loadNotices(){
 
-    const res = await fetch(
-        "https://erina-manager.tomoya19980427goku.workers.dev/?action=notices"
-    );
+    try{
 
-    return await res.json();
+        const res = await fetch(
+            "https://erina-manager.tomoya19980427goku.workers.dev/?action=notices"
+        );
+
+        if(!res.ok){
+            throw new Error("notices取得失敗");
+        }
+
+        const data = await res.json();
+
+        if(!Array.isArray(data)){
+            return [];
+        }
+
+        return data;
+
+    }catch(e){
+
+        console.error("お知らせ取得エラー", e);
+
+        return [];
+    }
 
 }
 
