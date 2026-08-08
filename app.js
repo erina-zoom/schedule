@@ -71,17 +71,33 @@ function renderNext(){
 // 今週
 // ==========================================
 function renderWeek(){
+
     const container = document.getElementById("weekEvents");
     container.innerHTML = "";
 
+    const today = new Date();
+
+    // 7日後まで
+    const end = new Date();
+    end.setDate(today.getDate() + 7);
+
     events.forEach(e=>{
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = createEventHTML(e);
 
-        div.onclick = ()=>showDetail(e);
+        const d = new Date(e.date);
 
-        container.appendChild(div);
+        // 👇ここが重要（今週だけ）
+        if(d >= today && d <= end){
+
+            const div = document.createElement("div");
+            div.className = "card";
+
+            div.innerHTML = createEventHTML(e);
+
+            div.onclick = ()=>showDetail(e);
+
+            container.appendChild(div);
+        }
+
     });
 }
 
