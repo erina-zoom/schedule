@@ -10,93 +10,90 @@
 
 <body>
 
-<header>
-ERINA Zoom 管理画面
-</header>
+<h1 style="padding:20px;">ERINA Zoom 管理画面</h1>
 
-<div class="container">
+<div class="panel">
 
-<!-- 一覧 -->
-<div class="section">
+<h2>📅 イベント一覧</h2>
 
-<h2>📅 登録済み催事</h2>
-
-<div class="top-buttons">
-<button id="newEventButton" class="add-btn">＋新しい催事を追加</button>
-<button id="reloadButton" class="reload-btn">最新データを読み込む</button>
-</div>
+<button id="newEventButton">＋新規</button>
+<button id="reloadButton">更新</button>
 
 <div id="eventList"></div>
 
 </div>
 
 
-<!-- 編集 -->
-<div class="section">
+<div class="panel">
 
-<h2>＋ 新しい催事を追加</h2>
+<h2>✏️ 編集</h2>
 
 <input type="hidden" id="eventId">
 
-<label>催事名</label>
-<input id="title">
+<input id="title" placeholder="タイトル"><br><br>
 
-<label>カレンダー用の短い名前</label>
-<input id="shortTitle">
+<input id="shortTitle" placeholder="短い名前"><br><br>
 
-<label>カテゴリー</label>
 <select id="category">
 <option>その他</option>
 <option>チェリー</option>
 <option>FMなまず</option>
 <option>理科</option>
-</select>
+</select><br><br>
 
-<label>開催日</label>
-<input type="date" id="eventDate">
+<input type="date" id="eventDate"><br><br>
 
-<label>カラー</label>
-<input type="color" id="eventColor" value="#247447">
+<input type="color" id="eventColor" value="#247447"><br><br>
 
-<label>開始時間</label>
-<input type="time" id="startTime">
+<input type="time" id="startTime"><br><br>
 
-<label>終了時間</label>
-<input type="time" id="endTime">
+<input type="time" id="endTime"><br><br>
 
-<label>Zoom URL</label>
-<input id="zoomUrl">
+<input id="zoomUrl" placeholder="Zoom URL"><br><br>
 
-<br>
+<!-- 🔥 画像 -->
+<h3>🖼 催事画像（チェリー・FM用）</h3>
 
-<button id="saveEventButton" class="save-btn">この催事を保存</button>
-<button id="deleteButton" class="danger-btn">削除</button>
+<input type="file" id="imageInput">
+<button id="uploadImageButton">画像アップロード</button>
+
+<div id="imagePreview"></div>
+
+<hr>
+
+<!-- 🔥 スケジュール -->
+<h3>📝 催事スケジュール（のびしろ用）</h3>
+
+<div id="programList"></div>
+
+<button id="addProgramButton">＋項目追加</button>
+
+<br><br>
+
+<button id="saveEventButton">保存</button>
+<button id="deleteButton">削除</button>
 <button id="clearButton">クリア</button>
 
-</div>
 
-
-<!-- お知らせ -->
-<div class="section">
+<div class="panel">
 
 <h2>📢 お知らせ</h2>
 
-<input id="noticeTitle" placeholder="タイトル">
-<textarea id="noticeMessage" placeholder="内容"></textarea>
+<input id="noticeTitle" placeholder="タイトル"><br><br>
 
-<input type="date" id="noticeStart">
-<input type="date" id="noticeEnd">
+<textarea id="noticeMessage" placeholder="内容"></textarea><br><br>
+
+<input type="date" id="noticeStart"><br><br>
+<input type="date" id="noticeEnd"><br><br>
 
 <select id="noticeEnabled">
 <option value="true">表示</option>
 <option value="false">非表示</option>
-</select>
+</select><br><br>
 
-<button id="saveNoticeButton" class="save-btn">お知らせ保存</button>
+<button id="saveNoticeButton">保存</button>
 
 <div id="noticeList"></div>
-
-</div>
 
 </div>
 
