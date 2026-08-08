@@ -8,6 +8,7 @@
 const WORKER_URL = "https://erina-manager.tomoya19980427goku.workers.dev";
 const EVENTS_URL = `${WORKER_URL}?action=events`;
 
+
 // ==========================================
 let events = [];
 let editingEventId = null;
