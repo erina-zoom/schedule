@@ -6,68 +6,62 @@
 
 <title>ERINA Zoom予定表</title>
 
-<link rel="stylesheet" href="./style.css">
-<link rel="manifest" href="./manifest.json">
+<!-- ★重要：キャッシュ対策 -->
+<link rel="stylesheet" href="style.css?v=3">
 
 </head>
 
 <body>
 
-<header>
-
-    <img src="images/logo.png" class="logo" alt="ERINA">
-
+<header class="header">
+    <!-- 画像なければ一旦コメントアウトでもOK -->
+    <img src="images/icon-192.png" class="logo">
+    
     <div>
         <h1>ERINA Zoom予定表</h1>
-        <p class="sub-title">最新のZoomスケジュール</p>
+        <p>最新のZoomスケジュール</p>
     </div>
-
 </header>
 
-<main>
+<div class="switch">
+    <button id="showSchedule">📋 予定表</button>
+    <button id="showCalendar">📅 カレンダー</button>
+</div>
 
-    <!-- 今日 -->
-    <h2>📢 今日のZoom</h2>
-    <div id="todayEvent">読み込み中...</div>
+<h2>📢 今日のZoom</h2>
+<div id="todayEvent"></div>
 
-    <!-- 次回 -->
-    <h2>⏭ 次回Zoom</h2>
-    <div id="nextEvent">読み込み中...</div>
+<h2>⏭ 次回Zoom</h2>
+<div id="nextEvent"></div>
 
-    <!-- カレンダー -->
-    <div class="calendar-header">
+<h2>📅 今週の予定</h2>
+<div id="weekEvents"></div>
+
+<div id="scheduleSection">
+    <h2>📋 スケジュール表</h2>
+    <div id="scheduleList"></div>
+</div>
+
+<div id="calendarSection" style="display:none;">
+    <h2 id="monthTitle"></h2>
+
+    <div class="calendar-controls">
         <button id="prevMonth">◀</button>
-        <h2 id="monthTitle"></h2>
         <button id="nextMonth">▶</button>
     </div>
 
-    <div class="week">
-        <div>月</div>
-        <div>火</div>
-        <div>水</div>
-        <div>木</div>
-        <div>金</div>
-        <div>土</div>
-        <div>日</div>
-    </div>
-
-    <div id="calendar" class="calendar"></div>
-
-</main>
-
-<!-- モーダル -->
-<div id="eventModal" class="modal">
-
-    <button id="closeModal" class="close">✕</button>
-
-    <div id="eventImageArea"></div>
-
-    <div id="eventDetail"></div>
-
+    <div class="calendar" id="calendar"></div>
 </div>
 
-<!-- 🔥 これが一番重要 -->
-<script src="./app.js"></script>
+<!-- ★最初から非表示にする -->
+<div id="modal" class="hidden">
+    <div class="modal-content">
+        <button id="closeModal">✖</button>
+        <div id="eventDetail"></div>
+    </div>
+</div>
+
+<script src="app.js?v=3"></script>
 
 </body>
 </html>
