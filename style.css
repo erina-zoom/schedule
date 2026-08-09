@@ -1,73 +1,1035 @@
-body {
+/* ===============================
+   ERINA Zoom予定表 style.css
+   基本レイアウト
+================================ */
+
+
+/* 全体 */
+
+*{
+    box-sizing:border-box;
+}
+
+
+body{
+
     margin:0;
-    font-family:sans-serif;
-    background:#f5f5f5;
+
+    padding:0;
+
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    sans-serif;
+
+    background:#f7f8fa;
+
+    color:#333;
+
 }
 
-/* 中央配置 */
-.container {
-    max-width:600px;
-    margin:40px auto;
-    padding:20px;
+
+
+/* ===============================
+   ヘッダー
+================================ */
+
+
+.header{
+
+    background:white;
+
+    padding:20px 15px;
+
+    border-bottom:1px solid #eee;
+
 }
 
-/* ヘッダー */
-.header {
+
+
+.header-inner{
+
     display:flex;
+
     align-items:center;
-    gap:10px;
-    margin-bottom:20px;
+
+    gap:15px;
+
+    max-width:900px;
+
+    margin:auto;
+
 }
 
-.logo {
-    width:50px;
+
+
+.logo{
+
+    width:60px;
+
+    height:60px;
+
+    object-fit:contain;
+
 }
 
-h1 {
-    color:#2e7d32;
+
+
+.title-area h1{
+
     margin:0;
+
+    font-size:24px;
+
 }
 
-/* カード */
-.card {
-    background:#fff;
-    padding:15px;
-    border-radius:12px;
-    margin-bottom:12px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-    cursor:pointer;
+
+
+.title-area p{
+
+    margin:5px 0 0;
+
+    color:#777;
+
+    font-size:14px;
+
 }
 
-/* 次回Zoom */
-.next {
-    background:#e3f2fd;
-    border-left:5px solid #2196f3;
-}
 
-/* ===== モーダル ===== */
 
-.modal {
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.5);
 
-    display:none; /* ←これで最初は出ない */
+
+/* ===============================
+   タブボタン
+================================ */
+
+
+.tab-buttons{
+
+    display:flex;
+
+    gap:10px;
 
     justify-content:center;
-    align-items:center;
+
+    padding:15px;
+
 }
 
-.modal.show {
-    display:flex;
+
+
+.tab-buttons button{
+
+
+    border:none;
+
+    background:white;
+
+    padding:12px 25px;
+
+    border-radius:25px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    box-shadow:
+    0 2px 6px rgba(0,0,0,.1);
+
 }
 
-.modal-box {
-    background:#fff;
+
+
+
+.tab-buttons button:hover{
+
+    opacity:.8;
+
+}
+
+
+
+
+
+/* ===============================
+   メイン
+================================ */
+
+
+main{
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:10px 15px;
+
+}
+
+
+
+section{
+
+    margin-bottom:25px;
+
+}
+
+
+
+h2{
+
+    font-size:20px;
+
+    margin:15px 0;
+
+}
+
+
+
+
+
+/* ===============================
+   予定カード
+================================ */
+
+
+.event-card{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    margin-bottom:12px;
+
+    box-shadow:
+    0 3px 10px rgba(0,0,0,.08);
+
+    cursor:pointer;
+
+}
+
+
+
+.event-card:hover{
+
+    transform:translateY(-1px);
+
+}
+
+
+
+
+.event-date{
+
+    font-size:14px;
+
+    color:#777;
+
+}
+
+
+
+.event-time{
+
+    font-size:15px;
+
+    color:#1976d2;
+
+    margin-top:5px;
+
+}
+
+
+
+.event-title{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    margin-top:8px;
+
+}
+
+
+
+
+
+/* ===============================
+   Zoomボタン
+================================ */
+
+
+.zoom-btn{
+
+    display:inline-block;
+
+    margin-top:15px;
+
+    background:#2d8cff;
+
+    color:white;
+
+    padding:12px 25px;
+
+    border-radius:30px;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+}
+
+
+
+.zoom-btn:hover{
+
+    opacity:.85;
+
+}
+
+
+
+
+
+/* ===============================
+   空表示
+================================ */
+
+
+.empty{
+
+    background:white;
+
     padding:20px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    color:#777;
+
+}
+/* ===============================
+   カレンダー
+================================ */
+
+
+.calendar-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.calendar-header button{
+
+    border:none;
+
+    background:white;
+
+    padding:10px 15px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    box-shadow:
+    0 2px 5px rgba(0,0,0,.1);
+
+}
+
+
+
+
+.calendar-week{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(7,1fr);
+
+    background:white;
+
+    border-radius:10px 10px 0 0;
+
+    overflow:hidden;
+
+}
+
+
+
+.calendar-week div{
+
+    text-align:center;
+
+    padding:10px 0;
+
+    font-weight:bold;
+
+    border-bottom:1px solid #eee;
+
+}
+
+
+
+
+
+#calendar{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(7,1fr);
+
+    background:white;
+
+    border-radius:0 0 15px 15px;
+
+    overflow:hidden;
+
+}
+
+
+
+.calendar-day{
+
+    min-height:100px;
+
+    padding:8px;
+
+    border:1px solid #eee;
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+.calendar-event{
+
+    color:white;
+
+    font-size:12px;
+
+    border-radius:5px;
+
+    padding:4px;
+
+    margin-top:5px;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+
+}
+
+
+
+
+
+/* ===============================
+   モーダル
+================================ */
+
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    rgba(0,0,0,.55);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:9999;
+
+}
+
+
+
+.modal.show{
+
+    display:flex;
+
+}
+
+
+
+
+.modal-content{
+
+    position:relative;
+
+    background:white;
+
+    width:500px;
+
+    max-width:90%;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    border-radius:20px;
+
+    padding:25px;
+
+}
+
+
+
+
+
+/* ×ボタン */
+
+#closeModal{
+
+
+    position:absolute;
+
+
+    top:10px;
+
+
+    right:10px;
+
+
+    width:40px;
+
+
+    height:40px;
+
+
+    border-radius:50%;
+
+
+    border:none;
+
+
+    background:#eee;
+
+
+    font-size:28px;
+
+
+    line-height:35px;
+
+
+    cursor:pointer;
+
+
+    z-index:10;
+
+
+}
+
+
+
+
+.modal-image{
+
+
+    width:100%;
+
+
+    border-radius:15px;
+
+
+    margin-bottom:20px;
+
+
+}
+
+
+
+
+
+.modal-content h2{
+
+
+    font-size:22px;
+
+
+    margin-top:10px;
+
+
+}
+
+
+
+
+
+.modal-zoom{
+
+
+    width:100%;
+
+
+    text-align:center;
+
+
+}
+
+
+
+
+
+/* ===============================
+   PC表示
+================================ */
+
+
+@media(min-width:601px){
+
+
+    .modal-content{
+
+
+        width:520px;
+
+
+    }
+
+
+}
+
+
+
+
+
+
+/* ===============================
+   スマホ表示
+================================ */
+
+
+@media(max-width:600px){
+
+
+
+    .header-inner{
+
+
+        gap:10px;
+
+
+    }
+
+
+
+    .logo{
+
+
+        width:50px;
+
+
+        height:50px;
+
+
+    }
+
+
+
+    .title-area h1{
+
+
+        font-size:20px;
+
+
+    }
+
+
+
+    .title-area p{
+
+
+        font-size:12px;
+
+
+    }
+
+
+
+
+
+    .tab-buttons button{
+
+
+        flex:1;
+
+
+        padding:14px 10px;
+
+
+    }
+
+
+
+
+
+    .event-title{
+
+
+        font-size:17px;
+
+
+    }
+
+
+
+
+
+    /* モーダル全画面 */
+
+
+    .modal{
+
+
+        align-items:stretch;
+
+
+        justify-content:stretch;
+
+
+    }
+
+
+
+
+
+    .modal-content{
+
+
+        width:100%;
+
+
+        max-width:none;
+
+
+        height:100%;
+
+
+        max-height:none;
+
+
+        border-radius:0;
+
+
+        padding:20px;
+
+
+        overflow-y:auto;
+
+
+    }
+
+
+
+
+
+    #closeModal{
+
+
+        top:15px;
+
+
+        right:15px;
+
+
+        width:45px;
+
+
+        height:45px;
+
+
+        font-size:30px;
+
+
+    }
+
+
+
+
+
+}
+/* ===============================
+   催事スケジュール
+================================ */
+
+
+.program-list{
+
+    margin-top:15px;
+
+}
+
+
+
+.program-item{
+
+    background:#f7f8fa;
+
     border-radius:12px;
-    width:90%;
-    max-width:400px;
+
+    padding:12px;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.program-time{
+
+    font-weight:bold;
+
+    color:#1976d2;
+
+    margin-bottom:5px;
+
+}
+
+
+
+.program-title{
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
+
+
+
+.program-person{
+
+    margin-top:5px;
+
+    color:#666;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+}
+/* ===============================
+   イベントカード調整
+================================ */
+
+
+.event-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.event-date{
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    color:#555;
+
+}
+
+
+
+.event-time{
+
+    font-size:16px;
+
+    color:#1976d2;
+
+    font-weight:bold;
+
+}
+
+
+
+.event-title{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    line-height:1.5;
+
+}
+/* ===============================
+   今週の予定・予定カード調整
+================================ */
+
+
+.event-card{
+
+    display:block;
+
+    padding:18px 20px;
+
+    border-radius:16px;
+
+    margin-bottom:12px;
+
+}
+
+
+
+/* 日付と時間を横並び */
+
+.event-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:8px;
+
+}
+
+
+
+/* 日付 */
+
+.event-date{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    color:#247447;
+
+}
+
+
+
+/* 時間 */
+
+.event-time{
+
+    font-size:16px;
+
+    color:#555;
+
+    font-weight:bold;
+
+}
+
+
+
+/* タイトル */
+
+.event-title{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    color:#222;
+
+    margin-top:8px;
+
+}
+
+
+
+
+
+/* 今週予定用の左ライン */
+
+#week .event-card{
+
+    border-left:6px solid #247447;
+
+}
+
+
+
+
+
+/* 次回Zoom */
+
+#next .event-card{
+
+    background:#eef7ff;
+
+    border-left:6px solid #3478d4;
+
+}
+
+
+
+
+
+/* 今日のZoom */
+
+#today .event-card{
+
+    background:#fff;
+
+}
+
+
+
+
+
+/* スマホ調整 */
+
+@media(max-width:600px){
+
+
+    .event-card{
+
+        padding:16px;
+
+    }
+
+
+    .event-date{
+
+        font-size:17px;
+
+    }
+
+
+    .event-title{
+
+        font-size:17px;
+
+    }
+
+
 }

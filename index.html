@@ -1,47 +1,336 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ERINA Zoom予定表</title>
+
+
 <link rel="stylesheet" href="style.css">
+
+
 </head>
+
 
 <body>
 
-<div class="container">
 
-    <!-- ヘッダー -->
-    <header class="header">
-        <img src="images/icon-192.png" class="logo">
-        <div>
-            <h1>ERINA Zoom予定表</h1>
-            <p>最新のZoomスケジュール</p>
-        </div>
-    </header>
+<!-- ===================== -->
+<!-- ヘッダー -->
+<!-- ===================== -->
 
-    <!-- 今日 -->
-    <h2>📢 今日のZoom</h2>
-    <div id="today"></div>
+<header class="header">
 
-    <!-- 次回 -->
-    <h2>⏭ 次回のZoom</h2>
-    <div id="next"></div>
 
-    <!-- 今週 -->
-    <h2>📅 今週の予定</h2>
-    <div id="week"></div>
+<div class="header-inner">
+
+
+<div class="logo-area">
+
+<img 
+src="images/logo.png"
+class="logo"
+>
+
 
 </div>
 
+
+
+<div class="title-area">
+
+<h1>
+ERINA Zoom予定表
+</h1>
+
+
+<p>
+最新のZoomスケジュール
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</header>
+
+
+
+
+<!-- ===================== -->
+<!-- 表示切替 -->
+<!-- ===================== -->
+
+
+<div class="tab-buttons">
+
+
+<button onclick="showView('schedule')">
+
+📋 予定表
+
+</button>
+
+
+
+<button onclick="showView('calendar')">
+
+📅 カレンダー
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+<!-- ===================== -->
+<!-- 予定表 -->
+<!-- ===================== -->
+
+
+<main id="scheduleView">
+
+
+
+<section>
+
+
+<h2>
+📢 今日のZoom
+</h2>
+
+
+<div id="today">
+
+</div>
+
+
+</section>
+
+
+
+
+
+<section>
+
+
+<h2>
+⏭ 次回Zoom
+</h2>
+
+
+<div id="next">
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<section>
+
+
+<h2>
+📅 今週の予定
+</h2>
+
+
+<div id="week">
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<section>
+
+
+<h2>
+📋 スケジュール表
+</h2>
+
+
+<div id="allSchedule">
+
+</div>
+
+
+</section>
+
+
+
+</main>
+
+
+
+
+
+<!-- ===================== -->
+<!-- カレンダー -->
+<!-- ===================== -->
+
+
+<main
+id="calendarView"
+style="display:none;"
+>
+
+
+
+<div class="calendar-header">
+
+
+<button id="prevMonth">
+
+◀
+
+</button>
+
+
+
+
+<h2 id="monthTitle">
+
+</h2>
+
+
+
+
+<button id="nextMonth">
+
+▶
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+<!-- 曜日 -->
+
+<div class="calendar-week">
+
+
+<div>
+月
+</div>
+
+
+<div>
+火
+</div>
+
+
+<div>
+水
+</div>
+
+
+<div>
+木
+</div>
+
+
+<div>
+金
+</div>
+
+
+<div>
+土
+</div>
+
+
+<div>
+日
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- カレンダー本体 -->
+
+
+<div id="calendar">
+
+
+</div>
+
+
+
+</main>
+<!-- ===================== -->
 <!-- モーダル -->
+<!-- ===================== -->
+
+
 <div id="modal" class="modal">
-    <div class="modal-box">
-        <button onclick="closeModal()">✖</button>
-        <div id="eventDetail"></div>
+
+
+    <div class="modal-content">
+
+
+        <!-- 右上固定 閉じるボタン -->
+
+        <button id="closeModal">
+            ×
+        </button>
+
+
+
+        <!-- 詳細内容 -->
+
+        <div id="eventDetail">
+
+        </div>
+
+
+
     </div>
+
+
 </div>
+
+
+
+
+
+<!-- ===================== -->
+<!-- JavaScript -->
+<!-- ===================== -->
+
 
 <script src="app.js"></script>
+
+
 </body>
+
 </html>

@@ -1,79 +1,940 @@
-const DATA_URL = "events.json";
+// ===============================
+// ERINA Zoom予定表 app.js
+// Cloudflare Worker 取得版
+// ===============================
+
+const DATA_URL =
+"https://erina-manager.tomoya19980427goku.workers.dev/?action=events";
+
 
 let events = [];
 
-async function load(){
+
+// ===============================
+// 初期読み込み
+// ===============================
+
+async function loadEvents(){
+
     try{
-        const res = await fetch(DATA_URL);
+
+        const res = await fetch(DATA_URL, {
+            cache: "no-store"
+        });
+
         events = await res.json();
-        render();
-    }catch(e){
-        console.error("読み込み失敗", e);
-    }
-}
 
-function render(){
-    const todayBox = document.getElementById("today");
-    const nextBox = document.getElementById("next");
-    const weekBox = document.getElementById("week");
+        // 日付順に整理
+        events.sort((a,b)=>{
 
-    todayBox.innerHTML = "";
-    nextBox.innerHTML = "";
-    weekBox.innerHTML = "";
+            const da = `${a.date} ${a.startTime || "00:00"}`;
+            const db = `${b.date} ${b.startTime || "00:00"}`;
 
-    const today = new Date().toISOString().slice(0,10);
+            return da.localeCompare(db);
 
-    // 今日
-    const todayEvents = events.filter(e => e.date === today);
-    todayEvents.forEach(e=>{
-        todayBox.appendChild(createCard(e));
-    });
+        });
 
-    // 次回
-    const future = events.filter(e => e.date >= today);
-    if(future.length){
-        const next = future[0];
-        const card = createCard(next);
-        card.classList.add("next");
-        nextBox.appendChild(card);
+
+        renderSchedule();
+
+
+    }catch(error){
+
+        console.error(
+            "イベント取得エラー:",
+            error
+        );
+
     }
 
-    // 今週
-    events.slice(0,5).forEach(e=>{
-        const div = createCard(e);
-        weekBox.appendChild(div);
-    });
 }
 
-function createCard(e){
-    const div = document.createElement("div");
-    div.className = "card";
 
-    div.innerHTML = `
-        <div>${e.date}</div>
-        <div>🕒 ${e.startTime}</div>
-        <div>${e.title}</div>
+
+// ===============================
+// 日本時間取得
+// ===============================
+
+function getJapanDate(){
+
+    const now = new Date();
+
+    return new Date(
+        now.toLocaleString(
+            "ja-JP",
+            {
+                timeZone:"Asia/Tokyo"
+            }
+        )
+    );
+
+}
+
+
+
+function formatDate(date){
+
+    const y = date.getFullYear();
+
+    const m = String(
+        date.getMonth()+1
+    ).padStart(2,"0");
+
+    const d = String(
+        date.getDate()
+    ).padStart(2,"0");
+
+
+    return `${y}-${m}-${d}`;
+
+}
+
+
+
+// ===============================
+// 予定表表示
+// ===============================
+
+function renderSchedule(){
+
+
+    const todayBox =
+    document.getElementById("today");
+
+
+    const nextBox =
+    document.getElementById("next");
+
+
+    const weekBox =
+    document.getElementById("week");
+
+
+    const allBox =
+    document.getElementById("allSchedule");
+
+
+
+    if(todayBox)
+        todayBox.innerHTML="";
+
+
+    if(nextBox)
+        nextBox.innerHTML="";
+
+
+    if(weekBox)
+        weekBox.innerHTML="";
+
+
+    if(allBox)
+        allBox.innerHTML="";
+
+
+
+    const today =
+    formatDate(
+        getJapanDate()
+    );
+
+
+
+    // ===========================
+    // 今日のZoom
+    // ===========================
+
+    const todayEvents =
+    events.filter(e=>
+        e.date === today
+    );
+
+
+    if(todayBox){
+
+        if(todayEvents.length){
+
+            todayEvents.forEach(e=>{
+
+                todayBox.appendChild(
+                    createCard(e,true)
+                );
+
+            });
+
+
+        }else{
+
+            todayBox.innerHTML =
+            `
+            <p class="empty">
+            今日のZoomはありません
+            </p>
+            `;
+
+        }
+
+    }
+
+
+
+    // ===========================
+    // 次回Zoom
+    // ===========================
+
+    const futureEvents =
+    events.filter(e=>
+        e.date >= today
+    );
+
+
+    if(nextBox){
+
+        if(futureEvents.length){
+
+            const next =
+            futureEvents[0];
+
+
+            const card =
+            createCard(next,true);
+
+
+            card.classList.add(
+                "next-card"
+            );
+
+
+            nextBox.appendChild(card);
+
+
+        }
+
+    }
+
+
+
+
+    // ===========================
+    // 今週の予定
+    // 今日から7日間
+    // ===========================
+
+
+    const start =
+    getJapanDate();
+
+
+    const end =
+    new Date(start);
+
+
+    end.setDate(
+        end.getDate()+7
+    );
+
+
+
+    const weekEvents =
+    events.filter(e=>{
+
+
+        const eventDate =
+        new Date(
+            e.date+"T00:00:00"
+        );
+
+
+        return (
+            eventDate >= start &&
+            eventDate < end
+        );
+
+
+    });
+
+
+
+    if(weekBox){
+
+
+        if(weekEvents.length){
+
+
+            weekEvents.forEach(e=>{
+
+
+                weekBox.appendChild(
+                    createCard(e,false)
+                );
+
+
+            });
+
+
+        }else{
+
+
+            weekBox.innerHTML =
+            `
+            <p class="empty">
+            今週の予定はありません
+            </p>
+            `;
+
+
+        }
+
+    }
+
+
+
+    // ===========================
+    // スケジュール表
+    // 全登録イベント
+    // ===========================
+
+
+    if(allBox){
+
+
+        events.forEach(e=>{
+
+
+            allBox.appendChild(
+                createCard(e,false)
+            );
+
+
+        });
+
+
+    }
+
+
+
+    // カレンダー更新
+
+    renderCalendar();
+
+
+}
+// ===============================
+// カード生成
+// ===============================
+
+// ===============================
+// カード生成（完成版デザイン対応）
+// ===============================
+
+function createCard(e, showZoom=false){
+
+    const div =
+    document.createElement("div");
+
+
+    div.className =
+    "event-card";
+
+
+
+    // 曜日取得（日本時間）
+
+    const dateObj =
+    new Date(
+        e.date + "T00:00:00"
+    );
+
+
+    const week =
+    [
+        "日",
+        "月",
+        "火",
+        "水",
+        "木",
+        "金",
+        "土"
+    ];
+
+
+
+    const dateText =
+    `${dateObj.getMonth()+1}/${dateObj.getDate()}(${week[dateObj.getDay()]})`;
+
+
+
+    div.innerHTML =
+    `
+
+    <div class="event-header">
+
+
+        <div class="event-date">
+
+            ${dateText}
+
+        </div>
+
+
+
+        <div class="event-time">
+
+            🕒 ${e.startTime || ""}
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <div class="event-title">
+
+        ${e.title || ""}
+
+    </div>
+
+
+
+    ${
+        showZoom && e.zoomUrl
+        ?
+        `
+        <a
+        href="${e.zoomUrl}"
+        target="_blank"
+        class="zoom-btn"
+        onclick="event.stopPropagation()">
+
+        Zoomに参加
+
+        </a>
+        `
+        :
+        ""
+    }
+
+
     `;
 
-    div.onclick = () => openModal(e);
+
+
+    div.onclick = ()=>{
+
+        openModal(e);
+
+    };
+
+
 
     return div;
+
+
 }
+
+
+
+// ===============================
+// モーダル表示（管理画面対応版）
+// ===============================
 
 function openModal(e){
-    const box = document.getElementById("eventDetail");
 
-    box.innerHTML = `
-        <h3>${e.title}</h3>
-        <p>${e.date}</p>
-        <p>${e.startTime}</p>
+    const modal =
+    document.getElementById("modal");
+
+
+    const detail =
+    document.getElementById("eventDetail");
+
+
+    if(!modal || !detail){
+        return;
+    }
+
+
+    let html = "";
+
+
+    // ===============================
+    // 画像
+    // ===============================
+
+    if(e.image){
+
+        html += `
+        <img
+        src="${e.image}"
+        class="modal-image"
+        >
+        `;
+
+    }
+
+
+
+    // ===============================
+    // タイトル
+    // ===============================
+
+    html += `
+
+    <h2>
+    ${e.title || ""}
+    </h2>
+
+
+    <p>
+    📅 ${e.date || ""}
+    </p>
+
+
+    <p>
+    🕒 ${e.startTime || ""}
+    ${
+        e.endTime
+        ?
+        `〜${e.endTime}`
+        :
+        ""
+    }
+    </p>
+
     `;
 
-    document.getElementById("modal").classList.add("show");
+
+
+    // ===============================
+    // 催事スケジュール
+    // ===============================
+
+    if(
+        e.program &&
+        Array.isArray(e.program) &&
+        e.program.length
+    ){
+
+        html += `
+
+        <hr>
+
+
+        <h3>
+        📋 催事スケジュール
+        </h3>
+
+
+        <div class="program-list">
+
+        `;
+
+
+        e.program.forEach(item=>{
+
+
+            html += `
+
+            <div class="program-item">
+
+                <b>
+                ${item.time || ""}
+                </b>
+
+                <span>
+                ${item.title || ""}
+                </span>
+
+            </div>
+
+            `;
+
+
+        });
+
+
+
+        html += `
+
+        </div>
+
+        `;
+
+    }
+
+
+
+
+    // ===============================
+    // Zoomボタン
+    // ===============================
+
+
+    if(e.zoomUrl){
+
+
+        html += `
+
+        <a
+        href="${e.zoomUrl}"
+        target="_blank"
+        class="zoom-btn modal-zoom">
+
+        Zoomに参加する
+
+        </a>
+
+        `;
+
+
+    }
+
+
+
+    detail.innerHTML =
+    html;
+
+
+
+    modal.classList.add(
+        "show"
+    );
+
+
 }
+
+
+// ===============================
+// モーダル閉じる
+// ===============================
 
 function closeModal(){
-    document.getElementById("modal").classList.remove("show");
+
+    const modal =
+    document.getElementById("modal");
+
+
+    if(modal){
+
+        modal.classList.remove(
+            "show"
+        );
+
+    }
+
 }
 
-load();
+
+
+// ×ボタン
+
+document.addEventListener(
+"click",
+(e)=>{
+
+
+    if(
+        e.target.id === "closeModal"
+    ){
+
+        closeModal();
+
+    }
+
+
+});
+
+
+
+
+// ===============================
+// カレンダー
+// ===============================
+
+let currentDate =
+new Date();
+
+
+
+function renderCalendar(){
+
+
+    const calendar =
+    document.getElementById("calendar");
+
+
+    const monthTitle =
+    document.getElementById("monthTitle");
+
+
+
+    if(!calendar)
+        return;
+
+
+
+    calendar.innerHTML="";
+
+
+
+    const year =
+    currentDate.getFullYear();
+
+
+    const month =
+    currentDate.getMonth();
+
+
+
+    if(monthTitle){
+
+        monthTitle.innerText =
+        `${year}年${month+1}月`;
+
+    }
+
+
+
+    const first =
+    new Date(
+        year,
+        month,
+        1
+    ).getDay();
+
+
+
+    const last =
+    new Date(
+        year,
+        month+1,
+        0
+    ).getDate();
+
+
+
+
+    // 空白
+
+    for(let i=0;i<first;i++){
+
+        calendar.innerHTML +=
+        `
+        <div></div>
+        `;
+
+    }
+
+
+
+
+    // 日付
+
+    for(
+        let d=1;
+        d<=last;
+        d++
+    ){
+
+
+        const dateStr =
+        `${year}-${String(month+1)
+        .padStart(2,"0")}-${String(d)
+        .padStart(2,"0")}`;
+
+
+
+        const dayEvents =
+        events.filter(e=>
+            e.date === dateStr
+        );
+
+
+
+        const day =
+        document.createElement(
+            "div"
+        );
+
+
+        day.className =
+        "calendar-day";
+
+
+
+        let eventHtml="";
+
+
+
+        dayEvents.forEach(e=>{
+
+
+            eventHtml +=
+            `
+            <div
+            class="calendar-event"
+            style="background:${e.color || "#4caf50"}"
+            >
+            ${e.shortTitle || e.title}
+            </div>
+            `;
+
+
+        });
+
+
+
+        day.innerHTML =
+        `
+        <div>
+        ${d}
+        </div>
+
+        ${eventHtml}
+
+        `;
+
+
+
+        if(dayEvents.length){
+
+
+            day.onclick = ()=>{
+
+                openModal(
+                    dayEvents[0]
+                );
+
+            };
+
+
+        }
+
+
+
+        calendar.appendChild(day);
+
+
+    }
+
+
+}
+
+
+
+// ===============================
+// 月移動
+// ===============================
+
+const prev =
+document.getElementById(
+"prevMonth"
+);
+
+
+const next =
+document.getElementById(
+"nextMonth"
+);
+
+
+
+if(prev){
+
+    prev.onclick = ()=>{
+
+
+        currentDate.setMonth(
+            currentDate.getMonth()-1
+        );
+
+
+        renderCalendar();
+
+
+    };
+
+}
+
+
+
+if(next){
+
+    next.onclick = ()=>{
+
+
+        currentDate.setMonth(
+            currentDate.getMonth()+1
+        );
+
+
+        renderCalendar();
+
+
+    };
+
+}
+
+
+
+
+// ===============================
+// 表示切替
+// ===============================
+
+function showView(type){
+
+
+    const schedule =
+    document.getElementById(
+        "scheduleView"
+    );
+
+
+    const calendar =
+    document.getElementById(
+        "calendarView"
+    );
+
+
+
+    if(type==="schedule"){
+
+
+        schedule.style.display =
+        "block";
+
+
+        calendar.style.display =
+        "none";
+
+
+    }
+
+
+    if(type==="calendar"){
+
+
+        schedule.style.display =
+        "none";
+
+
+        calendar.style.display =
+        "block";
+
+
+        renderCalendar();
+
+
+    }
+
+
+}
+
+
+
+// ===============================
+// 起動
+// ===============================
+
+loadEvents();
