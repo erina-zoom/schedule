@@ -1,185 +1,299 @@
 // ======================================
-// ERINA Zoom Ver4
+// ERINA Zoom
 // service-worker.js
+// 最新UI自動更新対応版
 // ======================================
 
-const CACHE_NAME = "erina-zoom-v4";
 
-// キャッシュするファイル
+const CACHE_NAME =
+"erina-zoom-v8";
+
+
+
 const STATIC_FILES = [
 
-    "./",
+"./",
 
-    "./index.html",
+"./index.html",
 
-    "./style.css",
+"./style.css",
 
-    "./app.js",
+"./app.js",
 
-    "./manifest.json"
+"./manifest.json"
 
 ];
-self.addEventListener("install", event => {
+
+
+
+
+
+// ======================================
+// Install
+// ======================================
+
+
+self.addEventListener(
+"install",
+event => {
+
+
+    // 新しいWorkerを即有効化
 
     self.skipWaiting();
 
+
+
     event.waitUntil(
 
-        caches.open(CACHE_NAME)
+        caches.open(
+            CACHE_NAME
+        )
 
-        .then(cache => cache.addAll(STATIC_FILES))
+        .then(cache=>{
+
+
+            return cache.addAll(
+                STATIC_FILES
+            );
+
+
+        })
 
     );
 
+
 });
-self.addEventListener("activate", event => {
+
+
+
+
+
+
+// ======================================
+// Activate
+// 古いキャッシュ削除
+// ======================================
+
+
+self.addEventListener(
+"activate",
+event=>{
+
 
     event.waitUntil(
 
         caches.keys()
 
-        .then(keys =>
+        .then(keys=>{
 
-            Promise.all(
 
-                keys.map(key => {
+            return Promise.all(
 
-                    if(key !== CACHE_NAME){
+                keys.map(key=>{
 
-                        return caches.delete(key);
+
+                    if(
+                        key !== CACHE_NAME
+                    ){
+
+
+                        return caches.delete(
+                            key
+                        );
+
 
                     }
+
 
                 })
 
-            )
+            );
 
+
+        })
+
+        .then(()=>{
+
+
+            return self.clients.claim();
+
+
+        })
+
+    );
+
+
+});
+
+
+
+
+
+
+
+// ======================================
+// Fetch
+// ======================================
+
+
+self.addEventListener(
+"fetch",
+event=>{
+
+
+    if(
+        event.request.method !== "GET"
+    ){
+
+        return;
+
+    }
+
+
+
+    const url =
+    new URL(
+        event.request.url
+    );
+
+
+
+
+
+    // ==================================
+    // 常に最新版取得するもの
+    // ==================================
+
+
+    if(
+
+        url.pathname.endsWith(
+            ".html"
         )
 
-    );
+        ||
 
-    self.clients.claim();
+        url.pathname.endsWith(
+            ".css"
+        )
 
-});
-self.addEventListener("fetch", event => {
+        ||
 
-    const url = new URL(event.request.url);
+        url.pathname.endsWith(
+            ".js"
+        )
 
-    // events.jsonは絶対キャッシュしない
-    if(url.pathname.endsWith("events.json")){
+        ||
+
+        url.pathname.includes(
+            "events.json"
+        )
+
+    ){
+
 
         event.respondWith(
 
-            fetch(event.request,{
+            fetch(
+                event.request,
+                {
+                    cache:"no-store"
+                }
+            )
 
-                cache:"no-store"
-
-            })
 
         );
+
 
         return;
 
     }
 
+
+
+
+
+    // ==================================
+    // 画像などはキャッシュ利用
+    // ==================================
+
+
     event.respondWith(
 
-        caches.match(event.request)
+        caches.match(
+            event.request
+        )
 
-        .then(cache =>{
+        .then(cached=>{
 
-            return cache || fetch(event.request);
+
+            return cached ||
+
+            fetch(
+                event.request
+            );
+
 
         })
 
     );
 
-});
-// ======================================
-// オフライン対応
-// ======================================
-
-self.addEventListener("fetch", event => {
-
-    // GET以外は処理しない
-    if (event.request.method !== "GET") {
-        return;
-    }
-
-    const url = new URL(event.request.url);
-
-    // events.jsonは常に最新を取得
-    if (url.pathname.endsWith("/data/events.json")) {
-
-        event.respondWith(
-
-            fetch(event.request, {
-                cache: "no-store"
-            }).catch(() => {
-
-                return new Response("[]", {
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
-
-            })
-
-        );
-
-        return;
-
-    }
-
-    // その他はキャッシュ優先
-    event.respondWith(
-
-        caches.match(event.request)
-
-        .then(cached => {
-
-            return cached || fetch(event.request);
-
-        })
-
-    );
 
 });
+
+
+
+
+
+
 // ======================================
-// ServiceWorker更新
+// 手動更新
 // ======================================
 
-self.addEventListener("message", event => {
 
-    if (event.data === "skipWaiting") {
+self.addEventListener(
+"message",
+event=>{
+
+
+    if(
+        event.data ===
+        "skipWaiting"
+    ){
 
         self.skipWaiting();
 
     }
 
-});
-// ======================================
-// バックグラウンド更新
-// ======================================
-
-self.addEventListener("activate", event => {
-
-    event.waitUntil(
-
-        self.clients.claim()
-
-    );
 
 });
+
+
+
+
+
+
+
 // ======================================
 // Push通知（将来用）
 // ======================================
 
-self.addEventListener("push", event => {
 
-    if (!event.data) return;
+self.addEventListener(
+"push",
+event=>{
 
-    const data = event.data.json();
+
+    if(!event.data)
+        return;
+
+
+
+    const data =
+    event.data.json();
+
+
 
     event.waitUntil(
 
@@ -189,11 +303,16 @@ self.addEventListener("push", event => {
 
             {
 
-                body: data.body,
+                body:
+                data.body,
 
-                icon: "images/icon-192.png",
 
-                badge: "images/icon-192.png"
+                icon:
+                "images/icon-192.png",
+
+
+                badge:
+                "images/icon-192.png"
 
             }
 
@@ -201,15 +320,35 @@ self.addEventListener("push", event => {
 
     );
 
+
 });
-self.addEventListener("notificationclick", event => {
+
+
+
+
+
+
+// ======================================
+// 通知クリック
+// ======================================
+
+
+self.addEventListener(
+"notificationclick",
+event=>{
+
 
     event.notification.close();
 
+
+
     event.waitUntil(
 
-        clients.openWindow("./")
+        clients.openWindow(
+            "./"
+        )
 
     );
+
 
 });
