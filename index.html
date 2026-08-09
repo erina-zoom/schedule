@@ -3,65 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ERINA Zoom予定表</title>
-
-<!-- ★重要：キャッシュ対策 -->
-<link rel="stylesheet" href="style.css?v=3">
-
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header class="header">
-    <!-- 画像なければ一旦コメントアウトでもOK -->
-    <img src="images/icon-192.png" class="logo">
-    
-    <div>
-        <h1>ERINA Zoom予定表</h1>
-        <p>最新のZoomスケジュール</p>
-    </div>
-</header>
+<div class="container">
 
-<div class="switch">
-    <button id="showSchedule">📋 予定表</button>
-    <button id="showCalendar">📅 カレンダー</button>
+    <!-- ヘッダー -->
+    <header class="header">
+        <img src="images/icon-192.png" class="logo">
+        <div>
+            <h1>ERINA Zoom予定表</h1>
+            <p>最新のZoomスケジュール</p>
+        </div>
+    </header>
+
+    <!-- 今日 -->
+    <h2>📢 今日のZoom</h2>
+    <div id="today"></div>
+
+    <!-- 次回 -->
+    <h2>⏭ 次回のZoom</h2>
+    <div id="next"></div>
+
+    <!-- 今週 -->
+    <h2>📅 今週の予定</h2>
+    <div id="week"></div>
+
 </div>
 
-<h2>📢 今日のZoom</h2>
-<div id="todayEvent"></div>
-
-<h2>⏭ 次回Zoom</h2>
-<div id="nextEvent"></div>
-
-<h2>📅 今週の予定</h2>
-<div id="weekEvents"></div>
-
-<div id="scheduleSection">
-    <h2>📋 スケジュール表</h2>
-    <div id="scheduleList"></div>
-</div>
-
-<div id="calendarSection" style="display:none;">
-    <h2 id="monthTitle"></h2>
-
-    <div class="calendar-controls">
-        <button id="prevMonth">◀</button>
-        <button id="nextMonth">▶</button>
-    </div>
-
-    <div class="calendar" id="calendar"></div>
-</div>
-
-<!-- ★最初から非表示にする -->
-<div id="modal" class="hidden">
-    <div class="modal-content">
-        <button id="closeModal">✖</button>
+<!-- モーダル -->
+<div id="modal" class="modal">
+    <div class="modal-box">
+        <button onclick="closeModal()">✖</button>
         <div id="eventDetail"></div>
     </div>
 </div>
 
-<script src="app.js?v=3"></script>
-
+<script src="app.js"></script>
 </body>
 </html>

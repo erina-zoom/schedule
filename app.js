@@ -1,104 +1,65 @@
-const API = "https://erina-manager.tomoya19980427goku.workers.dev?action=events";
+const DATA_URL = "events.json";
 
 let events = [];
-let current = new Date();
 
-document.addEventListener("DOMContentLoaded", async ()=>{
-
-    const res = await fetch(API + "&t=" + Date.now());
-    events = await res.json();
-
-    renderAll();
-    renderCalendar();
-});
-
-// 今日
-function renderToday(){
-    const e = events.find(x=>x.date===getToday());
-
-    document.getElementById("todayEvent").innerHTML =
-        e ? createCard(e,true)
-          : `<div class="card">今日のZoomはありません</div>`;
+async function load(){
+    try{
+        const res = await fetch(DATA_URL);
+        events = await res.json();
+        render();
+    }catch(e){
+        console.error("読み込み失敗", e);
+    }
 }
 
-// 次回
-function renderNext(){
-    const today = getToday();
+function render(){
+    const todayBox = document.getElementById("today");
+    const nextBox = document.getElementById("next");
+    const weekBox = document.getElementById("week");
 
-    const e = events
-        .filter(x=>x.date>=today)
-        .sort((a,b)=>a.date.localeCompare(b.date))[0];
+    todayBox.innerHTML = "";
+    nextBox.innerHTML = "";
+    weekBox.innerHTML = "";
 
-    document.getElementById("nextEvent").innerHTML =
-        e ? createCard(e,true)
-          : `<div class="card">予定なし</div>`;
-}
+    const today = new Date().toISOString().slice(0,10);
 
-// 今週
-function renderWeek(){
-    const el = document.getElementById("weekEvents");
-    el.innerHTML = "";
+    // 今日
+    const todayEvents = events.filter(e => e.date === today);
+    todayEvents.forEach(e=>{
+        todayBox.appendChild(createCard(e));
+    });
 
-    const now = new Date();
-    const end = new Date();
-    end.setDate(now.getDate()+7);
+    // 次回
+    const future = events.filter(e => e.date >= today);
+    if(future.length){
+        const next = future[0];
+        const card = createCard(next);
+        card.classList.add("next");
+        nextBox.appendChild(card);
+    }
 
-    events.forEach(e=>{
-        const d = new Date(e.date);
-
-        if(d>=now && d<=end){
-
-            const div = document.createElement("div");
-            div.className = "week-card";
-
-            div.innerHTML = `
-                ${d.getMonth()+1}/${d.getDate()}　
-                🕒 ${e.startTime}
-                ${e.title}
-            `;
-
-            div.onclick = ()=>openModal(e);
-            el.appendChild(div);
-        }
+    // 今週
+    events.slice(0,5).forEach(e=>{
+        const div = createCard(e);
+        weekBox.appendChild(div);
     });
 }
 
-// スケジュール
-function renderSchedule(){
-    const el = document.getElementById("scheduleList");
-    el.innerHTML="";
+function createCard(e){
+    const div = document.createElement("div");
+    div.className = "card";
 
-    events.forEach(e=>{
-        const div = document.createElement("div");
-        div.className="card";
-        div.innerHTML=createInner(e,true);
-        div.onclick=()=>openModal(e);
-        el.appendChild(div);
-    });
-}
-
-function renderAll(){
-    renderToday();
-    renderNext();
-    renderWeek();
-    renderSchedule();
-}
-
-// UI
-function createCard(e,showBtn){
-    return `<div class="card">${createInner(e,showBtn)}</div>`;
-}
-
-function createInner(e,showBtn){
-    return `
-        <div><b>${e.date}</b></div>
+    div.innerHTML = `
+        <div>${e.date}</div>
         <div>🕒 ${e.startTime}</div>
         <div>${e.title}</div>
-        ${showBtn && e.zoomUrl ? `<a href="${e.zoomUrl}" target="_blank">Zoomに参加</a>` : ""}
     `;
+
+    div.onclick = () => openModal(e);
+
+    return div;
 }
 
-// モーダル
 function openModal(e){
     const box = document.getElementById("eventDetail");
 
@@ -106,73 +67,13 @@ function openModal(e){
         <h3>${e.title}</h3>
         <p>${e.date}</p>
         <p>${e.startTime}</p>
-        ${e.zoomUrl ? `<a href="${e.zoomUrl}" target="_blank">Zoomに参加</a>` : ""}
     `;
 
-    document.getElementById("modal").classList.remove("hidden");
+    document.getElementById("modal").classList.add("show");
 }
 
-document.getElementById("closeModal").onclick=()=>{
-    document.getElementById("modal").classList.add("hidden");
-};
-
-// カレンダー
-function renderCalendar(){
-    const el = document.getElementById("calendar");
-    el.innerHTML="";
-
-    const y=current.getFullYear();
-    const m=current.getMonth();
-
-    document.getElementById("monthTitle").innerText=`${y}年${m+1}月`;
-
-    const first=new Date(y,m,1);
-    let start=first.getDay();
-    start=start===0?6:start-1;
-
-    const days=new Date(y,m+1,0).getDate();
-
-    for(let i=0;i<start;i++) el.innerHTML+="<div></div>";
-
-    for(let d=1;d<=days;d++){
-        const dateStr=`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-        const ev=events.filter(e=>e.date===dateStr);
-
-        let html=`<div class="cell"><b>${d}</b>`;
-        ev.forEach(x=>{
-            html+=`<div class="event">${x.startTime}</div>`;
-        });
-        html+="</div>";
-
-        el.innerHTML+=html;
-    }
+function closeModal(){
+    document.getElementById("modal").classList.remove("show");
 }
 
-// 操作
-document.addEventListener("click",e=>{
-    if(e.target.id==="prevMonth"){
-        current.setMonth(current.getMonth()-1);
-        renderCalendar();
-    }
-
-    if(e.target.id==="nextMonth"){
-        current.setMonth(current.getMonth()+1);
-        renderCalendar();
-    }
-
-    if(e.target.id==="showSchedule"){
-        scheduleSection.style.display="block";
-        calendarSection.style.display="none";
-    }
-
-    if(e.target.id==="showCalendar"){
-        scheduleSection.style.display="none";
-        calendarSection.style.display="block";
-    }
-});
-
-// 日付
-function getToday(){
-    const d=new Date();
-    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-}
+load();
