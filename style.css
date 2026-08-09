@@ -1033,3 +1033,16 @@ h2{
 
 
 }
+#updateNotice{
+    text-align:center;
+    margin:10px;
+}
+
+
+.show-update{
+    background:#e8f5e9;
+    color:#2e7d32;
+    padding:10px;
+    border-radius:10px;
+    font-weight:bold;
+}
