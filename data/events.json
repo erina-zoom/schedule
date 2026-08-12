@@ -203,19 +203,6 @@
     "program": []
   },
   {
-    "id": "20260907-9d10pm",
-    "date": "2026-09-07",
-    "startTime": "12:00",
-    "endTime": "14:00",
-    "title": "📻FMなまず",
-    "shortTitle": "📻FM",
-    "category": "fm",
-    "color": "#247447",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
     "id": "20260912-gltzhs",
     "date": "2026-09-12",
     "startTime": "13:00",
@@ -276,5 +263,18 @@
         "person": ""
       }
     ]
+  },
+  {
+    "id": "20260907-9d10pm",
+    "date": "2026-09-14",
+    "startTime": "12:00",
+    "endTime": "14:00",
+    "title": "📻FMなまず",
+    "shortTitle": "📻FM",
+    "category": "fm",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
   }
 ]
