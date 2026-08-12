@@ -227,5 +227,54 @@
     "image": "",
     "zoomUrl": "",
     "program": []
+  },
+  {
+    "id": "20260913-hfawph",
+    "date": "2026-09-13",
+    "startTime": "13:00",
+    "endTime": "14:00",
+    "title": "♣ミナソンチャンネル",
+    "shortTitle": "♣ミナソン",
+    "category": "",
+    "color": "#3311df",
+    "image": "",
+    "zoomUrl": "",
+    "program": [
+      {
+        "time": "13:00",
+        "title": "第51回ミナソン♣クラブ",
+        "person": ""
+      },
+      {
+        "time": "",
+        "title": "♣オープニング♣",
+        "person": ""
+      },
+      {
+        "time": "",
+        "title": "♣この人と アノ人に注目♣",
+        "person": "今月のゲスト\n"
+      },
+      {
+        "time": "",
+        "title": "♣ミナソン zoomパーティー♣",
+        "person": ""
+      },
+      {
+        "time": "",
+        "title": "♣クルーの エリナストーリー♣",
+        "person": ""
+      },
+      {
+        "time": "",
+        "title": "♣次回のお知らせ♣",
+        "person": ""
+      },
+      {
+        "time": "",
+        "title": "♣エンディング♣",
+        "person": ""
+      }
+    ]
   }
 ]
