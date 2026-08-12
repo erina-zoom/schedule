@@ -1046,3 +1046,17 @@ h2{
     border-radius:10px;
     font-weight:bold;
 }
+.program-content{
+    flex:1;
+}
+
+.program-title{
+    font-weight:500;
+}
+
+.program-person{
+    margin-top:5px;
+    font-size:0.9em;
+    color:#555;
+    white-space:pre-line;
+}

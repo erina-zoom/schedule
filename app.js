@@ -758,40 +758,43 @@ function openModal(e){
 
         e.program.forEach(item=>{
 
+    html += `
+    <div class="program-item">
 
-            html +=
-            `
+        <div class="program-time">
+            <b>
+            ${item.time || ""}
+            </b>
+        </div>
 
-            <div
-            class="program-item">
+        <div class="program-content">
 
-
-                <b>
-                ${item.time || ""}
-                </b>
-
-
-                <span>
+            <div class="program-title">
                 ${item.title || ""}
-                </span>
-
-
             </div>
 
-
-            `;
-
-
-        });
-
-
-
-        html +=
-        `
+            ${
+                item.person
+                ?
+                `
+                <div class="program-person">
+                    👤 ${item.person}
+                </div>
+                `
+                :
+                ""
+            }
 
         </div>
 
-        `;
+    </div>
+    `;
+
+});
+
+html += `
+</div>
+`;
 
 
     }
