@@ -4,27 +4,23 @@
 // 最新UI自動更新対応版
 // ======================================
 
-
 const CACHE_NAME =
 "erina-zoom-v8";
 
 
-
 const STATIC_FILES = [
 
-"./",
+    "./",
 
-"./index.html",
+    "./index.html",
 
-"./style.css",
+    "./style.css",
 
-"./app.js",
+    "./app.js",
 
-"./manifest.json"
+    "./manifest.json"
 
 ];
-
-
 
 
 
@@ -32,41 +28,32 @@ const STATIC_FILES = [
 // Install
 // ======================================
 
-
 self.addEventListener(
-"install",
-event => {
+    "install",
+    event => {
+
+        // 新しいWorkerを即有効化
+        self.skipWaiting();
 
 
-    // 新しいWorkerを即有効化
+        event.waitUntil(
 
-    self.skipWaiting();
+            caches.open(
+                CACHE_NAME
+            )
 
+            .then(cache => {
 
+                return cache.addAll(
+                    STATIC_FILES
+                );
 
-    event.waitUntil(
+            })
 
-        caches.open(
-            CACHE_NAME
-        )
+        );
 
-        .then(cache=>{
-
-
-            return cache.addAll(
-                STATIC_FILES
-            );
-
-
-        })
-
-    );
-
-
-});
-
-
-
+    }
+);
 
 
 
@@ -75,60 +62,46 @@ event => {
 // 古いキャッシュ削除
 // ======================================
 
-
 self.addEventListener(
-"activate",
-event=>{
+    "activate",
+    event => {
 
+        event.waitUntil(
 
-    event.waitUntil(
+            caches.keys()
 
-        caches.keys()
+            .then(keys => {
 
-        .then(keys=>{
+                return Promise.all(
 
+                    keys.map(key => {
 
-            return Promise.all(
+                        if (
+                            key !== CACHE_NAME
+                        ) {
 
-                keys.map(key=>{
+                            return caches.delete(
+                                key
+                            );
 
+                        }
 
-                    if(
-                        key !== CACHE_NAME
-                    ){
+                    })
 
+                );
 
-                        return caches.delete(
-                            key
-                        );
+            })
 
+            .then(() => {
 
-                    }
+                return self.clients.claim();
 
+            })
 
-                })
+        );
 
-            );
-
-
-        })
-
-        .then(()=>{
-
-
-            return self.clients.claim();
-
-
-        })
-
-    );
-
-
-});
-
-
-
-
+    }
+);
 
 
 
@@ -136,114 +109,98 @@ event=>{
 // Fetch
 // ======================================
 
-
 self.addEventListener(
-"fetch",
-event=>{
+    "fetch",
+    event => {
+
+        if (
+            event.request.method !== "GET"
+        ) {
+
+            return;
+
+        }
 
 
-    if(
-        event.request.method !== "GET"
-    ){
-
-        return;
-
-    }
-
-
-
-    const url =
-    new URL(
-        event.request.url
-    );
-
-
-
-
-
-    // ==================================
-    // 常に最新版取得するもの
-    // ==================================
-
-
-    if(
-
-        url.pathname.endsWith(
-            ".html"
-        )
-
-        ||
-
-        url.pathname.endsWith(
-            ".css"
-        )
-
-        ||
-
-        url.pathname.endsWith(
-            ".js"
-        )
-
-        ||
-
-        url.pathname.includes(
-            "events.json"
-        )
-
-    ){
-
-
-        event.respondWith(
-
-            fetch(
-                event.request,
-                {
-                    cache:"no-store"
-                }
-            )
-
-
+        const url =
+        new URL(
+            event.request.url
         );
 
 
-        return;
 
-    }
+        // ==================================
+        // 常に最新版取得
+        // ==================================
 
+        if (
 
+            url.pathname.endsWith(
+                ".html"
+            )
 
+            ||
 
+            url.pathname.endsWith(
+                ".css"
+            )
 
-    // ==================================
-    // 画像などはキャッシュ利用
-    // ==================================
+            ||
 
+            url.pathname.endsWith(
+                ".js"
+            )
 
-    event.respondWith(
+            ||
 
-        caches.match(
-            event.request
-        )
+            url.pathname.includes(
+                "events.json"
+            )
 
-        .then(cached=>{
+        ) {
 
+            event.respondWith(
 
-            return cached ||
+                fetch(
+                    event.request,
+                    {
+                        cache: "no-store"
+                    }
+                )
 
-            fetch(
-                event.request
             );
 
+            return;
 
-        })
-
-    );
-
-
-});
+        }
 
 
 
+        // ==================================
+        // 画像など
+        // キャッシュ利用
+        // ==================================
+
+        event.respondWith(
+
+            caches.match(
+                event.request
+            )
+
+            .then(cached => {
+
+                return cached ||
+
+                    fetch(
+                        event.request
+                    );
+
+            })
+
+        );
+
+    }
+);
 
 
 
@@ -251,27 +208,21 @@ event=>{
 // 手動更新
 // ======================================
 
-
 self.addEventListener(
-"message",
-event=>{
+    "message",
+    event => {
 
+        if (
+            event.data ===
+            "skipWaiting"
+        ) {
 
-    if(
-        event.data ===
-        "skipWaiting"
-    ){
+            self.skipWaiting();
 
-        self.skipWaiting();
+        }
 
     }
-
-
-});
-
-
-
-
+);
 
 
 
@@ -279,52 +230,46 @@ event=>{
 // Push通知（将来用）
 // ======================================
 
-
 self.addEventListener(
-"push",
-event=>{
+    "push",
+    event => {
+
+        if (!event.data) {
+
+            return;
+
+        }
 
 
-    if(!event.data)
-        return;
+        const data =
+        event.data.json();
 
 
+        event.waitUntil(
 
-    const data =
-    event.data.json();
+            self.registration.showNotification(
 
+                data.title,
 
+                {
 
-    event.waitUntil(
+                    body:
+                    data.body,
 
-        self.registration.showNotification(
+                    icon:
+                    "icons/icon-192.png",
 
-            data.title,
+                    badge:
+                    "icons/icon-192.png"
 
-            {
+                }
 
-                body:
-                data.body,
+            )
 
+        );
 
-                icon:
-                "images/icon-192.png",
-
-
-                badge:
-                "images/icon-192.png"
-
-            }
-
-        )
-
-    );
-
-
-});
-
-
-
+    }
+);
 
 
 
@@ -332,23 +277,20 @@ event=>{
 // 通知クリック
 // ======================================
 
-
 self.addEventListener(
-"notificationclick",
-event=>{
+    "notificationclick",
+    event => {
+
+        event.notification.close();
 
 
-    event.notification.close();
+        event.waitUntil(
 
+            clients.openWindow(
+                "./"
+            )
 
+        );
 
-    event.waitUntil(
-
-        clients.openWindow(
-            "./"
-        )
-
-    );
-
-
-});
+    }
+);
