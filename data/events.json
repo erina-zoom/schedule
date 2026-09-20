@@ -1,322 +1,5 @@
 [
   {
-    "id": "20260815-zn65b6",
-    "date": "2026-08-15",
-    "startTime": "13:00",
-    "endTime": "",
-    "title": "💃ワンコインダンス",
-    "shortTitle": "💃ワンコイン",
-    "category": "",
-    "color": "#e7c418",
-    "image": "",
-    "zoomUrl": "https://us06web.zoom.us/j/87028645307?pwd=Xc1MQXfxv2asuea89slEJcqTOcMNQT.1",
-    "program": []
-  },
-  {
-    "id": "20260816-8txzcn",
-    "date": "2026-08-16",
-    "startTime": "13:00",
-    "endTime": "",
-    "title": "♣ミナソンチャンネル",
-    "shortTitle": "♣ミナソン",
-    "category": "",
-    "color": "#3311df",
-    "image": "",
-    "zoomUrl": "https://us06web.zoom.us/j/87369717262?pwd=MOtL8zesaE8wnMpK5WUMdJcOpbnCp5.1",
-    "program": [
-      {
-        "time": "13:00",
-        "title": "第51回ミナソン♣クラブ",
-        "person": ""
-      },
-      {
-        "time": "",
-        "title": "♣オープニング♣",
-        "person": ""
-      },
-      {
-        "time": "",
-        "title": "♣この人と アノ人に注目♣",
-        "person": "今月のゲスト\n蔵本ひな"
-      },
-      {
-        "time": "",
-        "title": "♣ミナソン zoomパーティー♣",
-        "person": "KGマスク編"
-      },
-      {
-        "time": "",
-        "title": "♣クルーの エリナストーリー♣",
-        "person": ""
-      },
-      {
-        "time": "",
-        "title": "♣次回のお知らせ♣",
-        "person": ""
-      },
-      {
-        "time": "",
-        "title": "♣エンディング♣",
-        "person": ""
-      }
-    ]
-  },
-  {
-    "id": "20260817-6wtyi9",
-    "date": "2026-08-17",
-    "startTime": "12:00",
-    "endTime": "",
-    "title": "📻FMなまず",
-    "shortTitle": "📻FM",
-    "category": "fm",
-    "color": "#247447",
-    "image": "",
-    "zoomUrl": "https://us06web.zoom.us/j/86959645409?pwd=U7vJtElJXMs9wQ6XwIWsTqaDEMqNRg.1",
-    "program": []
-  },
-  {
-    "id": "20260806-y9f9ca",
-    "date": "2026-08-20",
-    "startTime": "19:00",
-    "endTime": "20:00",
-    "title": "🧪第47回　理科の実験チャンネル",
-    "shortTitle": "🧪理科実験",
-    "category": "event",
-    "color": "#247447",
-    "image": "",
-    "zoomUrl": "https://us06web.zoom.us/j/85915570830?pwd=tkfdeF58gMX0ttiOa7DxEcV2b5pP6a.1",
-    "program": [
-      {
-        "time": "",
-        "title": "夏を乗り越える為の商品",
-        "person": "ABC NCM アロエジュース 高麗人参"
-      },
-      {
-        "time": "",
-        "title": "りかのまんま",
-        "person": "ゲスト：上園咲美M＆大野ひろみさん"
-      }
-    ]
-  },
-  {
-    "id": "20260821-8s5ebk",
-    "date": "2026-08-21",
-    "startTime": "13:00",
-    "endTime": "",
-    "title": "💻 佐賀オンラインセミナー",
-    "shortTitle": "💻佐賀",
-    "category": "seminar",
-    "color": "#1976d2",
-    "image": "",
-    "zoomUrl": "https://us06web.zoom.us/j/85448148643?pwd=lvD6M06uikAvxEVEbt3HCzWgz0ONcH.1",
-    "program": []
-  },
-  {
-    "id": "20260824-mw1a3g",
-    "date": "2026-08-24",
-    "startTime": "12:00",
-    "endTime": "",
-    "title": "📻FMなまず",
-    "shortTitle": "📻FM",
-    "category": "fm",
-    "color": "#247447",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260825-de945n",
-    "date": "2026-08-25",
-    "startTime": "19:00",
-    "endTime": "",
-    "title": "🎶 竹の子族",
-    "shortTitle": "🎶竹の子",
-    "category": "event",
-    "color": "#8e44ad",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260830-u6c2dn",
-    "date": "2026-08-30",
-    "startTime": "13:00",
-    "endTime": "",
-    "title": "🍒 休日チェリーLive",
-    "shortTitle": "🍒チェリー",
-    "category": "cherry",
-    "color": "#c62828",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260831-o15js0",
-    "date": "2026-08-31",
-    "startTime": "12:00",
-    "endTime": "",
-    "title": "📻FMなまず",
-    "shortTitle": "📻FM",
-    "category": "fm",
-    "color": "#247447",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260901-9c4aw5",
-    "date": "2026-09-01",
-    "startTime": "11:00",
-    "endTime": "12:00",
-    "title": "📚寺子屋チャンネル",
-    "shortTitle": "📚寺子屋",
-    "category": "",
-    "color": "#e79f04",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260901-q4p3td",
-    "date": "2026-09-01",
-    "startTime": "19:00",
-    "endTime": "21:00",
-    "title": "🎶 竹の子族",
-    "shortTitle": "🎶竹の子",
-    "category": "event",
-    "color": "#8e44ad",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260904-3fbpph",
-    "date": "2026-09-04",
-    "startTime": "19:00",
-    "endTime": "20:00",
-    "title": "🧪第48回　理科の実験チャンネル",
-    "shortTitle": "🧪理科実験",
-    "category": "event",
-    "color": "#247447",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260912-gltzhs",
-    "date": "2026-09-12",
-    "startTime": "13:00",
-    "endTime": "15:00",
-    "title": "🌸サクラ咲く会",
-    "shortTitle": "🌸サクラ",
-    "category": "seminar",
-    "color": "#db29d5",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260913-hfawph",
-    "date": "2026-09-13",
-    "startTime": "13:00",
-    "endTime": "14:00",
-    "title": "♣ミナソンチャンネル",
-    "shortTitle": "♣ミナソン",
-    "category": "",
-    "color": "#3311df",
-    "image": "",
-    "zoomUrl": "",
-    "program": [
-      {
-        "time": "13:00",
-        "title": "第51回ミナソン♣クラブ",
-        "person": ""
-      },
-      {
-        "time": "",
-        "title": "♣オープニング♣",
-        "person": ""
-      },
-      {
-        "time": "",
-        "title": "♣この人と アノ人に注目♣",
-        "person": "今月のゲスト\n"
-      },
-      {
-        "time": "",
-        "title": "♣ミナソン zoomパーティー♣",
-        "person": ""
-      },
-      {
-        "time": "",
-        "title": "♣クルーの エリナストーリー♣",
-        "person": ""
-      },
-      {
-        "time": "",
-        "title": "♣次回のお知らせ♣",
-        "person": ""
-      },
-      {
-        "time": "",
-        "title": "♣エンディング♣",
-        "person": ""
-      }
-    ]
-  },
-  {
-    "id": "20260907-9d10pm",
-    "date": "2026-09-14",
-    "startTime": "12:00",
-    "endTime": "14:00",
-    "title": "📻FMなまず",
-    "shortTitle": "📻FM",
-    "category": "fm",
-    "color": "#247447",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260916-wdjs1m",
-    "date": "2026-09-16",
-    "startTime": "13:00",
-    "endTime": "",
-    "title": "🍒 平日チェリーLive",
-    "shortTitle": "🍒チェリー",
-    "category": "cherry",
-    "color": "#c62828",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260919-qwocfn",
-    "date": "2026-09-19",
-    "startTime": "18:00",
-    "endTime": "20:00",
-    "title": "💃ワンコインダンス",
-    "shortTitle": "💃ワンコイン",
-    "category": "",
-    "color": "#e7c418",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20260920-7iq7nu",
-    "date": "2026-09-20",
-    "startTime": "13:00",
-    "endTime": "14:30",
-    "title": "💻 佐賀オンラインセミナー",
-    "shortTitle": "💻佐賀",
-    "category": "seminar",
-    "color": "#1976d2",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
     "id": "20260921-v2dm5x",
     "date": "2026-09-21",
     "startTime": "12:00",
@@ -325,8 +8,8 @@
     "shortTitle": "📻FM",
     "category": "fm",
     "color": "#247447",
-    "image": "",
-    "zoomUrl": "",
+    "image": "images/event-1789884632249.png",
+    "zoomUrl": "https://us06web.zoom.us/j/83645445338?pwd=XkKpr2OH2sfDl6B3eR1G3J0TOFYGgH.1",
     "program": []
   },
   {
@@ -339,7 +22,7 @@
     "category": "cherry",
     "color": "#c62828",
     "image": "",
-    "zoomUrl": "",
+    "zoomUrl": "https://us06web.zoom.us/j/81757758626?pwd=IZQ9Mvudv2pEpiJRqtnLnptcK8OoWx.1",
     "program": []
   },
   {
@@ -356,6 +39,19 @@
     "program": []
   },
   {
+    "id": "20260929-x3mr5a",
+    "date": "2026-09-29",
+    "startTime": "10:00",
+    "endTime": "",
+    "title": "佐賀オンラインセミナー事前打ち合わせ",
+    "shortTitle": "佐賀事前",
+    "category": "",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
     "id": "20260929-e7xy58",
     "date": "2026-09-29",
     "startTime": "19:00",
@@ -364,6 +60,292 @@
     "shortTitle": "🎶竹の子",
     "category": "event",
     "color": "#8e44ad",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20260930-yc1oiv",
+    "date": "2026-09-30",
+    "startTime": "20:00",
+    "endTime": "",
+    "title": "🧘ヨガチャンネル",
+    "shortTitle": "🧘ヨガ",
+    "category": "",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261002-k5w1cn",
+    "date": "2026-10-02",
+    "startTime": "19:00",
+    "endTime": "20:00",
+    "title": "理科の実験チャンネル",
+    "shortTitle": "理科実験",
+    "category": "event",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261005-n51wy3",
+    "date": "2026-10-05",
+    "startTime": "11:00",
+    "endTime": "12:00",
+    "title": "寺子屋チャンネル",
+    "shortTitle": "寺子屋",
+    "category": "",
+    "color": "#ff1c1c",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261005-kmwttu",
+    "date": "2026-10-05",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": "📻ナイトFMなまず",
+    "shortTitle": "📻FM",
+    "category": "fm",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261006-ozccfz",
+    "date": "2026-10-06",
+    "startTime": "10:30",
+    "endTime": "12:00",
+    "title": "美智子会議(ダンススタッフのみ)",
+    "shortTitle": "美智子会議",
+    "category": "",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261006-nagrfj",
+    "date": "2026-10-06",
+    "startTime": "19:00",
+    "endTime": "21:00",
+    "title": "🎶 竹の子族",
+    "shortTitle": "🎶竹の子",
+    "category": "event",
+    "color": "#8e44ad",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261008-sj38cs",
+    "date": "2026-10-08",
+    "startTime": "13:00",
+    "endTime": "14:30",
+    "title": "💻のびしろの会",
+    "shortTitle": "のびしろ",
+    "category": "seminar",
+    "color": "#00db59",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261011-6v48sz",
+    "date": "2026-10-11",
+    "startTime": "13:00",
+    "endTime": "14:00",
+    "title": "ミナソンチャンネル",
+    "shortTitle": "ミナソン",
+    "category": "",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261012-oqxc2m",
+    "date": "2026-10-12",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": "📻FMなまず",
+    "shortTitle": "📻FM",
+    "category": "fm",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261014-fwdbce",
+    "date": "2026-10-14",
+    "startTime": "13:00",
+    "endTime": "14:30",
+    "title": "🍒 平日チェリーLive",
+    "shortTitle": "🍒チェリー",
+    "category": "cherry",
+    "color": "#c62828",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261017-sp8rou",
+    "date": "2026-10-17",
+    "startTime": "13:00",
+    "endTime": "15:00",
+    "title": "🌸サクラ咲く会",
+    "shortTitle": "🌸サクラ",
+    "category": "seminar",
+    "color": "#db29d5",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261019-ltu719",
+    "date": "2026-10-19",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": "📻FMなまず",
+    "shortTitle": "📻FM",
+    "category": "fm",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261019-rezph3",
+    "date": "2026-10-19",
+    "startTime": "20:00",
+    "endTime": "21:00",
+    "title": "🙆アスカストレッチ",
+    "shortTitle": "🙆ストレッチ",
+    "category": "",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261020-whwbee",
+    "date": "2026-10-20",
+    "startTime": "09:30",
+    "endTime": "",
+    "title": "のびしろの会打ち合わせ",
+    "shortTitle": "のびしろ打ち合わせ",
+    "category": "",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20260919-qwocfn",
+    "date": "2026-10-24",
+    "startTime": "18:00",
+    "endTime": "20:00",
+    "title": "💃ワンコインダンス",
+    "shortTitle": "💃ワンコイン",
+    "category": "",
+    "color": "#e7c418",
+    "image": "images/event-1789884189973.png",
+    "zoomUrl": "https://us06web.zoom.us/j/87641366805?pwd=gjaFtVFizpOdR4UUDoaaWQgVakFbtZ.1",
+    "program": []
+  },
+  {
+    "id": "20261025-u39qpl",
+    "date": "2026-10-25",
+    "startTime": "13:00",
+    "endTime": "14:30",
+    "title": "🍒 休日チェリーLive",
+    "shortTitle": "🍒チェリー",
+    "category": "cherry",
+    "color": "#c62828",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20260920-7iq7nu",
+    "date": "2026-10-26",
+    "startTime": "13:00",
+    "endTime": "14:30",
+    "title": "💻 佐賀オンラインセミナー",
+    "shortTitle": "💻佐賀",
+    "category": "seminar",
+    "color": "#1976d2",
+    "image": "",
+    "zoomUrl": "https://us06web.zoom.us/j/81842084487?pwd=8aO3jbzNnXyYOlFH7mJA5ablOG0LzS.1",
+    "program": []
+  },
+  {
+    "id": "20261026-ks4aj1",
+    "date": "2026-10-26",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": "📻ナイトFMなまず",
+    "shortTitle": "📻FM",
+    "category": "fm",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261027-kmkh10",
+    "date": "2026-10-27",
+    "startTime": "10:00",
+    "endTime": "",
+    "title": "佐賀オンラインセミナー事前打ち合わせ",
+    "shortTitle": "佐賀事前",
+    "category": "",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261027-ej92s2",
+    "date": "2026-10-27",
+    "startTime": "19:00",
+    "endTime": "21:00",
+    "title": "🎶 竹の子族",
+    "shortTitle": "🎶竹の子",
+    "category": "event",
+    "color": "#8e44ad",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261028-oddxik",
+    "date": "2026-10-28",
+    "startTime": "20:00",
+    "endTime": "21:00",
+    "title": "🧘ヨガチャンネル",
+    "shortTitle": "🧘ヨガ",
+    "category": "",
+    "color": "#247447",
+    "image": "",
+    "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20261030-wwl7ws",
+    "date": "2026-10-30",
+    "startTime": "19:00",
+    "endTime": "20:00",
+    "title": "理科の実験チャンネル",
+    "shortTitle": "理科実験",
+    "category": "event",
+    "color": "#247447",
     "image": "",
     "zoomUrl": "",
     "program": []
