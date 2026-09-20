@@ -1,18 +1,5 @@
 [
   {
-    "id": "20260919-qwocfn",
-    "date": "2026-09-19",
-    "startTime": "18:00",
-    "endTime": "20:00",
-    "title": "💃ワンコインダンス",
-    "shortTitle": "💃ワンコイン",
-    "category": "",
-    "color": "#e7c418",
-    "image": "",
-    "zoomUrl": "https://us06web.zoom.us/j/87641366805?pwd=gjaFtVFizpOdR4UUDoaaWQgVakFbtZ.1",
-    "program": []
-  },
-  {
     "id": "20260920-7iq7nu",
     "date": "2026-09-20",
     "startTime": "13:00",
@@ -270,6 +257,19 @@
     "color": "#247447",
     "image": "",
     "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20260919-qwocfn",
+    "date": "2026-10-24",
+    "startTime": "18:00",
+    "endTime": "20:00",
+    "title": "💃ワンコインダンス",
+    "shortTitle": "💃ワンコイン",
+    "category": "",
+    "color": "#e7c418",
+    "image": "",
+    "zoomUrl": "https://us06web.zoom.us/j/87641366805?pwd=gjaFtVFizpOdR4UUDoaaWQgVakFbtZ.1",
     "program": []
   },
   {
