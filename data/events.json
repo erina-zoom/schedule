@@ -1,18 +1,5 @@
 [
   {
-    "id": "20260920-7iq7nu",
-    "date": "2026-09-20",
-    "startTime": "13:00",
-    "endTime": "14:30",
-    "title": "💻 佐賀オンラインセミナー",
-    "shortTitle": "💻佐賀",
-    "category": "seminar",
-    "color": "#1976d2",
-    "image": "",
-    "zoomUrl": "https://us06web.zoom.us/j/81842084487?pwd=8aO3jbzNnXyYOlFH7mJA5ablOG0LzS.1",
-    "program": []
-  },
-  {
     "id": "20260921-v2dm5x",
     "date": "2026-09-21",
     "startTime": "12:00",
@@ -283,6 +270,19 @@
     "color": "#c62828",
     "image": "",
     "zoomUrl": "",
+    "program": []
+  },
+  {
+    "id": "20260920-7iq7nu",
+    "date": "2026-10-26",
+    "startTime": "13:00",
+    "endTime": "14:30",
+    "title": "💻 佐賀オンラインセミナー",
+    "shortTitle": "💻佐賀",
+    "category": "seminar",
+    "color": "#1976d2",
+    "image": "",
+    "zoomUrl": "https://us06web.zoom.us/j/81842084487?pwd=8aO3jbzNnXyYOlFH7mJA5ablOG0LzS.1",
     "program": []
   },
   {
