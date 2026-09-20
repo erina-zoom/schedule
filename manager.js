@@ -11,10 +11,10 @@
 // ==========================================
 
 const WORKER_URL =
-"https://erina-manager.tomoya19980427goku.workers.dev";
+"https://erina-zoom.tomoya19980427goku.workers.dev";
 
 const EVENTS_URL =
-`${WORKER_URL}?action=events`;
+`${WORKER_URL}/api/admin/events`;
 
 
 // ==========================================
