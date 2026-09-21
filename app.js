@@ -1791,8 +1791,9 @@ if(passwordSubmit){
 
                 closePasswordModal();
 
+alert(data.zoom_url || "Zoom URLが返ってきていません");
 
-                if(data.zoom_url){
+if(data.zoom_url){
 
     window.location.href =
         data.zoom_url;
