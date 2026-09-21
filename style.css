@@ -1089,3 +1089,435 @@ section {
     border-radius: 8px;
     box-sizing: border-box;
 }
+
+/* ==================================================
+   ERINA Zoom予定表
+   端末サイズ別レイアウト調整
+   ================================================== */
+
+
+/* ------------------------------------------
+   📱 小型スマホ
+   iPhone SEなど
+   320px ～ 374px
+   ------------------------------------------ */
+@media (max-width: 374px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    .header-inner {
+        min-height: 56px;
+        padding: 4px 8px;
+    }
+
+    .menu-button {
+        width: 44px;
+        height: 44px;
+        font-size: 27px;
+    }
+
+    main {
+        padding: 12px 10px 35px;
+    }
+
+    .app-view h2 {
+        font-size: 19px;
+        margin: 8px 0 15px;
+    }
+
+    .event-card {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .event-date {
+        font-size: 15px;
+    }
+
+    .event-time {
+        font-size: 14px;
+    }
+
+    .event-title {
+        font-size: 16px;
+    }
+
+    .zoom-btn {
+        width: 100%;
+        padding: 12px 18px;
+        font-size: 15px;
+    }
+
+    .modal-content {
+        padding: 18px;
+    }
+
+    .modal-content h2 {
+        font-size: 20px;
+    }
+
+    #zoomPassword {
+        height: 44px;
+        font-size: 16px;
+    }
+
+    #passwordSubmit {
+        min-height: 44px;
+        font-size: 15px;
+    }
+}
+
+
+/* ------------------------------------------
+   📱 スマートフォン
+   iPhone / Android
+   375px ～ 600px
+   ------------------------------------------ */
+@media (min-width: 375px) and (max-width: 600px) {
+
+    body {
+        font-size: 15px;
+    }
+
+    .header-inner {
+        min-height: 58px;
+        padding: 5px 10px;
+    }
+
+    .menu-button {
+        width: 46px;
+        height: 46px;
+        font-size: 28px;
+    }
+
+    main {
+        padding: 15px 12px 40px;
+    }
+
+    .app-view h2 {
+        font-size: 20px;
+    }
+
+    .event-card {
+        padding: 16px;
+        border-radius: 15px;
+    }
+
+    .event-date {
+        font-size: 16px;
+    }
+
+    .event-time {
+        font-size: 15px;
+    }
+
+    .event-title {
+        font-size: 17px;
+    }
+
+    .zoom-btn {
+        min-height: 44px;
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+
+    .modal-content h2 {
+        font-size: 21px;
+    }
+
+    #zoomPassword {
+        height: 44px;
+        font-size: 16px;
+    }
+
+    #passwordSubmit {
+        min-height: 44px;
+        font-size: 15px;
+    }
+}
+
+
+/* ------------------------------------------
+   📱 iPad / タブレット
+   縦・横
+   601px ～ 1024px
+   ------------------------------------------ */
+@media (min-width: 601px) and (max-width: 1024px) {
+
+    body {
+        font-size: 16px;
+    }
+
+    .header-inner {
+        min-height: 68px;
+        padding: 8px 20px;
+    }
+
+    .menu-button {
+        width: 50px;
+        height: 50px;
+        font-size: 30px;
+    }
+
+    main {
+        max-width: 900px;
+        padding: 25px 22px 60px;
+    }
+
+    .app-view h2 {
+        font-size: 23px;
+    }
+
+    .event-card {
+        padding: 20px 22px;
+        border-radius: 17px;
+    }
+
+    .event-date {
+        font-size: 18px;
+    }
+
+    .event-time {
+        font-size: 16px;
+    }
+
+    .event-title {
+        font-size: 19px;
+    }
+
+    .zoom-btn {
+        min-height: 46px;
+        padding: 13px 26px;
+        font-size: 16px;
+    }
+
+    .modal-content {
+        width: 560px;
+        padding: 28px;
+    }
+
+    .modal-content h2 {
+        font-size: 24px;
+    }
+
+    #zoomPassword {
+        height: 46px;
+        font-size: 16px;
+    }
+
+    #passwordSubmit {
+        min-height: 46px;
+        font-size: 16px;
+    }
+}
+
+
+/* ------------------------------------------
+   💻 PC
+   1025px ～ 1440px
+   ------------------------------------------ */
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    body {
+        font-size: 16px;
+    }
+
+    main {
+        max-width: 900px;
+        padding: 25px 20px 60px;
+    }
+
+    .app-view h2 {
+        font-size: 23px;
+    }
+
+    .event-card {
+        padding: 20px 22px;
+    }
+
+    .event-date {
+        font-size: 18px;
+    }
+
+    .event-title {
+        font-size: 19px;
+    }
+
+    .zoom-btn {
+        min-height: 46px;
+        font-size: 16px;
+    }
+}
+
+
+/* ------------------------------------------
+   🖥️ 大画面PC
+   1441px以上
+   ------------------------------------------ */
+@media (min-width: 1441px) {
+
+    body {
+        font-size: 17px;
+    }
+
+    main {
+        max-width: 1000px;
+        padding: 30px 25px 70px;
+    }
+
+    .app-view h2 {
+        font-size: 25px;
+    }
+
+    .event-card {
+        padding: 22px 25px;
+    }
+
+    .event-date {
+        font-size: 19px;
+    }
+
+    .event-title {
+        font-size: 20px;
+    }
+
+    .zoom-btn {
+        min-height: 48px;
+        padding: 13px 28px;
+        font-size: 17px;
+    }
+}
+
+
+/* ==================================================
+   パスワードモーダル
+   端末別サイズ調整
+   ================================================== */
+
+
+/* 📱 スマホ */
+@media (max-width: 600px) {
+
+    #passwordModal .modal-content {
+        width: calc(100% - 20px);
+        max-width: 460px;
+        min-height: auto;
+        padding: 28px 18px 22px;
+        border-radius: 18px;
+    }
+
+    #passwordModal h2 {
+        font-size: 21px;
+        line-height: 1.5;
+        padding-right: 45px;
+    }
+
+    #passwordModal p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    #zoomPassword {
+        width: 100%;
+        height: 44px;
+        font-size: 16px;
+    }
+
+    #passwordSubmit {
+        height: 44px;
+        padding: 0 20px;
+        font-size: 15px;
+        white-space: nowrap;
+    }
+}
+
+
+/* 📱 小型スマホ */
+@media (max-width: 374px) {
+
+    #passwordModal .modal-content {
+        padding: 25px 14px 20px;
+    }
+
+    #passwordModal h2 {
+        font-size: 19px;
+    }
+
+    #passwordModal p {
+        font-size: 13px;
+    }
+
+    #zoomPassword {
+        font-size: 16px;
+    }
+
+    #passwordSubmit {
+        font-size: 14px;
+        padding: 0 15px;
+    }
+}
+
+
+/* 📱 iPad / タブレット */
+@media (min-width: 601px) and (max-width: 1024px) {
+
+    #passwordModal .modal-content {
+        width: 560px;
+        max-width: 90%;
+        padding: 30px;
+        border-radius: 20px;
+    }
+
+    #passwordModal h2 {
+        font-size: 24px;
+    }
+
+    #passwordModal p {
+        font-size: 16px;
+    }
+
+    #zoomPassword {
+        height: 46px;
+        font-size: 17px;
+    }
+
+    #passwordSubmit {
+        height: 46px;
+        font-size: 16px;
+    }
+}
+
+
+/* 💻 PC */
+@media (min-width: 1025px) {
+
+    #passwordModal .modal-content {
+        width: 560px;
+        padding: 30px;
+        border-radius: 20px;
+    }
+
+    #passwordModal h2 {
+        font-size: 24px;
+    }
+
+    #passwordModal p {
+        font-size: 16px;
+    }
+
+    #zoomPassword {
+        height: 46px;
+        font-size: 16px;
+    }
+
+    #passwordSubmit {
+        height: 46px;
+        font-size: 16px;
+    }
+}
