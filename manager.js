@@ -303,7 +303,7 @@ async function loadEvents(){
 
         const res =
         await fetch(
-            `${EVENTS_URL}&t=${Date.now()}`,
+            `${EVENTS_URL}?t=${Date.now()}`,
             {
                 cache:"no-store"
             }
