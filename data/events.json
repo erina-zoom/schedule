@@ -1,15 +1,15 @@
 [
   {
-    "id": "20260921-v2dm5x",
+    "id": "20260921-bybcuw",
     "date": "2026-09-21",
-    "startTime": "12:00",
-    "endTime": "14:00",
-    "title": "📻FMなまず",
-    "shortTitle": "📻FM",
-    "category": "fm",
+    "startTime": "22:45",
+    "endTime": "",
+    "title": "テスト",
+    "shortTitle": "",
+    "category": "",
     "color": "#247447",
-    "image": "images/event-1789884632249.png",
-    "zoomUrl": "https://us06web.zoom.us/j/83645445338?pwd=XkKpr2OH2sfDl6B3eR1G3J0TOFYGgH.1",
+    "image": "",
+    "zoomUrl": "",
     "program": []
   },
   {
@@ -332,19 +332,6 @@
     "title": "🧘ヨガチャンネル",
     "shortTitle": "🧘ヨガ",
     "category": "",
-    "color": "#247447",
-    "image": "",
-    "zoomUrl": "",
-    "program": []
-  },
-  {
-    "id": "20261030-wwl7ws",
-    "date": "2026-10-30",
-    "startTime": "19:00",
-    "endTime": "20:00",
-    "title": "理科の実験チャンネル",
-    "shortTitle": "理科実験",
-    "category": "event",
     "color": "#247447",
     "image": "",
     "zoomUrl": "",
