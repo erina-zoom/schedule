@@ -433,7 +433,10 @@ function renderEventList(){
             class="button button-green duplicate-btn">
                 複製
             </button>
-
+<button
+class="button button-danger delete-list-btn">
+    削除
+</button>
         </div>
 
         `;
@@ -453,6 +456,13 @@ function renderEventList(){
             duplicateEvent(event.id);
 
         };
+        item
+.querySelector(".delete-list-btn")
+.onclick = ()=>{
+
+    deleteEventFromList(event.id);
+
+};
 
         eventList.appendChild(item);
 
@@ -1329,16 +1339,87 @@ function wait(ms){
 }
 
 
-
-// ==========================================
-// Part3へ続く
-// ==========================================
 // ==========================================
 // ERINA Zoom Manager Ver5
 // manager.js Part3
 // ==========================================
 
+async function deleteEventFromList(id){
 
+    const target =
+    events.find(
+        item =>
+        String(item.id) ===
+        String(id)
+    );
+
+    if(!target){
+        return;
+    }
+
+    const confirmDelete =
+    confirm(
+        `「${target.title}」を削除しますか？`
+    );
+
+    if(!confirmDelete){
+        return;
+    }
+
+    try{
+
+        showStatus(
+            "削除中...",
+            "loading"
+        );
+
+        const response =
+        await fetch(
+            `${WORKER_URL}/api/admin/events/${encodeURIComponent(id)}`,
+            {
+                method:"DELETE",
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                }
+            }
+        );
+
+        const result =
+        await response.json();
+
+        if(
+            !response.ok ||
+            !result.success
+        ){
+            throw new Error(
+                result.error ||
+                "削除失敗"
+            );
+        }
+
+        showStatus(
+            "削除しました",
+            "success"
+        );
+
+        await wait(1000);
+
+        await loadEvents();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showStatus(
+            "削除失敗："+error.message,
+            "error"
+        );
+
+    }
+
+}
 // ==========================================
 // 削除
 // ==========================================
