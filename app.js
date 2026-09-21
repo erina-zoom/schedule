@@ -405,6 +405,8 @@ function normalizeEvent(e){
         description:
             e.description ||
             "",
+locked:
+    !!e.locked,
 
         program:
             e.programs ||
@@ -743,25 +745,29 @@ function createCard(
 
 
         ${
-            showZoom && e.zoomUrl
-            ?
+    showZoom && e.zoomUrl
+    ?
 
-            `
-            <a
-                href="${e.zoomUrl}"
-                target="_blank"
-                rel="noopener"
-                class="zoom-btn"
-                onclick="event.stopPropagation()"
-            >
-                Zoomに参加
-            </a>
-            `
+    `
+    <a
+        href="${e.locked ? "#" : e.zoomUrl}"
+        target="${e.locked ? "_self" : "_blank"}"
+        rel="noopener"
+        class="zoom-btn"
+        onclick="event.stopPropagation(); ${
+            e.locked
+            ? `openPasswordModal('${e.id}'); return false;`
+            : ""
+        }"
+    >
+        Zoomに参加
+    </a>
+    `
 
-            :
+    :
 
-            ""
-        }
+    ""
+}
 
     `;
 
@@ -1587,3 +1593,197 @@ setInterval(
     },
     30000
 );
+/* ===============================
+   Zoomパスワード入力
+================================ */
+
+let passwordEvent = null;
+
+
+function openPasswordModal(eventId){
+
+    passwordEvent =
+        events
+            .map(normalizeEvent)
+            .find(e => e.id === eventId);
+
+    const modal =
+        document.getElementById(
+            "passwordModal"
+        );
+
+    const passwordInput =
+        document.getElementById(
+            "zoomPassword"
+        );
+
+    const error =
+        document.getElementById(
+            "passwordError"
+        );
+
+    if(!modal || !passwordInput){
+        return;
+    }
+
+    passwordInput.value = "";
+
+    if(error){
+        error.style.display = "none";
+    }
+
+    modal.classList.add("show");
+
+    passwordInput.focus();
+
+}
+
+
+function closePasswordModal(){
+
+    const modal =
+        document.getElementById(
+            "passwordModal"
+        );
+
+    if(modal){
+
+        modal.classList.remove("show");
+
+    }
+
+}
+
+
+const closePasswordButton =
+    document.getElementById(
+        "closePasswordModal"
+    );
+
+
+if(closePasswordButton){
+
+    closePasswordButton.addEventListener(
+        "click",
+        closePasswordModal
+    );
+
+}
+
+
+const passwordSubmit =
+    document.getElementById(
+        "passwordSubmit"
+    );
+
+
+if(passwordSubmit){
+
+    passwordSubmit.addEventListener(
+        "click",
+        async () => {
+
+            if(!passwordEvent){
+                return;
+            }
+
+            const passwordInput =
+                document.getElementById(
+                    "zoomPassword"
+                );
+
+            const error =
+                document.getElementById(
+                    "passwordError"
+                );
+
+            const password =
+                passwordInput.value.trim();
+
+            if(!password){
+
+                if(error){
+
+                    error.textContent =
+                        "パスワードを入力してください。";
+
+                    error.style.display =
+                        "block";
+
+                }
+
+                return;
+
+            }
+
+            try{
+
+                const res =
+                    await fetch(
+                        DATA_URL.replace(
+                            "/api/events",
+                            `/api/events/${passwordEvent.id}/unlock`
+                        ),
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    password:
+                                        password
+                                })
+                        }
+                    );
+
+
+                const data =
+                    await res.json();
+
+
+                if(!res.ok){
+
+                    if(error){
+
+                        error.textContent =
+                            "パスワードが正しくありません。";
+
+                        error.style.display =
+                            "block";
+
+                    }
+
+                    return;
+
+                }
+
+
+                closePasswordModal();
+
+
+                if(data.zoom_url){
+
+                    window.open(
+                        data.zoom_url,
+                        "_blank"
+                    );
+
+                }
+
+            }catch(error){
+
+                console.error(
+                    "パスワード確認エラー:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+}

@@ -110,7 +110,10 @@ const zoomUrlInput =
 document.getElementById(
     "zoomUrl"
 );
-
+const eventPasswordInput =
+document.getElementById(
+    "eventPassword"
+);
 
 const imageFileInput =
 document.getElementById(
@@ -518,7 +521,15 @@ function editEvent(id){
 
     zoomUrlInput.value =
     event.zoomUrl || "";
+if(event.hasPassword){
+    eventPasswordInput.placeholder =
+        "現在パスワード設定済み（変更する場合のみ入力）";
+}else{
+    eventPasswordInput.placeholder =
+        "参加者が入力するパスワード";
+}
 
+eventPasswordInput.value = "";
     currentImageInput.value =
     event.image || "";
 
@@ -590,6 +601,9 @@ function duplicateEvent(id){
 
 // Zoom・画像だけ空
 zoomUrlInput.value = "";
+eventPasswordInput.value = "";
+eventPasswordInput.placeholder =
+    "参加者が入力するパスワード";
 currentImageInput.value = "";
 imageFileInput.value = "";
 
@@ -666,6 +680,7 @@ function clearEditor(){
 
     zoomUrlInput.value="";
 
+eventPasswordInput.value="";
 
     currentImageInput.value="";
 
@@ -831,7 +846,11 @@ async function saveEvent(){
 
             zoomUrl:
             zoomUrlInput.value.trim(),
-
+password:
+eventPasswordInput.value.trim(),
+keep_password:
+!eventPasswordInput.value.trim() &&
+editingEventId !== null,
 
             program:
             collectProgram()
@@ -917,8 +936,9 @@ await fetch(
                 color: newEvent.color,
                 image_url: newEvent.image,
                 zoom_url: newEvent.zoomUrl,
-                description: newEvent.description || null,
-                programs: newEvent.program || []
+password: newEvent.password || "",
+description: newEvent.description || null,
+programs: newEvent.program || []
             }
 
         })

@@ -9,9 +9,9 @@
 
 <title>ERINA Zoom予定表</title>
 
-
 <link rel="stylesheet" href="style.css">
 
+<link rel="manifest" href="./manifest.json">
 
 </head>
 
@@ -25,163 +25,320 @@
 
 <header class="header">
 
-
-<div class="header-inner">
-
-
-<div class="logo-area">
-
-<img 
-src="images/logo.png"
-class="logo"
->
+    <div class="header-inner">
 
 
-</div>
+        <!-- 三本線メニュー -->
+
+        <button
+            id="menuButton"
+            class="menu-button"
+            type="button"
+            aria-label="メニュー"
+        >
+            ☰
+        </button>
 
 
-
-<div class="title-area">
-
-<h1>
-ERINA Zoom予定表
-</h1>
-
-
-<p>
-最新のZoomスケジュール
-</p>
-<div id="updateNotice"></div>
-
-</div>
-
-
-</div>
-
+    </div>
 
 </header>
 
 
 
-
 <!-- ===================== -->
-<!-- 表示切替 -->
+<!-- メニュー背景 -->
 <!-- ===================== -->
 
-
-<div class="tab-buttons">
-
-
-<button onclick="showView('schedule')">
-
-📋 予定表
-
-</button>
-
-
-
-<button onclick="showView('calendar')">
-
-📅 カレンダー
-
-</button>
-
-
-</div>
-
-
-
+<div
+    id="menuOverlay"
+    class="menu-overlay"
+></div>
 
 
 
 <!-- ===================== -->
-<!-- 予定表 -->
+<!-- サイドメニュー -->
 <!-- ===================== -->
 
-
-<main id="scheduleView">
-
-
-
-<section>
+<nav
+    id="sideMenu"
+    class="side-menu"
+>
 
 
-<h2>
-📢 今日のZoom
-</h2>
+    <div class="side-menu-header">
+
+        <strong>
+            ERINA
+        </strong>
 
 
-<div id="today">
+        <button
+            id="menuClose"
+            type="button"
+            aria-label="閉じる"
+        >
+            ×
+        </button>
 
-</div>
+    </div>
+
+
+
+    <div class="side-menu-content">
+
+
+        <button
+            class="menu-item active"
+            data-view="home"
+        >
+            🏠 ホーム
+        </button>
+
+
+
+        <button
+            class="menu-item"
+            data-view="schedule"
+        >
+            📋 催事予定表
+        </button>
+
+
+
+        <button
+            class="menu-item"
+            data-view="calendar"
+        >
+            📅 カレンダー
+        </button>
+
+
+
+        <!-- ================= -->
+        <!-- 使い方 -->
+        <!-- ================= -->
+
+        <div class="menu-group">
+
+            <div class="menu-group-title">
+                📱 使い方
+            </div>
+
+
+            <button
+                class="submenu-item"
+                data-guide="iphone"
+            >
+                iPhone
+            </button>
+
+
+            <button
+                class="submenu-item"
+                data-guide="ipad"
+            >
+                iPad
+            </button>
+
+
+            <button
+                class="submenu-item"
+                data-guide="android"
+            >
+                Android
+            </button>
+
+
+            <button
+                class="submenu-item"
+                data-guide="zoom"
+            >
+                Zoomアプリのインストール
+            </button>
+
+        </div>
+
+
+
+        <!-- ================= -->
+        <!-- 商品紹介 -->
+        <!-- ================= -->
+
+        <div class="menu-group">
+
+            <div class="menu-group-title">
+                🛍️ 商品紹介
+            </div>
+
+
+            <button
+                class="submenu-item"
+                data-category="スキンケア"
+            >
+                スキンケア
+            </button>
+
+
+            <button
+                class="submenu-item"
+                data-category="ヘルスケア"
+            >
+                ヘルスケア
+            </button>
+
+
+            <button
+                class="submenu-item"
+                data-category="生活用品"
+            >
+                生活用品
+            </button>
+
+
+            <button
+                class="submenu-item"
+                data-category="販促品"
+            >
+                販促品
+            </button>
+
+        </div>
+
+
+    </div>
+
+</nav>
+
+
+
+<!-- ===================== -->
+<!-- メイン -->
+<!-- ===================== -->
+
+<main>
+
+
+<!-- ===================== -->
+<!-- ホーム -->
+<!-- ===================== -->
+
+<section
+    id="homeView"
+    class="app-view active-view"
+>
+
+
+    <div class="home-card">
+
+        <h2>
+            🏠 ERINA Zoom予定表
+        </h2>
+
+
+        <p>
+            ERINAのZoom催事予定や商品情報をご確認いただけます。
+        </p>
+
+    </div>
+
+
+
+    <section>
+
+        <h2>
+            📢 今日のZoom
+        </h2>
+
+
+        <div id="today">
+
+        </div>
+
+    </section>
+
+
+
+    <section>
+
+        <h2>
+            ⏭ 次回Zoom
+        </h2>
+
+
+        <div id="next">
+
+        </div>
+
+    </section>
 
 
 </section>
 
 
 
+<!-- ===================== -->
+<!-- 催事予定表 -->
+<!-- ===================== -->
+
+<section
+    id="scheduleView"
+    class="app-view"
+    style="display:none;"
+>
 
 
-<section>
+    <h2>
+        📋 催事予定表
+    </h2>
 
 
-<h2>
-⏭ 次回Zoom
-</h2>
+    <section>
+
+        <h3>
+            📢 今日のZoom
+        </h3>
 
 
-<div id="next">
+        <div id="scheduleToday">
 
-</div>
+        </div>
+
+    </section>
+
+
+
+    <section>
+
+        <h3>
+            📅 今週の予定
+        </h3>
+
+
+        <div id="week">
+
+        </div>
+
+    </section>
+
+
+
+    <section>
+
+        <h3>
+            📋 スケジュール表
+        </h3>
+
+
+        <div id="allSchedule">
+
+        </div>
+
+    </section>
 
 
 </section>
-
-
-
-
-
-
-<section>
-
-
-<h2>
-📅 今週の予定
-</h2>
-
-
-<div id="week">
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-<section>
-
-
-<h2>
-📋 スケジュール表
-</h2>
-
-
-<div id="allSchedule">
-
-</div>
-
-
-</section>
-
-
-
-</main>
-
-
 
 
 
@@ -189,144 +346,204 @@ ERINA Zoom予定表
 <!-- カレンダー -->
 <!-- ===================== -->
 
-
-<main
-id="calendarView"
-style="display:none;"
+<section
+    id="calendarView"
+    class="app-view"
+    style="display:none;"
 >
 
 
-
-<div class="calendar-header">
-
-
-<button id="prevMonth">
-
-◀
-
-</button>
+    <div class="calendar-header">
 
 
+        <button id="prevMonth">
+            ◀
+        </button>
 
 
-<h2 id="monthTitle">
-
-</h2>
-
+        <h2 id="monthTitle">
+        </h2>
 
 
+        <button id="nextMonth">
+            ▶
+        </button>
 
-<button id="nextMonth">
 
-▶
-
-</button>
+    </div>
 
 
 
-</div>
+    <div class="calendar-week">
+
+        <div>月</div>
+        <div>火</div>
+        <div>水</div>
+        <div>木</div>
+        <div>金</div>
+        <div>土</div>
+        <div>日</div>
+
+    </div>
 
 
 
+    <div id="calendar">
+
+    </div>
 
 
-<!-- 曜日 -->
-
-<div class="calendar-week">
-
-
-<div>
-月
-</div>
-
-
-<div>
-火
-</div>
-
-
-<div>
-水
-</div>
-
-
-<div>
-木
-</div>
-
-
-<div>
-金
-</div>
-
-
-<div>
-土
-</div>
-
-
-<div>
-日
-</div>
-
-
-</div>
+</section>
 
 
 
+<!-- ===================== -->
+<!-- 使い方 -->
+<!-- ===================== -->
+
+<section
+    id="guideView"
+    class="app-view"
+    style="display:none;"
+>
 
 
-<!-- カレンダー本体 -->
+    <h2>
+        📱 使い方
+    </h2>
 
 
-<div id="calendar">
+    <div id="guideContent">
+
+        <p class="empty">
+            使い方を選択してください。
+        </p>
+
+    </div>
 
 
-</div>
+</section>
 
+
+
+<!-- ===================== -->
+<!-- 商品紹介 -->
+<!-- ===================== -->
+
+<section
+    id="productsView"
+    class="app-view"
+    style="display:none;"
+>
+
+
+    <h2>
+        🛍️ 商品紹介
+    </h2>
+
+
+    <div id="productList">
+
+        <p class="empty">
+            商品カテゴリーを選択してください。
+        </p>
+
+    </div>
+
+
+</section>
 
 
 </main>
-<!-- ===================== -->
-<!-- モーダル -->
-<!-- ===================== -->
 
 
-<div id="modal" class="modal">
+
+<!-- ===================== -->
+<!-- 催事詳細モーダル -->
+<!-- ===================== -->
+
+<div
+    id="modal"
+    class="modal"
+>
 
 
     <div class="modal-content">
 
-
-        <!-- 右上固定 閉じるボタン -->
 
         <button id="closeModal">
             ×
         </button>
 
 
-
-        <!-- 詳細内容 -->
-
         <div id="eventDetail">
 
         </div>
 
 
-
     </div>
-
 
 </div>
 
+<!-- ===================== -->
+<!-- Zoomパスワードモーダル -->
+<!-- ===================== -->
 
+<div
+    id="passwordModal"
+    class="modal"
+>
 
+    <div class="modal-content">
 
+        <button
+            id="closePasswordModal"
+            type="button"
+        >
+            ×
+        </button>
+
+        <div id="passwordContent">
+
+            <h2>
+                🔐 Zoom参加パスワード
+            </h2>
+
+            <p>
+                この催事はパスワードが必要です。
+            </p>
+
+            <input
+                type="password"
+                id="zoomPassword"
+                placeholder="パスワードを入力してください"
+                autocomplete="off"
+            >
+
+            <button
+                id="passwordSubmit"
+                type="button"
+                class="zoom-btn"
+            >
+                Zoomに参加
+            </button>
+
+            <p
+                id="passwordError"
+                style="display:none;"
+            >
+                パスワードが正しくありません。
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
 
 <!-- ===================== -->
 <!-- JavaScript -->
 <!-- ===================== -->
-
 
 <script src="app.js"></script>
 
