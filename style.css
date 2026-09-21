@@ -1048,3 +1048,25 @@ section {
     }
 
 }
+/* パスワード入力モーダルの×ボタン */
+#closePasswordModal {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: #eeeeee;
+    color: #555;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#closePasswordModal:hover {
+    background: #e2e2e2;
+}
