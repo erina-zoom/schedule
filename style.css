@@ -1079,3 +1079,13 @@ section {
 #closePasswordModal:hover {
     background: #e2e2e2 !important;
 }
+
+/* パスワード入力欄 */
+#zoomPassword {
+    height: 44px;
+    padding: 0 12px;
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
