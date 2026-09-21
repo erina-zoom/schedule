@@ -320,22 +320,38 @@ async function loadEvents(){
 
 
         const data =
-        await res.json();
+await res.json();
 
 
-        if(!Array.isArray(data)){
+if(!data.success || !Array.isArray(data.events)){
 
-            throw new Error(
-                "events形式エラー"
-            );
+    throw new Error(
+        data.error ||
+        "events形式エラー"
+    );
 
-        }
+}
 
 
-        events =
-        data.sort(
-            compareEvents
-        );
+events =
+data.events
+    .map(event => ({
+        id: event.id,
+        date: event.event_date || "",
+        startTime: event.start_time || "",
+        endTime: event.end_time || "",
+        title: event.title || "",
+        shortTitle: event.short_title || "",
+        category: event.category || "",
+        color: event.color || "#247447",
+        image: event.image_url || "",
+        zoomUrl: event.zoom_url || "",
+        hasPassword: !!event.has_password,
+        program: event.program || []
+    }))
+    .sort(
+        compareEvents
+    );
 
 
         renderEventList();
@@ -862,42 +878,43 @@ async function saveEvent(){
 
 
         showStatus(
-            "GitHubへ保存中...",
-            "loading"
-        );
+    "D1へ保存中...",
+    "loading"
+);
 
+const response =
+await fetch(
+    `${WORKER_URL}/api/admin/events/save`,
+    {
+        method:"POST",
 
+        headers:{
+            "Content-Type":
+            "application/json"
+        },
 
-        const response =
-        await fetch(
-            WORKER_URL,
-            {
+        body:
+        JSON.stringify({
 
-                method:"POST",
-
-
-                headers:{
-
-                    "Content-Type":
-                    "application/json"
-
-                },
-
-
-                body:
-                JSON.stringify({
-
-                    action:
-                    "saveEvent",
-
-
-                    events:
-                    saveEvents
-
-                })
-
+            event: {
+                id: newEvent.id,
+                event_date: newEvent.date,
+                start_time: newEvent.startTime,
+                end_time: newEvent.endTime,
+                title: newEvent.title,
+                short_title: newEvent.shortTitle,
+                category: newEvent.category,
+                color: newEvent.color,
+                image_url: newEvent.image,
+                zoom_url: newEvent.zoomUrl,
+                description: newEvent.description || null,
+                programs: newEvent.program || []
             }
-        );
+
+        })
+
+    }
+);
 
 
 
@@ -1020,39 +1037,30 @@ async function uploadImage(
 
 
     const response =
-    await fetch(
-        WORKER_URL,
-        {
+await fetch(
+    `${WORKER_URL}/api/admin/images/upload`,
+    {
 
-            method:"POST",
+        method:"POST",
 
+        headers:{
+            "Content-Type":
+            "application/json"
+        },
 
-            headers:{
+        body:
+        JSON.stringify({
 
-                "Content-Type":
-                "application/json"
+            filename:
+            filename,
 
-            },
+            content:
+            base64
 
+        })
 
-            body:
-            JSON.stringify({
-
-                action:
-                "uploadImage",
-
-
-                filename:
-                filename,
-
-
-                content:
-                base64
-
-            })
-
-        }
-    );
+    }
+);
 
 
 
@@ -1374,58 +1382,33 @@ async function deleteCurrentEvent(){
 
     try{
 
-
         showStatus(
             "削除中...",
             "loading"
         );
 
 
-        const newEvents =
-        events.filter(
-            item =>
-            String(item.id) !==
-            String(editingEventId)
-        );
-
-
-
         const response =
         await fetch(
-            WORKER_URL,
+            `${WORKER_URL}/api/admin/events/${encodeURIComponent(editingEventId)}`,
             {
 
-                method:"POST",
+                method:"DELETE",
 
                 headers:{
                     "Content-Type":
                     "application/json"
-                },
-
-
-                body:
-                JSON.stringify({
-
-                    action:
-                    "deleteEvent",
-
-
-                    events:
-                    newEvents
-
-                })
+                }
 
             }
         );
-
 
 
         const result =
         await response.json();
 
 
-
-        if(!result.success){
+        if(!response.ok || !result.success){
 
             throw new Error(
                 result.error ||
@@ -1435,12 +1418,10 @@ async function deleteCurrentEvent(){
         }
 
 
-
         showStatus(
             "削除しました",
             "success"
         );
-
 
 
         await wait(
@@ -1457,7 +1438,6 @@ async function deleteCurrentEvent(){
     }
     catch(error){
 
-
         console.error(error);
 
 
@@ -1466,12 +1446,9 @@ async function deleteCurrentEvent(){
             "error"
         );
 
-
     }
 
-
 }
-
 
 
 // ==========================================
