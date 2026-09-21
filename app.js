@@ -745,22 +745,20 @@ function createCard(
 
 
         ${
-    showZoom && e.zoomUrl
+    showZoom && (e.zoomUrl || e.locked)
     ?
 
     `
     <a
-        href="${e.locked ? "#" : e.zoomUrl}"
-        target="${e.locked ? "_self" : "_blank"}"
-        rel="noopener"
+        href="#"
         class="zoom-btn"
-        onclick="event.stopPropagation(); ${
-            e.locked
-            ? `openPasswordModal('${e.id}'); return false;`
-            : ""
-        }"
+        onclick="
+            event.stopPropagation();
+            handleZoomJoin('${e.id}');
+            return false;
+        "
     >
-        Zoomに参加
+        Zoomに参加する
     </a>
     `
 
@@ -1598,7 +1596,36 @@ setInterval(
 ================================ */
 
 let passwordEvent = null;
+function handleZoomJoin(eventId){
 
+    const event =
+        events
+            .map(normalizeEvent)
+            .find(e => e.id === eventId);
+
+    if(!event){
+        return;
+    }
+
+    // パスワードなし
+    if(!event.locked){
+
+        if(event.zoomUrl){
+
+            window.open(
+                event.zoomUrl,
+                "_blank"
+            );
+
+        }
+
+        return;
+    }
+
+    // パスワードあり
+    openPasswordModal(eventId);
+
+}
 
 function openPasswordModal(eventId){
 
