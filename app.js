@@ -1794,12 +1794,10 @@ if(passwordSubmit){
 
                 if(data.zoom_url){
 
-                    window.open(
-                        data.zoom_url,
-                        "_blank"
-                    );
+    window.location.href =
+        data.zoom_url;
 
-                }
+}
 
             }catch(error){
 
