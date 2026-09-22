@@ -1,8 +1,3 @@
-// ==========================================
-// ERINA Zoom Manager Ver5
-// manager.js Part1
-// ==========================================
-
 "use strict";
 
 
@@ -701,17 +696,6 @@ eventPasswordInput.value="";
 
 }
 
-
-
-// ==========================================
-// Part2へ続く
-// ==========================================
-// ==========================================
-// ERINA Zoom Manager Ver5
-// manager.js Part2
-// ==========================================
-
-
 // ==========================================
 // 保存
 // ==========================================
@@ -848,9 +832,6 @@ async function saveEvent(){
             zoomUrlInput.value.trim(),
 password:
 eventPasswordInput.value.trim(),
-keep_password:
-!eventPasswordInput.value.trim() &&
-editingEventId !== null,
 
             program:
             collectProgram()
@@ -1359,11 +1340,6 @@ function wait(ms){
 }
 
 
-// ==========================================
-// ERINA Zoom Manager Ver5
-// manager.js Part3
-// ==========================================
-
 async function deleteEventFromList(id){
 
     const target =
@@ -1664,9 +1640,8 @@ function addProgramEditor(
         type="time"
         class="program-time-input"
         value="${escapeAttribute(
-            item.time || ""
-        )}"
-        >
+    item.program_time || item.time || ""
+)}"
 
 
         <input

@@ -937,22 +937,25 @@ function openModal(e){
     }
 
 
-    if(e.zoomUrl){
+    if(e.zoomUrl || e.locked){
 
-        html += `
+    html += `
 
-            <a
-                href="${e.zoomUrl}"
-                target="_blank"
-                rel="noopener"
-                class="zoom-btn modal-zoom"
-            >
-                Zoomに参加する
-            </a>
+        <a
+            href="#"
+            class="zoom-btn modal-zoom"
+            onclick="
+                event.stopPropagation();
+                handleZoomJoin('${e.id}');
+                return false;
+            "
+        >
+            Zoomに参加する
+        </a>
 
-        `;
+    `;
 
-    }
+}
 
 
     detail.innerHTML =
@@ -1286,21 +1289,234 @@ function showGuide(type){
     }
 
 
-    guideContent.innerHTML = `
+        if(type === "iphone"){
 
-        <div class="home-card">
+        guideContent.innerHTML = `
 
-            <h2>
-                📱 ${title}
-            </h2>
+            <div class="guide-card">
 
-            <p>
-                このページはこれから設定します。
-            </p>
+                <h2>🍎 iPhoneでの使い方</h2>
 
-        </div>
+                <p class="guide-intro">
+                    ERINA Zoomスケジュールをホーム画面に追加すると、
+                    次回からホーム画面のアイコンをタップするだけで、
+                    すぐに開くことができます。
+                </p>
 
-    `;
+
+                <h3>パターン①</h3>
+
+                <h4>
+                    Safariの画面右下に「・・・」が表示されている場合
+                </h4>
+
+                <p>
+                    SafariでERINA Zoomスケジュールを開いた状態から、
+                    以下の手順でホーム画面に追加してください。
+                </p>
+
+                <ol>
+
+                    <li>
+                        画面右下の「・・・」を押します。
+                    </li>
+
+                    <li>
+                        「共有」を押します。
+                    </li>
+
+                    <li>
+                        右下の「表示を増やす」の
+                        <strong>下向き「∨」ボタン</strong>
+                        を押します。
+                    </li>
+
+                    <li>
+                        「ホーム画面に追加」を押します。
+                    </li>
+
+                    <li>
+                        右上の「追加」を押します。
+                    </li>
+
+                </ol>
+
+
+                <h3>パターン②</h3>
+
+                <h4>
+                    Safariの画面下に「共有」ボタン（□↑）が
+                    表示されている場合
+                </h4>
+
+                <p>
+                    SafariでERINA Zoomスケジュールを開いた状態から、
+                    以下の手順でホーム画面に追加してください。
+                </p>
+
+                <ol>
+
+                    <li>
+                        画面下の「共有」ボタンを押します。
+                    </li>
+
+                    <li>
+                        右下の「表示を増やす」の
+                        <strong>下向き「∨」ボタン</strong>
+                        を押します。
+                    </li>
+
+                    <li>
+                        「ホーム画面に追加」を押します。
+                    </li>
+
+                    <li>
+                        右上の「追加」を押します。
+                    </li>
+
+                </ol>
+
+            </div>
+
+        `;
+
+
+    }else if(type === "ipad"){
+
+        guideContent.innerHTML = `
+
+            <div class="guide-card">
+
+                <h2>📱 iPadでの使い方</h2>
+
+                <p class="guide-intro">
+                    iPadのホーム画面に追加する方法をご案内します。
+                </p>
+
+                <h3>ホーム画面に追加</h3>
+
+                <ol>
+
+                    <li>
+                        SafariでERINA Zoomスケジュールを開きます。
+                    </li>
+
+                    <li>
+                        共有メニューを開きます。
+                    </li>
+
+                    <li>
+                        「ホーム画面に追加」を選びます。
+                    </li>
+
+                    <li>
+                        「追加」を押します。
+                    </li>
+
+                </ol>
+
+            </div>
+
+        `;
+
+
+    }else if(type === "android"){
+
+        guideContent.innerHTML = `
+
+            <div class="guide-card">
+
+                <h2>🤖 Androidでの使い方</h2>
+
+                <p class="guide-intro">
+                    AndroidではChromeからホーム画面に追加できます。
+                </p>
+
+                <h3>ホーム画面に追加</h3>
+
+                <ol>
+
+                    <li>
+                        ChromeでERINA Zoomスケジュールを開きます。
+                    </li>
+
+                    <li>
+                        右上の「︙」を押します。
+                    </li>
+
+                    <li>
+                        「ホーム画面に追加」または
+                        「ショートカットを作成」を選びます。
+                    </li>
+
+                    <li>
+                        表示された画面で、
+                        名前を確認・変更します。
+                    </li>
+
+                    <li>
+                        「追加」を押します。
+                    </li>
+
+                </ol>
+
+            </div>
+
+        `;
+
+
+    }else if(type === "zoom"){
+
+        guideContent.innerHTML = `
+
+            <div class="guide-card">
+
+                <h2>📱 Zoomアプリのインストール</h2>
+
+                <p class="guide-intro">
+                    Zoomに参加するには、Zoomアプリの
+                    インストールが必要な場合があります。
+                </p>
+
+
+                <h3>🍎 iPhone・iPad</h3>
+
+                <p>
+                    App StoreからZoom Workplaceを
+                    インストールしてください。
+                </p>
+
+                <a
+                    href="https://apps.apple.com/jp/app/zoom-workplace/id546505307"
+                    target="_blank"
+                    rel="noopener"
+                    class="guide-button"
+                >
+                    App StoreでZoomをインストール
+                </a>
+
+
+                <h3>🤖 Android</h3>
+
+                <p>
+                    Google PlayからZoom Workplaceを
+                    インストールしてください。
+                </p>
+
+                <a
+                    href="https://play.google.com/store/apps/details?id=us.zoom.videomeetings&hl=ja"
+                    target="_blank"
+                    rel="noopener"
+                    class="guide-button"
+                >
+                    Google PlayでZoomをインストール
+                </a>
+
+            </div>
+
+        `;
+
+    }
 
 }
 
