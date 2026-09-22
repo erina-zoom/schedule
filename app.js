@@ -1297,52 +1297,23 @@ if(next){
 
 function showGuide(type){
 
-    const guideView =
-        document.getElementById(
-            "guideView"
-        );
-
-
     const guideContent =
-        document.getElementById(
-            "guideContent"
-        );
+        document.getElementById("guideContent");
 
 
-    if(!guideView || !guideContent){
-
+    if(!guideContent){
         return;
-
     }
 
 
     showView("guide");
 
 
-    let title = "";
-
+    /* ===============================
+       iPhone
+    =============================== */
 
     if(type === "iphone"){
-
-        title = "iPhone";
-
-    }else if(type === "ipad"){
-
-        title = "iPad";
-
-    }else if(type === "android"){
-
-        title = "Android";
-
-    }else if(type === "zoom"){
-
-        title =
-            "Zoomアプリのインストール";
-
-    }
-
-
-        if(type === "iphone"){
 
         guideContent.innerHTML = `
 
@@ -1357,96 +1328,147 @@ function showGuide(type){
                 </p>
 
 
-                <h3>パターン①</h3>
+                <!-- パターン① -->
 
-                <h4>
-                    Safariの画面右下に「・・・」が表示されている場合
-                </h4>
+                <div class="guide-pattern">
 
-                <p>
-                    SafariでERINA Zoomスケジュールを開いた状態から、
-                    以下の手順でホーム画面に追加してください。
-                </p>
+                    <h3>パターン①</h3>
 
-                <ol>
+                    <h4>
+                        Safariの画面右下に「・・・」が表示されている場合
+                    </h4>
 
-                    <li>
-                        画面右下の「・・・」を押します。
-                    </li>
-
-                    <li>
-                        「共有」を押します。
-                    </li>
-
-                    <li>
-                        右下の「表示を増やす」の
-                        <strong>下向き「∨」ボタン</strong>
-                        を押します。
-                    </li>
-
-                    <li>
-                        「ホーム画面に追加」を押します。
-                    </li>
-
-                    <li>
-                        右上の「追加」を押します。
-                    </li>
-
-                </ol>
+                    <p>
+                        SafariでERINA Zoomスケジュールを開いた状態から、
+                        以下の手順でホーム画面に追加してください。
+                    </p>
 
 
-                <h3>パターン②</h3>
+                    <ol>
 
-                <h4>
-                    Safariの画面下に「共有」ボタン（□↑）が
-                    表示されている場合
-                </h4>
+                        <li>
+                            画面右下の「・・・」を押します。
+                        </li>
 
-                <p>
-                    SafariでERINA Zoomスケジュールを開いた状態から、
-                    以下の手順でホーム画面に追加してください。
-                </p>
+                        <li>
+                            「共有」を押します。
+                        </li>
 
-                <ol>
+                        <li>
+                            右下の「表示を増やす」の
+                            <strong>下向き「∨」ボタン</strong>
+                            を押します。
+                        </li>
 
-                    <li>
-                        画面下の「共有」ボタンを押します。
-                    </li>
+                        <li>
+                            「ホーム画面に追加」を押します。
+                        </li>
 
-                    <li>
-                        右下の「表示を増やす」の
-                        <strong>下向き「∨」ボタン</strong>
-                        を押します。
-                    </li>
+                        <li>
+                            右上の「追加」を押します。
+                        </li>
 
-                    <li>
-                        「ホーム画面に追加」を押します。
-                    </li>
+                    </ol>
 
-                    <li>
-                        右上の「追加」を押します。
-                    </li>
 
-                </ol>
+                    <div class="guide-image-placeholder">
+
+                       <div class="guide-image">
+
+    <img
+        src="./images/guides/iphone-pattern1.png"
+        alt="iPhone パターン①のホーム画面追加方法"
+    >
+
+</div>
+                </div>
+
+
+
+                <!-- パターン② -->
+
+                <div class="guide-pattern">
+
+                    <h3>パターン②</h3>
+
+                    <h4>
+                        Safariの画面下に「共有」ボタン（□↑）が
+                        表示されている場合
+                    </h4>
+
+                    <p>
+                        SafariでERINA Zoomスケジュールを開いた状態から、
+                        以下の手順でホーム画面に追加してください。
+                    </p>
+
+
+                    <ol>
+
+                        <li>
+                            画面下の「共有」ボタンを押します。
+                        </li>
+
+                        <li>
+                            右下の「表示を増やす」の
+                            <strong>下向き「∨」ボタン</strong>
+                            を押します。
+                        </li>
+
+                        <li>
+                            「ホーム画面に追加」を押します。
+                        </li>
+
+                        <li>
+                            右上の「追加」を押します。
+                        </li>
+
+                    </ol>
+
+
+                    <div class="guide-image-placeholder">
+
+                        <div class="guide-image">
+
+    <img
+        src="./images/guides/iphone-pattern2.png"
+        alt="iPhone パターン②のホーム画面追加方法"
+    >
+
+</div>
+
+                </div>
 
             </div>
 
         `;
 
 
+    /* ===============================
+       iPad
+    =============================== */
+
     }else if(type === "ipad"){
 
-        guideContent.innerHTML = `
+    guideContent.innerHTML = `
 
-            <div class="guide-card">
+        <div class="guide-card">
 
-                <h2>📱 iPadでの使い方</h2>
+            <h2>📱 iPadでの使い方</h2>
 
-                <p class="guide-intro">
-                    iPadのホーム画面に追加する方法をご案内します。
-                </p>
+            <p class="guide-intro">
+                iPadのホーム画面に追加する方法をご案内します。
+            </p>
+
+
+            <div class="guide-pattern">
 
                 <h3>ホーム画面に追加</h3>
+
+                <p>
+                    SafariでERINA Zoomスケジュールを開いた状態から、
+                    以下の手順でホーム画面に追加してください。
+                </p>
+
 
                 <ol>
 
@@ -1468,22 +1490,45 @@ function showGuide(type){
 
                 </ol>
 
+
+                <!-- iPad画像を後から追加 -->
+
+                <div class="guide-image-placeholder">
+
+                    <div class="guide-image">
+
+    <img
+        src="./images/guides/ipad-home-add.png"
+        alt="iPadのホーム画面追加方法"
+    >
+
+</div>
+
             </div>
 
-        `;
+        </div>
 
+    `;
+
+
+    /* ===============================
+       Android
+    =============================== */
 
     }else if(type === "android"){
 
-        guideContent.innerHTML = `
+    guideContent.innerHTML = `
 
-            <div class="guide-card">
+        <div class="guide-card">
 
-                <h2>🤖 Androidでの使い方</h2>
+            <h2>🤖 Androidでの使い方</h2>
 
-                <p class="guide-intro">
-                    AndroidではChromeからホーム画面に追加できます。
-                </p>
+            <p class="guide-intro">
+                AndroidではChromeからホーム画面に追加できます。
+            </p>
+
+
+            <div class="guide-pattern">
 
                 <h3>ホーム画面に追加</h3>
 
@@ -1513,32 +1558,48 @@ function showGuide(type){
 
                 </ol>
 
+
+                <div class="guide-image-placeholder">
+
+                    <div class="guide-image">
+
+    <img
+        src="./images/guides/android-home-add.png"
+        alt="Androidのホーム画面追加方法"
+    >
+
+</div>
+
             </div>
 
-        `;
+        </div>
+
+    `;
+
+/* ===============================
+   Zoom
+================================ */
+}else if(type === "zoom"){
+
+    guideContent.innerHTML = `
+
+        <div class="guide-card">
+
+            <h2>📱 Zoomアプリのインストール</h2>
+
+            <p class="guide-intro">
+                Zoomに参加するには、お使いの端末に合わせて
+            下のボタンから、Zoomアプリをインストールしてください。
+            </p>
 
 
-    }else if(type === "zoom"){
+            <!-- iPhone・iPad -->
 
-        guideContent.innerHTML = `
-
-            <div class="guide-card">
-
-                <h2>📱 Zoomアプリのインストール</h2>
-
-                <p class="guide-intro">
-                    Zoomに参加するには、Zoomアプリの
-                    インストールが必要な場合があります。
-                </p>
-
+            <div class="guide-pattern">
 
                 <h3>🍎 iPhone・iPad</h3>
 
-                <p>
-                    App StoreからZoom Workplaceを
-                    インストールしてください。
-                </p>
-
+            
                 <a
                     href="https://apps.apple.com/jp/app/zoom-workplace/id546505307"
                     target="_blank"
@@ -1548,14 +1609,15 @@ function showGuide(type){
                     App StoreでZoomをインストール
                 </a>
 
+            </div>
+
+            <!-- Android -->
+
+            <div class="guide-pattern">
 
                 <h3>🤖 Android</h3>
 
-                <p>
-                    Google PlayからZoom Workplaceを
-                    インストールしてください。
-                </p>
-
+    
                 <a
                     href="https://play.google.com/store/apps/details?id=us.zoom.videomeetings&hl=ja"
                     target="_blank"
@@ -1567,12 +1629,13 @@ function showGuide(type){
 
             </div>
 
-        `;
+        </div>
 
-    }
+    `;
 
 }
 
+}
 
 /* ===============================
    使い方メニュー
@@ -1591,8 +1654,6 @@ document
                 showGuide(
                     button.dataset.guide
                 );
-
-                closeMenu();
 
             }
         );
@@ -1830,8 +1891,6 @@ document
                 loadProducts(
                     button.dataset.category
                 );
-
-                closeMenu();
 
             }
         );
