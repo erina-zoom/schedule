@@ -225,7 +225,33 @@ document
 
     });
 
+/* ===============================
+   ホーム画面ナビゲーション
+================================ */
 
+document
+    .querySelectorAll(
+        ".home-nav-button"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const view =
+                    button.dataset.view;
+
+                if(view){
+
+                    showView(view);
+
+                }
+
+            }
+        );
+
+    });
 /* ===============================
    日本時間
 ================================ */
