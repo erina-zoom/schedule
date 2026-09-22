@@ -1521,3 +1521,46 @@ section {
         font-size: 16px;
     }
 }
+/* =========================
+   ホーム画面ナビボタン
+   ========================= */
+
+.home-buttons {
+    display: flex;
+    gap: 14px;
+    margin-top: 22px;
+    margin-bottom: 5px;
+}
+
+.home-nav-button {
+    flex: 1;
+    min-height: 52px;
+    padding: 12px 18px;
+
+    border: 1px solid #cfd8d5;
+    border-radius: 14px;
+
+    background: #ffffff;
+    color: #247447;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+}
+
+.home-nav-button:hover {
+    background: #f2f8f5;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.10);
+}
+
+.home-nav-button:active {
+    transform: scale(0.97);
+}
