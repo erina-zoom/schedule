@@ -252,6 +252,33 @@ document
         );
 
     });
+    /* ===============================
+   予定表・カレンダー切り替え
+================================ */
+
+document
+    .querySelectorAll(
+        ".schedule-calendar-button"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const view =
+                    button.dataset.view;
+
+                if(view){
+
+                    showView(view);
+
+                }
+
+            }
+        );
+
+    });
 /* ===============================
    日本時間
 ================================ */

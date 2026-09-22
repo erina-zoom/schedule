@@ -1582,3 +1582,44 @@ section {
 .home-nav-button:active {
     transform: scale(0.97);
 }
+/* =========================
+   予定表・カレンダー切り替え
+   ========================= */
+
+.schedule-calendar-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 0 0 20px;
+}
+
+.schedule-calendar-button {
+    flex: 1;
+    min-height: 48px;
+    padding: 10px 14px;
+
+    border: 1px solid #cfd8d5;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #247447;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.schedule-calendar-button.active {
+    background: #247447;
+    color: #ffffff;
+    border-color: #247447;
+}
+
+.schedule-calendar-button:active {
+    transform: scale(0.97);
+}
