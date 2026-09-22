@@ -1539,6 +1539,7 @@ section {
         font-size: 16px;
     }
 }
+
 /* =========================
    ホーム画面ナビボタン
    ========================= */
@@ -1554,24 +1555,15 @@ section {
     flex: 1;
     min-height: 52px;
     padding: 12px 18px;
-
     border: 1px solid #cfd8d5;
     border-radius: 14px;
-
     background: #ffffff;
     color: #247447;
-
     font-size: 16px;
     font-weight: 600;
-
     cursor: pointer;
-
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease,
-        background 0.15s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 .home-nav-button:hover {
@@ -1582,6 +1574,8 @@ section {
 .home-nav-button:active {
     transform: scale(0.97);
 }
+
+
 /* =========================
    予定表・カレンダー切り替え
    ========================= */
@@ -1596,22 +1590,14 @@ section {
     flex: 1;
     min-height: 48px;
     padding: 10px 14px;
-
     border: 1px solid #cfd8d5;
     border-radius: 12px;
-
     background: #ffffff;
     color: #247447;
-
     font-size: 15px;
     font-weight: 600;
-
     cursor: pointer;
-
-    transition:
-        background 0.15s ease,
-        color 0.15s ease,
-        transform 0.15s ease;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
 .schedule-calendar-button.active {
@@ -1623,8 +1609,10 @@ section {
 .schedule-calendar-button:active {
     transform: scale(0.97);
 }
+
+
 /* =========================
-   予定表セクション
+   予定表
    ========================= */
 
 #scheduleView section {
@@ -1644,8 +1632,10 @@ section {
     flex-direction: column;
     gap: 10px;
 }
+
+
 /* =========================
-   カレンダーUI
+   カレンダー
    ========================= */
 
 #calendarView {
@@ -1653,16 +1643,11 @@ section {
 }
 
 .calendar-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     gap: 10px;
-    margin-bottom: 16px;
 }
 
 .calendar-header h2 {
     flex: 1;
-    margin: 0;
     text-align: center;
     font-size: 20px;
 }
@@ -1675,39 +1660,20 @@ section {
     background: #ffffff;
     color: #247447;
     font-size: 18px;
-    cursor: pointer;
 }
 
 .calendar-header button:active {
     transform: scale(0.95);
 }
+
+
 /* =========================
-   ホームカード
+   ホーム
    ========================= */
 
 .home-card {
-    padding: 22px 18px;
-    margin-bottom: 24px;
-
-    background: #ffffff;
     border: 1px solid #dce5e1;
-    border-radius: 16px;
-
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
 }
-
-.home-card h2 {
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-.home-card p {
-    margin-bottom: 0;
-    line-height: 1.7;
-}
-/* =========================
-   ホームのZoomセクション
-   ========================= */
 
 #homeView > section {
     margin-top: 24px;
@@ -1722,48 +1688,4 @@ section {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-/* =========================
-   スマホ表示の微調整
-   ========================= */
-
-@media (max-width: 600px) {
-
-    .app-view {
-        padding-left: 14px;
-        padding-right: 14px;
-    }
-
-    .home-card {
-        padding: 20px 16px;
-    }
-
-    .home-card h2 {
-        font-size: 20px;
-    }
-
-    .home-card p {
-        font-size: 14px;
-    }
-
-    .home-buttons {
-        gap: 10px;
-    }
-
-    .home-nav-button {
-        min-height: 48px;
-        padding: 10px 8px;
-        font-size: 14px;
-    }
-
-    .schedule-calendar-buttons {
-        gap: 8px;
-    }
-
-    .schedule-calendar-button {
-        min-height: 46px;
-        padding: 9px 8px;
-        font-size: 14px;
-    }
-
 }
