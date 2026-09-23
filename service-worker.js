@@ -5,7 +5,7 @@
 // ======================================
 
 const CACHE_NAME =
-"erina-zoom-v8";
+"erina-zoom-v9";
 
 
 const STATIC_FILES = [
