@@ -14,7 +14,14 @@ const DATA_URL =
 const PRODUCTS_URL =
     "https://erina-zoom.tomoya19980427goku.workers.dev/api/products";
 
-
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 /* ===============================
    データ
 ================================ */
@@ -1561,14 +1568,19 @@ function showGuide(type){
 
                 <div class="guide-image-placeholder">
 
-                    <div class="guide-image">
+                    <div class="guide-image-icon">
+                        🖼️
+                    </div>
 
-    <img
-        src="./images/guides/android-home-add.png"
-        alt="Androidのホーム画面追加方法"
-    >
+                    <p>
+                        ここに画像を追加
+                    </p>
 
-</div>
+                    <span>
+                        Androidの手順画像
+                    </span>
+
+                </div>
 
             </div>
 
@@ -1761,142 +1773,112 @@ async function loadProducts(
    商品表示
 ================================ */
 
-function renderProducts(
-    list,
-    category
-){
+function renderProducts(list, category) {
+    const container = document.getElementById("productList");
 
-    const productList =
-        document.getElementById(
-            "productList"
-        );
+    if (!container) return;
 
-
-    if(!productList){
-
-        return;
-
-    }
-
-
-    if(!list.length){
-
-        productList.innerHTML = `
-
-            <p class="empty">
-                ${category}の商品はありません。
-            </p>
-
+    if (!list || list.length === 0) {
+        container.innerHTML = `
+            <div class="empty-message">
+                現在、掲載中の商品はありません。
+            </div>
         `;
-
         return;
-
     }
 
+    container.innerHTML = list.map(product => {
 
-    productList.innerHTML = "";
+        const prices = Array.isArray(product.prices)
+            ? product.prices
+            : [];
 
+        const priceHtml = prices.length > 0
+            ? `
+                <div class="product-prices">
+                    <h4>価格・ポイント</h4>
 
-    list.forEach(
-        product => {
+                    <div class="price-list">
+                        ${prices.map(price => `
+                            <div class="price-row">
+                                <div class="price-rank">
+                                    ${escapeHtml(price.rank_name || "")}
+                                </div>
 
-            const card =
-                document.createElement(
-                    "div"
-                );
+                                <div class="price-value">
+                                    ${price.price != null
+                                        ? Number(price.price).toLocaleString() + "円"
+                                        : "-"}
+                                </div>
 
+                                <div class="price-points">
+                                    ${price.points != null
+                                        ? price.points + "ポイント"
+                                        : "-"}
+                                </div>
+                            </div>
+                        `).join("")}
+                    </div>
+                </div>
+            `
+            : "";
 
-            card.className =
-                "product-card";
-
-
-            card.innerHTML = `
+        return `
+            <article class="product-card">
 
                 ${
                     product.image_url
-                    ?
-                    `
-                    <img
-                        src="${product.image_url}"
-                        alt="${product.name || ""}"
-                    >
-                    `
-                    :
-                    ""
+                        ? `
+                            <div class="product-image">
+                                <img
+                                    src="${escapeHtml(product.image_url)}"
+                                    alt="${escapeHtml(product.name || "")}"
+                                    loading="lazy"
+                                >
+                            </div>
+                        `
+                        : ""
                 }
 
+                <div class="product-info">
 
-                <h3>
-                    ${product.name || ""}
-                </h3>
+                    <h3>
+                        ${escapeHtml(product.name || "")}
+                    </h3>
 
+                    ${
+                        product.description
+                            ? `
+                                <p class="product-description">
+                                    ${escapeHtml(product.description)}
+                                </p>
+                            `
+                            : ""
+                    }
 
-                ${
-                    product.description
-                    ?
-                    `
-                    <p>
-                        ${product.description}
-                    </p>
-                    `
-                    :
-                    ""
-                }
+                    ${priceHtml}
 
+                    ${
+                        product.product_url
+                            ? `
+                                <a
+                                    class="product-link"
+                                    href="${escapeHtml(product.product_url)}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    ERINA公式商品ページを見る
+                                </a>
+                            `
+                            : ""
+                    }
 
-                ${
-                    product.product_url
-                    ?
-                    `
-                    <a
-                        href="${product.product_url}"
-                        target="_blank"
-                        rel="noopener"
-                        class="product-link"
-                    >
-                        ERINA公式商品ページを見る
-                    </a>
-                    `
-                    :
-                    ""
-                }
+                </div>
 
-            `;
-
-
-            productList.appendChild(
-                card
-            );
-
-        }
-    );
-
+            </article>
+        `;
+    }).join("");
 }
-
-
-/* ===============================
-   商品メニュー
-================================ */
-
-document
-    .querySelectorAll(
-        "[data-category]"
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                loadProducts(
-                    button.dataset.category
-                );
-
-            }
-        );
-
-    });
-
 
 /* ===============================
    起動
