@@ -1895,15 +1895,33 @@ async function showProductDetail(productId) {
 
                         <thead>
                             <tr>
-                                ${prices.map(price => `
-                                    <th style="
-                                        border:1px solid #ddd;
-                                        padding:12px 8px;
-                                        background:#f5f5f5;
-                                    ">
-                                        ${escapeHtml(price.rank_name || "")}
-                                    </th>
-                                `).join("")}
+                                ${prices.map(price => {
+
+    let backgroundColor = "#f5f5f5";
+
+    if (price.rank_name === "おすすめ") {
+        backgroundColor = "#d9d9d9";
+    } else if (price.rank_name === "ホワイト") {
+        backgroundColor = "#ffffff";
+    } else if (price.rank_name === "イエロー") {
+        backgroundColor = "#fff2a8";
+    } else if (price.rank_name === "グリーン") {
+        backgroundColor = "#c8e6c9";
+    } else if (price.rank_name === "アンバー") {
+        backgroundColor = "#e8b879";
+    }
+
+    return `
+        <th style="
+            border:1px solid #ddd;
+            padding:12px 8px;
+            background:${backgroundColor};
+        ">
+            ${escapeHtml(price.rank_name || "")}
+        </th>
+    `;
+
+}).join("")}
                             </tr>
                         </thead>
 
