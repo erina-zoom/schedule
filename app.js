@@ -1701,6 +1701,14 @@ async function loadProducts(
 
     showView("products");
 
+    const isLimited =
+        category === "限定販売";
+
+    const apiCategory =
+        isLimited
+            ? "スキンケア"
+            : category;
+
 
     const productList =
         document.getElementById(
@@ -1729,10 +1737,10 @@ async function loadProducts(
         const res =
             await fetch(
                 PRODUCTS_URL +
-                "?category=" +
-                encodeURIComponent(
-                    category
-                )
+"?category=" +
+encodeURIComponent(
+    apiCategory
+)
                 +
                 "&t=" +
                 Date.now()
@@ -1753,11 +1761,18 @@ async function loadProducts(
 
 
         products =
-            Array.isArray(data)
-                ? data
-                : (
-                    data.products || []
-                );
+    Array.isArray(data)
+        ? data
+        : (
+            data.products || []
+        );
+
+if (isLimited) {
+    products = products.filter(
+        product =>
+            product.product_type === "limited"
+    );
+}
 
 
         renderProducts(
@@ -1811,22 +1826,86 @@ function renderProducts(list, category) {
             <article class="product-card">
 
                 ${
-                    product.image_url
-                        ? `
-                            <div
-                                class="product-image"
-                                style="cursor:pointer;"
-                                onclick="showProductDetail(${product.id})"
-                            >
-                                <img
-                                    src="${escapeHtml(product.image_url)}"
-                                    alt="${escapeHtml(product.name || "")}"
-                                    loading="lazy"
-                                >
-                            </div>
-                        `
-                        : ""
-                }
+    product.image_url
+        ? `
+            <div style="
+                text-align:center;
+                margin-bottom:25px;
+            ">
+                <img
+                    src="${escapeHtml(product.image_url)}"
+                    alt="${escapeHtml(product.name || "")}"
+                    style="
+                        max-width:100%;
+                        width:500px;
+                        height:auto;
+                        border-radius:10px;
+                    "
+                >
+            </div>
+        `
+        : ""
+}
+
+${
+    product.pdf_url
+        ? `
+            <div style="
+                margin:25px 0 30px;
+            ">
+
+                <h3 style="
+                    margin-bottom:15px;
+                    text-align:center;
+                ">
+                    商品案内
+                </h3>
+
+                <div style="
+                    width:100%;
+                    height:700px;
+                    border:1px solid #ddd;
+                    border-radius:10px;
+                    overflow:hidden;
+                    background:#f5f5f5;
+                ">
+                    <iframe
+                        src="${escapeHtml(product.pdf_url)}"
+                        width="100%"
+                        height="100%"
+                        style="
+                            border:none;
+                        "
+                        title="${escapeHtml(product.name || "商品案内")}"
+                    ></iframe>
+                </div>
+
+                <a
+                    href="${escapeHtml(product.pdf_url)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="
+                        display:block;
+                        max-width:420px;
+                        margin:15px auto 0;
+                        padding:13px 20px;
+                        background:#f2f2f2;
+                        color:#247447;
+                        text-align:center;
+                        text-decoration:none;
+                        border:1px solid #247447;
+                        border-radius:10px;
+                        font-weight:bold;
+                        box-sizing:border-box;
+                    "
+                >
+                    PDFを別画面で開く
+                </a>
+
+            </div>
+        `
+        : ""
+}
 
                 <div class="product-info">
 
