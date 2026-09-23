@@ -1676,7 +1676,25 @@ document
 /* ===============================
    商品
 ================================ */
+document
+    .querySelectorAll("[data-category]")
+    .forEach(button => {
 
+        button.addEventListener(
+            "click",
+            () => {
+
+                const category =
+                    button.dataset.category;
+
+                if (category) {
+                    loadProducts(category);
+                }
+
+            }
+        );
+
+    });
 async function loadProducts(
     category
 ){
