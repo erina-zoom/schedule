@@ -1807,16 +1807,20 @@ if (isLimited) {
 ================================ */
 
 function renderProducts(list, category) {
-    const container = document.getElementById("productList");
+
+    const container =
+        document.getElementById("productList");
 
     if (!container) return;
 
     if (!list || list.length === 0) {
+
         container.innerHTML = `
             <div class="empty-message">
                 現在、掲載中の商品はありません。
             </div>
         `;
+
         return;
     }
 
@@ -1826,86 +1830,22 @@ function renderProducts(list, category) {
             <article class="product-card">
 
                 ${
-    product.image_url
-        ? `
-            <div style="
-                text-align:center;
-                margin-bottom:25px;
-            ">
-                <img
-                    src="${escapeHtml(product.image_url)}"
-                    alt="${escapeHtml(product.name || "")}"
-                    style="
-                        max-width:100%;
-                        width:500px;
-                        height:auto;
-                        border-radius:10px;
-                    "
-                >
-            </div>
-        `
-        : ""
-}
-
-${
-    product.pdf_url
-        ? `
-            <div style="
-                margin:25px 0 30px;
-            ">
-
-                <h3 style="
-                    margin-bottom:15px;
-                    text-align:center;
-                ">
-                    商品案内
-                </h3>
-
-                <div style="
-                    width:100%;
-                    height:700px;
-                    border:1px solid #ddd;
-                    border-radius:10px;
-                    overflow:hidden;
-                    background:#f5f5f5;
-                ">
-                    <iframe
-                        src="${escapeHtml(product.pdf_url)}"
-                        width="100%"
-                        height="100%"
-                        style="
-                            border:none;
-                        "
-                        title="${escapeHtml(product.name || "商品案内")}"
-                    ></iframe>
-                </div>
-
-                <a
-                    href="${escapeHtml(product.pdf_url)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style="
-                        display:block;
-                        max-width:420px;
-                        margin:15px auto 0;
-                        padding:13px 20px;
-                        background:#f2f2f2;
-                        color:#247447;
-                        text-align:center;
-                        text-decoration:none;
-                        border:1px solid #247447;
-                        border-radius:10px;
-                        font-weight:bold;
-                        box-sizing:border-box;
-                    "
-                >
-                    PDFを別画面で開く
-                </a>
-
-            </div>
-        `
-        : ""
-}
+                    product.image_url
+                        ? `
+                            <div
+                                class="product-image"
+                                style="cursor:pointer;"
+                                onclick="showProductDetail(${product.id})"
+                            >
+                                <img
+                                    src="${escapeHtml(product.image_url)}"
+                                    alt="${escapeHtml(product.name || "")}"
+                                    loading="lazy"
+                                >
+                            </div>
+                        `
+                        : ""
+                }
 
                 <div class="product-info">
 
@@ -1920,9 +1860,9 @@ ${
 
             </article>
         `;
+
     }).join("");
 }
-
 
 /* ===============================
    商品詳細
@@ -1931,6 +1871,15 @@ ${
 async function showProductDetail(productId) {
 
     try {
+
+        const oldModal =
+            document.getElementById(
+                "productDetailModal"
+            );
+
+        if (oldModal) {
+            oldModal.remove();
+        }
 
         const res = await fetch(
             PRODUCTS_URL +
@@ -1952,100 +1901,155 @@ async function showProductDetail(productId) {
 
         const product = data.product;
 
-        const prices = Array.isArray(product.prices)
-            ? product.prices
-            : [];
+        const prices =
+            Array.isArray(product.prices)
+                ? product.prices
+                : [];
 
-        const priceHtml = prices.length > 0
-            ? `
-                <div style="
-                    margin-top:25px;
-                    overflow-x:auto;
-                ">
 
-                    <h3>価格・ポイント</h3>
+        /* ===============================
+           価格・ポイント
+        ================================ */
 
-                    <table style="
-                        width:100%;
-                        min-width:650px;
-                        border-collapse:collapse;
-                        text-align:center;
+        const priceHtml =
+            prices.length > 0
+                ? `
+                    <div style="
+                        margin-top:25px;
+                        overflow-x:auto;
                     ">
 
-                        <thead>
-                            <tr>
-                                ${prices.map(price => {
+                        <h3>
+                            価格・ポイント
+                        </h3>
 
-    let backgroundColor = "#f5f5f5";
+                        <table style="
+                            width:100%;
+                            min-width:650px;
+                            border-collapse:collapse;
+                            text-align:center;
+                        ">
 
-    if (price.rank_name === "おすすめ") {
-        backgroundColor = "#d9d9d9";
-    } else if (price.rank_name === "ホワイト") {
-        backgroundColor = "#ffffff";
-    } else if (price.rank_name === "イエロー") {
-        backgroundColor = "#fff2a8";
-    } else if (price.rank_name === "グリーン") {
-        backgroundColor = "#c8e6c9";
-    } else if (price.rank_name === "アンバー") {
-        backgroundColor = "#e8b879";
-    }
+                            <thead>
+                                <tr>
 
-    return `
-        <th style="
-            border:1px solid #ddd;
-            padding:12px 8px;
-            background:${backgroundColor};
-        ">
-            ${escapeHtml(price.rank_name || "")}
-        </th>
-    `;
+                                    ${prices.map(price => {
 
-}).join("")}
-                            </tr>
-                        </thead>
+                                        let backgroundColor =
+                                            "#f5f5f5";
 
-                        <tbody>
-                            <tr>
-                                ${prices.map(price => `
-                                    <td style="
-                                        border:1px solid #ddd;
-                                        padding:12px 8px;
-                                        font-weight:bold;
-                                    ">
-                                        ${
-                                            price.price != null
-                                                ? Number(price.price).toLocaleString() + "円"
-                                                : "-"
+                                        if (
+                                            price.rank_name ===
+                                            "おすすめ"
+                                        ) {
+                                            backgroundColor =
+                                                "#d9d9d9";
+
+                                        } else if (
+                                            price.rank_name ===
+                                            "ホワイト"
+                                        ) {
+                                            backgroundColor =
+                                                "#ffffff";
+
+                                        } else if (
+                                            price.rank_name ===
+                                            "イエロー"
+                                        ) {
+                                            backgroundColor =
+                                                "#fff2a8";
+
+                                        } else if (
+                                            price.rank_name ===
+                                            "グリーン"
+                                        ) {
+                                            backgroundColor =
+                                                "#c8e6c9";
+
+                                        } else if (
+                                            price.rank_name ===
+                                            "アンバー"
+                                        ) {
+                                            backgroundColor =
+                                                "#e8b879";
                                         }
-                                    </td>
-                                `).join("")}
-                            </tr>
 
-                            <tr>
-                                ${prices.map(price => `
-                                    <td style="
-                                        border:1px solid #ddd;
-                                        padding:10px 8px;
-                                    ">
-                                        ${
-                                            price.points != null
-                                                ? price.points + "ポイント"
-                                                : "-"
-                                        }
-                                    </td>
-                                `).join("")}
-                            </tr>
-                        </tbody>
+                                        return `
+                                            <th style="
+                                                border:1px solid #ddd;
+                                                padding:12px 8px;
+                                                background:${backgroundColor};
+                                            ">
+                                                ${escapeHtml(
+                                                    price.rank_name || ""
+                                                )}
+                                            </th>
+                                        `;
 
-                    </table>
+                                    }).join("")}
 
-                </div>
-            `
-            : "";
+                                </tr>
+                            </thead>
 
-        const modal = document.createElement("div");
+                            <tbody>
 
-        modal.id = "productDetailModal";
+                                <tr>
+
+                                    ${prices.map(price => `
+                                        <td style="
+                                            border:1px solid #ddd;
+                                            padding:12px 8px;
+                                            font-weight:bold;
+                                        ">
+                                            ${
+                                                price.price != null
+                                                    ? Number(
+                                                        price.price
+                                                    ).toLocaleString() +
+                                                      "円"
+                                                    : "-"
+                                            }
+                                        </td>
+                                    `).join("")}
+
+                                </tr>
+
+                                <tr>
+
+                                    ${prices.map(price => `
+                                        <td style="
+                                            border:1px solid #ddd;
+                                            padding:10px 8px;
+                                        ">
+                                            ${
+                                                price.points != null
+                                                    ? price.points +
+                                                      "ポイント"
+                                                    : "-"
+                                            }
+                                        </td>
+                                    `).join("")}
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                `
+                : "";
+
+
+        /* ===============================
+           モーダル
+        ================================ */
+
+        const modal =
+            document.createElement("div");
+
+        modal.id =
+            "productDetailModal";
 
         modal.style.cssText = `
             position:fixed;
@@ -2057,7 +2061,9 @@ async function showProductDetail(productId) {
             box-sizing:border-box;
         `;
 
+
         modal.innerHTML = `
+
             <div style="
                 max-width:900px;
                 margin:30px auto;
@@ -2084,34 +2090,116 @@ async function showProductDetail(productId) {
                     ×
                 </button>
 
+
+                <!-- 商品名 -->
+
                 <h2 style="
                     color:#247447;
                     text-align:center;
                     margin:10px 0 25px;
                 ">
-                    ${escapeHtml(product.name || "")}
+                    ${escapeHtml(
+                        product.name || ""
+                    )}
                 </h2>
+
+
+                <!-- 商品画像 -->
 
                 ${
                     product.image_url
                         ? `
                             <div style="
                                 text-align:center;
-                                margin-bottom:25px;
+                                margin-bottom:30px;
                             ">
+
                                 <img
-                                    src="${escapeHtml(product.image_url)}"
-                                    alt="${escapeHtml(product.name || "")}"
+                                    src="${escapeHtml(
+                                        product.image_url
+                                    )}"
+                                    alt=""
                                     style="
-                                        max-width:100%;
-                                        width:400px;
+                                        display:block;
+                                        width:100%;
+                                        max-width:500px;
                                         height:auto;
+                                        margin:0 auto;
+                                        border-radius:10px;
                                     "
                                 >
+
                             </div>
                         `
                         : ""
                 }
+
+
+                <!-- PDF -->
+
+                ${
+                    product.pdf_url
+                        ? `
+                            <div style="
+                                margin-bottom:30px;
+                            ">
+
+                                <div style="
+                                    width:100%;
+                                    height:700px;
+                                    border:1px solid #ddd;
+                                    border-radius:10px;
+                                    overflow:hidden;
+                                    background:#f5f5f5;
+                                ">
+
+                                    <iframe
+                                        src="${escapeHtml(
+                                            product.pdf_url
+                                        )}"
+                                        width="100%"
+                                        height="100%"
+                                        style="
+                                            display:block;
+                                            border:none;
+                                        "
+                                        title="PDF"
+                                    ></iframe>
+
+                                </div>
+
+
+                                <a
+                                    href="${escapeHtml(
+                                        product.pdf_url
+                                    )}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style="
+                                        display:block;
+                                        max-width:420px;
+                                        margin:15px auto 0;
+                                        padding:13px 20px;
+                                        background:#fff;
+                                        color:#247447;
+                                        text-align:center;
+                                        text-decoration:none;
+                                        border:1px solid #247447;
+                                        border-radius:10px;
+                                        font-weight:bold;
+                                        box-sizing:border-box;
+                                    "
+                                >
+                                    PDFを別画面で開く
+                                </a>
+
+                            </div>
+                        `
+                        : ""
+                }
+
+
+                <!-- 商品説明 -->
 
                 ${
                     product.description
@@ -2122,22 +2210,33 @@ async function showProductDetail(productId) {
                                 border-radius:12px;
                                 margin-bottom:20px;
                             ">
-                                <h3>商品の概要</h3>
+
                                 <p>
-                                    ${escapeHtml(product.description)}
+                                    ${escapeHtml(
+                                        product.description
+                                    )}
                                 </p>
+
                             </div>
                         `
                         : ""
                 }
 
+
+                <!-- 価格 -->
+
                 ${priceHtml}
+
+
+                <!-- 公式ページ -->
 
                 ${
                     product.product_url
                         ? `
                             <a
-                                href="${escapeHtml(product.product_url)}"
+                                href="${escapeHtml(
+                                    product.product_url
+                                )}"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style="
@@ -2161,9 +2260,14 @@ async function showProductDetail(productId) {
                 }
 
             </div>
+
         `;
 
-        document.body.appendChild(modal);
+
+        document.body.appendChild(
+            modal
+        );
+
 
     } catch (error) {
 
@@ -2172,12 +2276,13 @@ async function showProductDetail(productId) {
             error
         );
 
-        alert("商品詳細を取得できませんでした。");
+        alert(
+            "商品詳細を取得できませんでした。"
+        );
 
     }
 
 }
-
 
 /* ===============================
    商品詳細を閉じる
