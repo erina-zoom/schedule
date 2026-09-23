@@ -1566,21 +1566,14 @@ function showGuide(type){
                 </ol>
 
 
-                <div class="guide-image-placeholder">
+                <div class="guide-image">
 
-                    <div class="guide-image-icon">
-                        🖼️
-                    </div>
+    <img
+        src="./images/guides/android-home-add.png"
+        alt="Androidのホーム画面への追加方法"
+    >
 
-                    <p>
-                        ここに画像を追加
-                    </p>
-
-                    <span>
-                        Androidの手順画像
-                    </span>
-
-                </div>
+</div>
 
             </div>
 
