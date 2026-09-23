@@ -1807,47 +1807,17 @@ function renderProducts(list, category) {
 
     container.innerHTML = list.map(product => {
 
-        const prices = Array.isArray(product.prices)
-            ? product.prices
-            : [];
-
-        const priceHtml = prices.length > 0
-            ? `
-                <div class="product-prices">
-                    <h4>価格・ポイント</h4>
-
-                    <div class="price-list">
-                        ${prices.map(price => `
-                            <div class="price-row">
-                                <div class="price-rank">
-                                    ${escapeHtml(price.rank_name || "")}
-                                </div>
-
-                                <div class="price-value">
-                                    ${price.price != null
-                                        ? Number(price.price).toLocaleString() + "円"
-                                        : "-"}
-                                </div>
-
-                                <div class="price-points">
-                                    ${price.points != null
-                                        ? price.points + "ポイント"
-                                        : "-"}
-                                </div>
-                            </div>
-                        `).join("")}
-                    </div>
-                </div>
-            `
-            : "";
-
         return `
             <article class="product-card">
 
                 ${
                     product.image_url
                         ? `
-                            <div class="product-image">
+                            <div
+                                class="product-image"
+                                style="cursor:pointer;"
+                                onclick="showProductDetail(${product.id})"
+                            >
                                 <img
                                     src="${escapeHtml(product.image_url)}"
                                     alt="${escapeHtml(product.name || "")}"
@@ -1860,42 +1830,273 @@ function renderProducts(list, category) {
 
                 <div class="product-info">
 
-                    <h3>
+                    <h3
+                        style="cursor:pointer;"
+                        onclick="showProductDetail(${product.id})"
+                    >
                         ${escapeHtml(product.name || "")}
                     </h3>
-
-                    ${
-                        product.description
-                            ? `
-                                <p class="product-description">
-                                    ${escapeHtml(product.description)}
-                                </p>
-                            `
-                            : ""
-                    }
-
-                    ${priceHtml}
-
-                    ${
-                        product.product_url
-                            ? `
-                                <a
-                                    class="product-link"
-                                    href="${escapeHtml(product.product_url)}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    ERINA公式商品ページを見る
-                                </a>
-                            `
-                            : ""
-                    }
 
                 </div>
 
             </article>
         `;
     }).join("");
+}
+
+
+/* ===============================
+   商品詳細
+================================ */
+
+async function showProductDetail(productId) {
+
+    try {
+
+        const res = await fetch(
+            PRODUCTS_URL +
+            "/" +
+            encodeURIComponent(productId) +
+            "?t=" +
+            Date.now()
+        );
+
+        if (!res.ok) {
+            throw new Error("商品詳細取得失敗");
+        }
+
+        const data = await res.json();
+
+        if (!data.product) {
+            throw new Error("商品情報がありません");
+        }
+
+        const product = data.product;
+
+        const prices = Array.isArray(product.prices)
+            ? product.prices
+            : [];
+
+        const priceHtml = prices.length > 0
+            ? `
+                <div style="
+                    margin-top:25px;
+                    overflow-x:auto;
+                ">
+
+                    <h3>価格・ポイント</h3>
+
+                    <table style="
+                        width:100%;
+                        min-width:650px;
+                        border-collapse:collapse;
+                        text-align:center;
+                    ">
+
+                        <thead>
+                            <tr>
+                                ${prices.map(price => `
+                                    <th style="
+                                        border:1px solid #ddd;
+                                        padding:12px 8px;
+                                        background:#f5f5f5;
+                                    ">
+                                        ${escapeHtml(price.rank_name || "")}
+                                    </th>
+                                `).join("")}
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                ${prices.map(price => `
+                                    <td style="
+                                        border:1px solid #ddd;
+                                        padding:12px 8px;
+                                        font-weight:bold;
+                                    ">
+                                        ${
+                                            price.price != null
+                                                ? Number(price.price).toLocaleString() + "円"
+                                                : "-"
+                                        }
+                                    </td>
+                                `).join("")}
+                            </tr>
+
+                            <tr>
+                                ${prices.map(price => `
+                                    <td style="
+                                        border:1px solid #ddd;
+                                        padding:10px 8px;
+                                    ">
+                                        ${
+                                            price.points != null
+                                                ? price.points + "ポイント"
+                                                : "-"
+                                        }
+                                    </td>
+                                `).join("")}
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+            `
+            : "";
+
+        const modal = document.createElement("div");
+
+        modal.id = "productDetailModal";
+
+        modal.style.cssText = `
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.55);
+            z-index:9999;
+            overflow-y:auto;
+            padding:20px;
+            box-sizing:border-box;
+        `;
+
+        modal.innerHTML = `
+            <div style="
+                max-width:900px;
+                margin:30px auto;
+                background:#fff;
+                border-radius:16px;
+                padding:25px;
+                box-sizing:border-box;
+            ">
+
+                <button
+                    onclick="closeProductDetail()"
+                    style="
+                        display:block;
+                        margin-left:auto;
+                        border:none;
+                        background:#eee;
+                        border-radius:50%;
+                        width:40px;
+                        height:40px;
+                        font-size:20px;
+                        cursor:pointer;
+                    "
+                >
+                    ×
+                </button>
+
+                <h2 style="
+                    color:#247447;
+                    text-align:center;
+                    margin:10px 0 25px;
+                ">
+                    ${escapeHtml(product.name || "")}
+                </h2>
+
+                ${
+                    product.image_url
+                        ? `
+                            <div style="
+                                text-align:center;
+                                margin-bottom:25px;
+                            ">
+                                <img
+                                    src="${escapeHtml(product.image_url)}"
+                                    alt="${escapeHtml(product.name || "")}"
+                                    style="
+                                        max-width:100%;
+                                        width:400px;
+                                        height:auto;
+                                    "
+                                >
+                            </div>
+                        `
+                        : ""
+                }
+
+                ${
+                    product.description
+                        ? `
+                            <div style="
+                                background:#f7f7f7;
+                                padding:20px;
+                                border-radius:12px;
+                                margin-bottom:20px;
+                            ">
+                                <h3>商品の概要</h3>
+                                <p>
+                                    ${escapeHtml(product.description)}
+                                </p>
+                            </div>
+                        `
+                        : ""
+                }
+
+                ${priceHtml}
+
+                ${
+                    product.product_url
+                        ? `
+                            <a
+                                href="${escapeHtml(product.product_url)}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style="
+                                    display:block;
+                                    max-width:420px;
+                                    margin:30px auto 10px;
+                                    padding:15px 20px;
+                                    background:#247447;
+                                    color:#fff;
+                                    text-align:center;
+                                    text-decoration:none;
+                                    border-radius:10px;
+                                    font-weight:bold;
+                                    box-sizing:border-box;
+                                "
+                            >
+                                ERINA公式商品ページを見る
+                            </a>
+                        `
+                        : ""
+                }
+
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+    } catch (error) {
+
+        console.error(
+            "商品詳細取得エラー:",
+            error
+        );
+
+        alert("商品詳細を取得できませんでした。");
+
+    }
+
+}
+
+
+/* ===============================
+   商品詳細を閉じる
+================================ */
+
+function closeProductDetail() {
+
+    const modal =
+        document.getElementById(
+            "productDetailModal"
+        );
+
+    if (modal) {
+        modal.remove();
+    }
+
 }
 
 /* ===============================
