@@ -1929,3 +1929,121 @@ section {
     margin: 0 auto;
     border-radius: 10px;
 }
+/* ERINA ヘッダー画像 */
+
+.erina-header-image {
+    width: 100%;
+    overflow: hidden;
+    background: #f5f7fa;
+}
+
+.erina-header-image {
+    width: calc(100% - 32px);
+    max-width: 1200px;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.erina-header-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+}
+
+/* =========================
+   今日のZoom
+   ========================= */
+
+#today {
+    position: relative;
+}
+
+/* 今日のZoomカードを薄いピンクにする */
+#today .event-card {
+    background: #fff5f8 !important;
+    border-left-color: #d95b82 !important;
+}
+
+/* 右下にさくらんぼ */
+#today::after {
+    content: "🍒";
+    position: absolute;
+    right: 25px;
+    bottom: 20px;
+    font-size: 42px;
+    opacity: 0.7;
+    pointer-events: none;
+}
+#today .empty {
+    background: #fff5f8;
+    border: 1px solid #f3d6df;
+    border-radius: 14px;
+    padding: 30px 20px;
+}
+
+/* 商品紹介 カテゴリーボタン */
+
+.product-category-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 900px;
+    margin: 0 auto 25px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.product-category-button {
+    min-height: 55px;
+    padding: 12px 15px;
+    background: #fff;
+    color: #247447;
+    border: 1px solid #cfd8d3;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,.08);
+}
+
+.product-category-button:hover {
+    background: #f5faf7;
+}
+
+@media (max-width: 600px) {
+
+    .product-category-buttons {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .product-category-button:first-child {
+        grid-column: 1 / -1;
+    }
+
+}
+/* 商品紹介ボタン 配置を強制 */
+
+.product-category-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+}
+
+.product-category-button:first-child {
+    grid-column: 1 / -1 !important;
+}
+
+@media (max-width: 600px) {
+    .product-category-buttons {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    .product-category-button:first-child {
+        grid-column: 1 / -1 !important;
+    }
+}
