@@ -2090,3 +2090,29 @@ section {
         word-break: break-word;
     }
 }
+/* ===============================
+   ホームタイトル・共有ボタン
+================================ */
+
+.home-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.share-app-button {
+    border: 1px solid #247447;
+    background: #ffffff;
+    color: #247447;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.share-app-button:hover {
+    background: #f0f7f3;
+}
