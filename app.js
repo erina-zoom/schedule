@@ -2508,3 +2508,61 @@ if(data.event && data.event.zoom_url){
     );
 
 }
+document
+    .getElementById("shareAppButton")
+    ?.addEventListener("click", async () => {
+
+        const shareText =
+`🏠 ERINA Zoom予定表
+
+ERINAのZoom催事予定や商品情報をご確認いただけます。
+
+📋 予定表
+📅 カレンダー`;
+
+        const shareUrl =
+            "https://erina-zoom.github.io/schedule/";
+
+        if (navigator.share) {
+
+            try {
+
+                await navigator.share({
+                    title: "ERINA Zoom予定表",
+                    text: shareText,
+                    url: shareUrl
+                });
+
+            } catch (error) {
+
+                if (error.name !== "AbortError") {
+                    console.error(error);
+                }
+
+            }
+
+        } else {
+
+            try {
+
+                await navigator.clipboard.writeText(
+                    shareText + "\n" + shareUrl
+                );
+
+                alert(
+                    "共有内容をコピーしました。\n\n" +
+                    "LINEやメールなどに貼り付けて送ってください。"
+                );
+
+            } catch (error) {
+
+                alert(
+                    "共有できませんでした。\n" +
+                    "URLをコピーしてお使いください。"
+                );
+
+            }
+
+        }
+
+    });
