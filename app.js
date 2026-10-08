@@ -526,18 +526,40 @@ function renderSchedule(){
         );
 
 
-    const todayEvents =
-        normalizedEvents.filter(
-            e =>
-                e.date === today
-        );
+    const now = new Date();
+
+const todayEvents =
+    normalizedEvents.filter(e => {
+
+        if (e.date !== today) {
+            return false;
+        }
+
+        if (!e.endTime) {
+            return true;
+        }
+
+        const endDateTime =
+            new Date(
+                `${e.date}T${e.endTime}:00+09:00`
+            );
+
+        return endDateTime > now;
+
+    });
 
 
-    const futureEvents =
-        normalizedEvents.filter(
-            e =>
-                e.date >= today
-        );
+const futureEvents =
+    normalizedEvents.filter(e => {
+
+        const startDateTime =
+            new Date(
+                `${e.date}T${e.startTime || "00:00"}:00+09:00`
+            );
+
+        return startDateTime > now;
+
+    });
 
 
     const weekStart =
