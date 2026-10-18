@@ -1819,8 +1819,142 @@ function escapeAttribute(
 
 }
 
+// ==========================================
+// 催事テンプレート
+// ==========================================
 
+const eventTemplates = {
+    "weekday-cherry": {
+        title: "🍒 平日チェリーライブ",
+        shortTitle: "平日チェリー",
+        category: "cherry",
+        startTime: "13:00",
+        endTime: "15:00",
+        color: "#E57373"
+    },
+    "holiday-cherry": {
+        title: "🍒 休日チェリーライブ",
+        shortTitle: "休日チェリー",
+        category: "cherry",
+        startTime: "13:00",
+        endTime: "15:00",
+        color: "#E57373"
+    },
+    "nobishiro": {
+        title: "💻 のびしろの会",
+        shortTitle: "のびしろ",
+        category: "seminar",
+        startTime: "13:00",
+        endTime: "15:00",
+        color: "#81D4FA"
+    },
+    "saga-online": {
+        title: "💻 佐賀オンラインセミナー",
+        shortTitle: "佐賀オンライン",
+        category: "seminar",
+        startTime: "13:00",
+        endTime: "15:00",
+        color: "#FFF176"
+    },
+    "fm-namazu": {
+        title: "📻 FMなまず",
+        shortTitle: "FMなまず",
+        category: "fm",
+        startTime: "12:00",
+        endTime: "14:00",
+        color: "#9E9E9E"
+    },
+    "night-fm": {
+        title: "📻 ナイトFMなまず",
+        shortTitle: "ナイトFM",
+        category: "fm",
+        startTime: "19:00",
+        endTime: "21:00",
+        color: "#9E9E9E"
+    },
+    "one-coin": {
+        title: "💃 ワンコインダンス",
+        shortTitle: "ワンコイン",
+        category: "event",
+        startTime: "",
+        endTime: "",
+        color: "#FFB74D"
+    },
+    "takenoko": {
+        title: "📚 竹の子族",
+        shortTitle: "竹の子族",
+        category: "event",
+        startTime: "19:00",
+        endTime: "21:00",
+        color: "#AED581"
+    },
+    "minason": {
+        title: "♣ ミナソンチャンネル",
+        shortTitle: "ミナソンチャンネル",
+        category: "event",
+        startTime: "13:00",
+        endTime: "14:00",
+        color: "#3949AB"
+    },
+    "terakoya": {
+        title: "📚 寺子屋チャンネル",
+        shortTitle: "寺子屋",
+        category: "event",
+        startTime: "11:00",
+        endTime: "12:00",
+        color: "#A1887F"
+    },
+    "science": {
+        title: "🧪 理科の実験チャンネル",
+        shortTitle: "理科実験",
+        category: "event",
+        startTime: "19:00",
+        endTime: "20:00",
+        color: "#4CAF50"
+    },
+    "sakura": {
+        title: "🌸 サクラ咲く会",
+        shortTitle: "サクラ",
+        category: "event",
+        startTime: "13:00",
+        endTime: "15:00",
+        color: "#F8BBD0"
+    }
+};
 
+document
+    .getElementById("eventTemplateButtons")
+    ?.addEventListener("click", (event) => {
+
+        const button = event.target.closest("[data-template]");
+
+        if (!button) {
+            return;
+        }
+
+        const template = eventTemplates[button.dataset.template];
+
+        if (!template) {
+            return;
+        }
+
+        titleInput.value = template.title;
+        shortTitleInput.value = template.shortTitle;
+        categoryInput.value = template.category;
+        startTimeInput.value = template.startTime;
+        endTimeInput.value = template.endTime;
+        eventColorInput.value = template.color;
+
+        showStatus(
+            "テンプレートを入力しました。開催日とZoom URLを入力してください。",
+            "success"
+        );
+
+        editorPanel.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
 // ==========================================
 // 完成
 // ==========================================

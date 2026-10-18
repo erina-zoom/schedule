@@ -476,6 +476,56 @@
 
         }
 
+/* 催事テンプレート */
+.template-section {
+    margin-bottom: 22px;
+    padding: 16px;
+    background: #f4f8f6;
+    border: 1px solid #dce8e1;
+    border-radius: 12px;
+}
+
+.template-section h3 {
+    margin: 0 0 5px;
+}
+
+.template-section p {
+    margin: 0 0 12px;
+    color: #66736c;
+    font-size: 14px;
+}
+
+.template-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.template-button {
+    min-height: 48px;
+    padding: 9px;
+    border: 1px solid #cbd8d0;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #263238;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.template-button:hover {
+    background: #e7f3eb;
+    border-color: #247447;
+}
+
+@media (max-width: 700px) {
+    .template-buttons {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .template-button {
+        font-size: 13px;
+    }
+}
     </style>
 </head>
 
@@ -575,7 +625,26 @@
             id="eventId"
         >
 
+<!-- 催事テンプレート -->
+<div class="template-section">
+    <h3>✨ 催事テンプレート</h3>
+    <p>催事を選ぶと、基本情報が自動入力されます。</p>
 
+    <div id="eventTemplateButtons" class="template-buttons">
+        <button type="button" class="template-button" data-template="weekday-cherry">🍒 平日チェリーライブ</button>
+        <button type="button" class="template-button" data-template="holiday-cherry">🍒 休日チェリーライブ</button>
+        <button type="button" class="template-button" data-template="nobishiro">💻 のびしろの会</button>
+        <button type="button" class="template-button" data-template="saga-online">💻 佐賀オンラインセミナー</button>
+        <button type="button" class="template-button" data-template="fm-namazu">📻 FMなまず</button>
+        <button type="button" class="template-button" data-template="night-fm">📻 ナイトFMなまず</button>
+        <button type="button" class="template-button" data-template="one-coin">💃 ワンコインダンス</button>
+        <button type="button" class="template-button" data-template="takenoko">📚 竹の子族</button>
+        <button type="button" class="template-button" data-template="minason">♣ ミナソンチャンネル</button>
+        <button type="button" class="template-button" data-template="terakoya">📚 寺子屋チャンネル</button>
+        <button type="button" class="template-button" data-template="science">🧪 理科の実験チャンネル</button>
+        <button type="button" class="template-button" data-template="sakura">🌸 サクラ咲く会</button>
+    </div>
+</div>
         <div class="form-grid">
 
 
